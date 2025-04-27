@@ -100,7 +100,7 @@ export function CustomerDetail({ customer }: CustomerDetailProps) {
         <Tabs defaultValue="basic" value={activeTab} onValueChange={setActiveTab}>
           <TabsList>
             <TabsTrigger value="basic">基本信息</TabsTrigger>
-            <TabsTrigger value="interaction">互动记录</TabsTrigger>
+            <TabsTrigger value="interaction">触达记录</TabsTrigger>
           </TabsList>
 
           <TabsContent value="basic">
