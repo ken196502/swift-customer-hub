@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Search, File, PlusCircle, Edit } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -29,13 +30,33 @@ const customers = [
   },
   {
     id: 2,
-    name: "阿里巴巴",
-    nameEn: "Alibaba",
+    name: "小米科技",
+    nameEn: "Xiaomi Tech",
     type: "公司户",
-    company: "阿里巴巴集团控股有限公司",
-    products: ["销售", "IPO"],
-    tags: ["机构投资"],
-    entryDate: "2018-06-15",
+    company: "小米科技有限责任公司",
+    products: ["销售", "IPO", "私募"],
+    tags: ["机构投资", "CRM", "ERM"],
+    entryDate: "2017-10-01",
+  },
+  {
+    id: 3,
+    name: "腾讯集团",
+    nameEn: "Tencent",
+    type: "公司户",
+    company: "腾讯科技有限公司",
+    products: [],
+    tags: [],
+    entryDate: "",
+  },
+  {
+    id: 4,
+    name: "高盛",
+    nameEn: "Goldman Sachs",
+    type: "公司户",
+    company: "高盛集团",
+    products: [],
+    tags: [],
+    entryDate: "",
   },
 ]
 
