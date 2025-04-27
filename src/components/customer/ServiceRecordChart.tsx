@@ -45,7 +45,7 @@ export function ServiceRecordChart({ data }: ServiceRecordChartProps) {
         </div>
       </div>
 
-      <div className="space-y-2">
+      {/* <div className="space-y-2">
         {data.map((item, index) => (
           <div key={index} className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
@@ -61,7 +61,7 @@ export function ServiceRecordChart({ data }: ServiceRecordChartProps) {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }
