@@ -18,22 +18,22 @@ import { CustomerDetail } from "@/components/CustomerDetail";
 const customers = [
   {
     id: 1,
-    name: "小米汽车",
-    nameEn: "Xiaomi Auto",
-    type: "公司户",
-    company: "小米科技有限责任公司",
-    products: ["股票交易", "咨询", "债券交易", "IPO", "发债"],
-    tags: ["零售经纪", "机构经纪", "跨资产", "DCM", "ECM"],
-    entryDate: "2019-10-01",
-  },
-  {
-    id: 2,
     name: "小米科技",
     nameEn: "Xiaomi Tech",
     type: "公司户",
     company: "小米科技有限责任公司",
-    products: ["股票交易", "咨询", "债券交易", "IPO", "发债"],
-    tags: ["零售经纪", "机构经纪", "跨资产", "DCM", "ECM"],
+    products: ["股票交易", "债券交易"],
+    tags: ["零售经纪", "跨资产"],
+    entryDate: "2019-10-01",
+  },
+  {
+    id: 2,
+    name: "小米汽车",
+    nameEn: "Xiaomi Auto",
+    type: "公司户",
+    company: "小米汽车有限责任公司",
+    products: ["咨询", "IPO", "发债"],
+    tags: ["机构经纪","DCM", "ECM"],
     entryDate: "2017-10-01",
   }
 ];
