@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Search, File, PlusCircle, Edit } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -12,7 +11,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Checkbox } from "@/components/ui/checkbox";
 import { CustomerFilters } from "@/components/CustomerFilters";
 import { CustomerDetail } from "@/components/CustomerDetail";
 
@@ -20,12 +18,12 @@ import { CustomerDetail } from "@/components/CustomerDetail";
 const customers = [
   {
     id: 1,
-    name: "小米集团",
-    nameEn: "Xiaomi",
+    name: "小米汽车",
+    nameEn: "Xiaomi Auto",
     type: "公司户",
     company: "小米科技有限责任公司",
-    products: ["新客签约", "续约签约"],
-    tags: ["专属秘书"],
+    products: ["股票交易", "咨询", "债券交易", "IPO", "发债"],
+    tags: ["零售经纪", "机构经纪", "跨资产", "DCM", "ECM"],
     entryDate: "2019-10-01",
   },
   {
@@ -34,31 +32,11 @@ const customers = [
     nameEn: "Xiaomi Tech",
     type: "公司户",
     company: "小米科技有限责任公司",
-    products: ["销售", "IPO", "私募"],
-    tags: ["机构投资", "CRM", "ERM"],
+    products: ["股票交易", "咨询", "债券交易", "IPO", "发债"],
+    tags: ["零售经纪", "机构经纪", "跨资产", "DCM", "ECM"],
     entryDate: "2017-10-01",
-  },
-  {
-    id: 3,
-    name: "腾讯集团",
-    nameEn: "Tencent",
-    type: "公司户",
-    company: "腾讯科技有限公司",
-    products: [],
-    tags: [],
-    entryDate: "",
-  },
-  {
-    id: 4,
-    name: "高盛",
-    nameEn: "Goldman Sachs",
-    type: "公司户",
-    company: "高盛集团",
-    products: [],
-    tags: [],
-    entryDate: "",
-  },
-]
+  }
+];
 
 export default function Index() {
   const [selectedCustomer, setSelectedCustomer] = useState<number | null>(null);
@@ -108,9 +86,6 @@ export default function Index() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-10">
-                  <Checkbox />
-                </TableHead>
                 <TableHead>客户名称</TableHead>
                 <TableHead>客户类型</TableHead>
                 <TableHead>法人公司</TableHead>
@@ -127,9 +102,6 @@ export default function Index() {
                   onClick={() => setSelectedCustomer(customer.id)}
                 >
                   <TableCell>
-                    <Checkbox onClick={(e) => e.stopPropagation()} />
-                  </TableCell>
-                  <TableCell>
                     <div className="font-medium">{customer.name}</div>
                     <div className="text-sm text-gray-500">{customer.nameEn}</div>
                   </TableCell>
@@ -141,7 +113,17 @@ export default function Index() {
                         <Badge
                           key={i}
                           variant="outline"
-                          className="bg-blue-100 text-blue-800 hover:bg-blue-100"
+                          className={
+                            product === "股票交易"
+                              ? "bg-blue-100 text-blue-800 hover:bg-blue-100"
+                              : product === "咨询"
+                                ? "bg-pink-100 text-pink-800 hover:bg-pink-100"
+                                : product === "债券交易"
+                                  ? "bg-green-100 text-green-800 hover:bg-green-100"
+                                  : product === "IPO"
+                                    ? "bg-cyan-100 text-cyan-800 hover:bg-cyan-100"
+                                    : "bg-purple-100 text-purple-800 hover:bg-purple-100"
+                          }
                         >
                           {product}
                         </Badge>
@@ -154,7 +136,17 @@ export default function Index() {
                         <Badge
                           key={i}
                           variant="outline"
-                          className="bg-purple-100 text-purple-800 hover:bg-purple-100"
+                          className={
+                            tag === "零售经纪"
+                              ? "bg-red-100 text-red-800 hover:bg-red-100"
+                              : tag === "机构经纪"
+                                ? "bg-green-100 text-green-800 hover:bg-green-100"
+                                : tag === "跨资产"
+                                  ? "bg-cyan-100 text-cyan-800 hover:bg-cyan-100"
+                                  : tag === "DCM"
+                                    ? "bg-yellow-100 text-yellow-800 hover:bg-yellow-100"
+                                    : "bg-indigo-100 text-indigo-800 hover:bg-indigo-100"
+                          }
                         >
                           {tag}
                         </Badge>
