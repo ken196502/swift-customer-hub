@@ -1,6 +1,5 @@
-
 import { useState } from "react";
-import { Search, FileImport, PlusCircle, Edit } from "lucide-react";
+import { Search, File, PlusCircle, Edit } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -75,7 +74,7 @@ export default function Index() {
             查询
           </Button>
           <Button variant="default" size="sm" className="bg-orange-500 hover:bg-orange-600">
-            <FileImport className="h-4 w-4 mr-2" />
+            <File className="h-4 w-4 mr-2" />
             导出
           </Button>
           <Button variant="default" size="sm" className="bg-green-500 hover:bg-green-600">
