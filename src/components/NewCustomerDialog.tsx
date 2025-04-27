@@ -149,6 +149,19 @@ export function NewCustomerDialog({ open, onOpenChange }: NewCustomerDialogProps
                 </SelectContent>
               </Select>
             </div>
+
+            <div className="space-y-2">
+              <Label>活跃状态</Label>
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder="请选择活跃状态" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="active">活跃</SelectItem>
+                  <SelectItem value="inactive">不活跃</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </div>
         <div className="flex justify-end space-x-2 mt-6">
