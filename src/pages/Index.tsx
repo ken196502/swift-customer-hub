@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Search, File, PlusCircle, Edit } from "lucide-react";
+import { Search, File, PlusCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,35 +13,71 @@ import {
 } from "@/components/ui/table";
 import { CustomerFilters } from "@/components/CustomerFilters";
 import { CustomerDetail } from "@/components/CustomerDetail";
+import { NewCustomerDialog } from "@/components/NewCustomerDialog";
 
-// 模拟数据
-const customers = [
+export interface Customer {
+  id: number;
+  customerNumber: string;
+  groupName: string;
+  nameEn: string;
+  shortNameEn: string;
+  fullNameEn: string;
+  shortNameCn: string;
+  fullNameCn: string;
+  type: string;
+  isListed: boolean;
+  stockCode: string;
+  city: string;
+  idType: string;
+  idNumber: string;
+  shareholders: string;
+  actualController: string;
+  registeredCapital: string;
+  establishDate: string;
+  registeredAddress: string;
+  legalRepresentative: string;
+  riskLevel: string;
+  entryDate: string;
+  activeStatus: string;
+  products: string[];
+  tags: string[];
+}
+
+// Updated mock data
+const customers: Customer[] = [
   {
     id: 1,
-    name: "小米科技",
-    nameEn: "Xiaomi Tech",
-    type: "公司户",
-    company: "小米科技有限责任公司",
-    products: ["股票交易", "债券交易"],
-    tags: ["零售经纪", "跨资产"],
-    entryDate: "2019-10-01",
-  },
-  {
-    id: 2,
-    name: "小米汽车",
+    customerNumber: "C20240001",
+    groupName: "小米集团",
     nameEn: "Xiaomi Auto",
+    shortNameEn: "Xiaomi Auto",
+    fullNameEn: "Xiaomi Automobile Co., Ltd.",
+    shortNameCn: "小米汽车",
+    fullNameCn: "小米汽车有限责任公司",
     type: "公司户",
-    company: "小米汽车有限责任公司",
-    products: ["咨询", "IPO", "发债"],
-    tags: ["机构经纪","DCM", "ECM"],
-    entryDate: "2017-10-01",
+    isListed: true,
+    stockCode: "1810.HK",
+    city: "北京",
+    idType: "统一社会信用代码",
+    idNumber: "91110000XXXXX",
+    shareholders: "雷军,小米科技",
+    actualController: "雷军",
+    registeredCapital: "100亿元",
+    establishDate: "2021-09-01",
+    registeredAddress: "北京市海淀区清河中街68号",
+    legalRepresentative: "雷军",
+    riskLevel: "低",
+    entryDate: "2019-10-01",
+    activeStatus: "活跃",
+    products: ["股票交易", "咨询", "债券交易", "IPO", "发债"],
+    tags: ["零售经纪", "机构经纪", "跨资产", "DCM", "ECM"],
   }
 ];
 
 export default function Index() {
   const [selectedCustomer, setSelectedCustomer] = useState<number | null>(null);
+  const [showNewCustomerDialog, setShowNewCustomerDialog] = useState(false);
 
-  // 如果选中了客户，显示客户详情
   if (selectedCustomer !== null) {
     const customer = customers.find((c) => c.id === selectedCustomer);
     if (customer) {
@@ -59,7 +95,6 @@ export default function Index() {
     }
   }
 
-  // 默认显示客户列表
   return (
     <div className="container mx-auto py-6 space-y-6">
       <h1 className="text-2xl font-bold">客户关系管理系统</h1>
@@ -76,7 +111,12 @@ export default function Index() {
             <File className="h-4 w-4 mr-2" />
             导出
           </Button>
-          <Button variant="default" size="sm" className="bg-green-500 hover:bg-green-600">
+          <Button 
+            variant="default" 
+            size="sm" 
+            className="bg-green-500 hover:bg-green-600"
+            onClick={() => setShowNewCustomerDialog(true)}
+          >
             <PlusCircle className="h-4 w-4 mr-2" />
             新建
           </Button>
@@ -86,9 +126,10 @@ export default function Index() {
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead>客户号</TableHead>
                 <TableHead>客户名称</TableHead>
                 <TableHead>客户类型</TableHead>
-                <TableHead>法人公司</TableHead>
+                <TableHead>所属集团</TableHead>
                 <TableHead>提供产品</TableHead>
                 <TableHead>标签</TableHead>
                 <TableHead>录入时间</TableHead>
@@ -101,12 +142,13 @@ export default function Index() {
                   className="cursor-pointer hover:bg-gray-50"
                   onClick={() => setSelectedCustomer(customer.id)}
                 >
+                  <TableCell>{customer.customerNumber}</TableCell>
                   <TableCell>
-                    <div className="font-medium">{customer.name}</div>
-                    <div className="text-sm text-gray-500">{customer.nameEn}</div>
+                    <div className="font-medium">{customer.shortNameCn}</div>
+                    <div className="text-sm text-gray-500">{customer.shortNameEn}</div>
                   </TableCell>
                   <TableCell>{customer.type}</TableCell>
-                  <TableCell>{customer.company}</TableCell>
+                  <TableCell>{customer.groupName}</TableCell>
                   <TableCell>
                     <div className="flex flex-wrap gap-1">
                       {customer.products.map((product, i) => (
@@ -160,6 +202,10 @@ export default function Index() {
           </Table>
         </div>
       </div>
+      <NewCustomerDialog 
+        open={showNewCustomerDialog} 
+        onOpenChange={setShowNewCustomerDialog} 
+      />
     </div>
   );
 }
