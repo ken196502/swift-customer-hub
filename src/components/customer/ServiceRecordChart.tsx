@@ -38,7 +38,7 @@ export function ServiceRecordChart({ data }: ServiceRecordChartProps) {
             </Pie>
             <text
               x="50%"
-              y="45%"
+              y="35%"
               textAnchor="middle"
               dominantBaseline="middle"
               className="text-sm font-medium"
@@ -47,7 +47,7 @@ export function ServiceRecordChart({ data }: ServiceRecordChartProps) {
             </text>
             <text
               x="50%"
-              y="55%"
+              y="45%"
               textAnchor="middle"
               dominantBaseline="middle"
               className="text-2xl font-bold"
@@ -56,7 +56,7 @@ export function ServiceRecordChart({ data }: ServiceRecordChartProps) {
             </text>
             <text
               x="50%"
-              y="65%"
+              y="55%"
               textAnchor="middle"
               dominantBaseline="middle"
               className="text-xs text-green-600"
