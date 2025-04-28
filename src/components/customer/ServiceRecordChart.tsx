@@ -56,7 +56,7 @@ export function ServiceRecordChart({ data }: ServiceRecordChartProps) {
             </text>
             <text
               x="50%"
-              y="70%"
+              y="50%"
               textAnchor="middle"
               dominantBaseline="middle"
               className="text-xs text-green-600"
