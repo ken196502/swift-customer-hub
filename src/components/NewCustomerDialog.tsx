@@ -9,14 +9,15 @@ import { useState } from "react";
 interface NewCustomerDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  initialData?: Customer;  // Add this line
 }
 
-export function NewCustomerDialog({ open, onOpenChange }: NewCustomerDialogProps) {
+export function NewCustomerDialog({ open, onOpenChange, initialData }: NewCustomerDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>新建客户</DialogTitle>
+          <DialogTitle>{initialData ? "编辑客户" : "新建客户"}</DialogTitle>
         </DialogHeader>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-4">

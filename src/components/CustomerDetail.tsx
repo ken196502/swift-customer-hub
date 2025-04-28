@@ -3,10 +3,12 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Edit, CircleDot } from "lucide-react";
+import { Edit, CircleDot, Plus } from "lucide-react";
 import type { Customer } from "@/pages/Index";
 import { BasicInformation } from "./customer/BasicInformation";
 import { InteractionRecords } from "./customer/InteractionRecords";
+import { NewCustomerDialog } from "./NewCustomerDialog";
+import { NewServiceRecordDialog } from "./customer/NewServiceRecordDialog";
 
 interface CustomerDetailProps {
   customer: Customer;
@@ -70,11 +72,19 @@ const transactionData = [
 
 export function CustomerDetail({ customer }: CustomerDetailProps) {
   const [activeTab, setActiveTab] = useState("basic");
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [newServiceDialogOpen, setNewServiceDialogOpen] = useState(false);
 
   return (
     <Card>
       <CardHeader className="space-y-2">
-        <CardTitle className="text-xl">{customer.fullNameCn}</CardTitle>
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-xl">{customer.fullNameCn}</CardTitle>
+          <Button variant="outline" size="sm" onClick={() => setEditDialogOpen(true)}>
+            <Edit className="h-4 w-4 mr-2" />
+            编辑
+          </Button>
+        </div>
         <div className="flex items-center text-sm text-gray-500 space-x-8">
           <div className="flex items-center space-x-2">
             <span>所属集团:</span>
@@ -95,10 +105,18 @@ export function CustomerDetail({ customer }: CustomerDetailProps) {
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="basic" value={activeTab} onValueChange={setActiveTab}>
-          <TabsList>
-            <TabsTrigger value="basic">基本信息</TabsTrigger>
-            <TabsTrigger value="interaction">触达记录</TabsTrigger>
-          </TabsList>
+          <div className="flex items-center justify-between mb-4">
+            <TabsList>
+              <TabsTrigger value="basic">基本信息</TabsTrigger>
+              <TabsTrigger value="interaction">触达记录</TabsTrigger>
+            </TabsList>
+            {activeTab === "interaction" && (
+              <Button size="sm" onClick={() => setNewServiceDialogOpen(true)}>
+                <Plus className="h-4 w-4 mr-2" />
+                新增触达记录
+              </Button>
+            )}
+          </div>
 
           <TabsContent value="basic">
             <BasicInformation customer={customer} />
@@ -112,6 +130,17 @@ export function CustomerDetail({ customer }: CustomerDetailProps) {
           </TabsContent>
         </Tabs>
       </CardContent>
+
+      <NewCustomerDialog 
+        open={editDialogOpen} 
+        onOpenChange={setEditDialogOpen}
+        initialData={customer}
+      />
+
+      <NewServiceRecordDialog
+        open={newServiceDialogOpen}
+        onOpenChange={setNewServiceDialogOpen}
+      />
     </Card>
   );
 }
