@@ -1,8 +1,9 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Edit } from "lucide-react";
+import { Edit, CircleDot } from "lucide-react";
 import type { Customer } from "@/pages/Index";
 import { BasicInformation } from "./customer/BasicInformation";
 import { InteractionRecords } from "./customer/InteractionRecords";
@@ -72,12 +73,25 @@ export function CustomerDetail({ customer }: CustomerDetailProps) {
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="text-xl">{customer.shortNameCn}</CardTitle>
-        <Button variant="outline" size="sm">
-          <Edit className="h-4 w-4 mr-2" />
-          编辑
-        </Button>
+      <CardHeader className="space-y-2">
+        <CardTitle className="text-xl">{customer.fullNameCn}</CardTitle>
+        <div className="flex items-center text-sm text-gray-500 space-x-8">
+          <div className="flex items-center space-x-2">
+            <span>所属集团:</span>
+            <span className="text-gray-700">{customer.groupName}</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <span>录入时间:</span>
+            <span className="text-gray-700">{customer.entryDate}</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <span>活跃状态:</span>
+            <div className="flex items-center space-x-1">
+              <CircleDot className="h-3 w-3 text-green-500" />
+              <span className="text-gray-700">{customer.activeStatus}</span>
+            </div>
+          </div>
+        </div>
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="basic" value={activeTab} onValueChange={setActiveTab}>

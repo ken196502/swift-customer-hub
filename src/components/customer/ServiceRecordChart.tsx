@@ -1,6 +1,7 @@
 
 import React from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from "recharts";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 
 export interface ServiceRecord {
   name: string;
@@ -15,34 +16,9 @@ interface ServiceRecordChartProps {
 
 export function ServiceRecordChart({ data }: ServiceRecordChartProps) {
   const totalCount = data.reduce((sum, item) => sum + item.value, 0);
-  
-  // Custom Legend component to show percentage and value
-  const CustomLegend = ({ payload }: any) => {
-    if (!payload) return null;
-    
-    return (
-      <div className="flex flex-col space-y-2">
-        {payload.map((entry: any, index: number) => (
-          <div key={`legend-${index}`} className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <div
-                className="w-3 h-3 rounded-full"
-                style={{ backgroundColor: entry.color }}
-              />
-              <span className="text-sm">{entry.value}</span>
-            </div>
-            <div className="flex space-x-6">
-              <span className="text-sm">{entry.payload.percentage}%</span>
-              <span className="text-sm">{entry.payload.value}</span>
-            </div>
-          </div>
-        ))}
-      </div>
-    );
-  };
 
   return (
-    <div className="space-y-4">
+    <div className="grid grid-cols-2 gap-6">
       <div className="h-64 relative">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
@@ -90,7 +66,27 @@ export function ServiceRecordChart({ data }: ServiceRecordChartProps) {
           </PieChart>
         </ResponsiveContainer>
       </div>
-      <Legend content={<CustomLegend />} />
+      <div>
+        <Table>
+          <TableBody>
+            {data.map((item, index) => (
+              <TableRow key={index}>
+                <TableCell>
+                  <div className="flex items-center space-x-2">
+                    <div
+                      className="w-3 h-3 rounded-full"
+                      style={{ backgroundColor: item.color }}
+                    />
+                    <span>{item.name}</span>
+                  </div>
+                </TableCell>
+                <TableCell>{item.percentage}%</TableCell>
+                <TableCell>{item.value}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }
