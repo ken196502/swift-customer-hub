@@ -5,11 +5,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState } from "react";
+import type { Customer } from "@/pages/Index";
 
 interface NewCustomerDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  initialData?: Customer;  // Add this line
+  initialData?: Customer;
 }
 
 export function NewCustomerDialog({ open, onOpenChange, initialData }: NewCustomerDialogProps) {

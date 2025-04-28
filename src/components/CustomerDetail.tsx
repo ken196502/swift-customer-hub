@@ -80,10 +80,6 @@ export function CustomerDetail({ customer }: CustomerDetailProps) {
       <CardHeader className="space-y-2">
         <div className="flex items-center justify-between">
           <CardTitle className="text-xl">{customer.fullNameCn}</CardTitle>
-          <Button variant="outline" size="sm" onClick={() => setEditDialogOpen(true)}>
-            <Edit className="h-4 w-4 mr-2" />
-            编辑
-          </Button>
         </div>
         <div className="flex items-center text-sm text-gray-500 space-x-8">
           <div className="flex items-center space-x-2">
@@ -110,7 +106,12 @@ export function CustomerDetail({ customer }: CustomerDetailProps) {
               <TabsTrigger value="basic">基本信息</TabsTrigger>
               <TabsTrigger value="interaction">触达记录</TabsTrigger>
             </TabsList>
-            {activeTab === "interaction" && (
+            {activeTab === "basic" ? (
+              <Button variant="outline" size="sm" onClick={() => setEditDialogOpen(true)}>
+                <Edit className="h-4 w-4 mr-2" />
+                编辑
+              </Button>
+            ) : (
               <Button size="sm" onClick={() => setNewServiceDialogOpen(true)}>
                 <Plus className="h-4 w-4 mr-2" />
                 新增触达记录
