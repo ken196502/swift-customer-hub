@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,10 +12,10 @@ interface CustomerDetailProps {
 }
 
 const contactData = [
-  { name: "投资服务", value: 5, percentage: 42, color: "#4f46e5" },
-  { name: "销售沟通", value: 3, percentage: 25, color: "#f97316" },
-  { name: "线上会议", value: 2, percentage: 16, color: "#10b981" },
-  { name: "客服反馈", value: 1, percentage: 8, color: "#ef4444" },
+  { name: "投研服务", value: 5, percentage: 42, color: "#4f46e5" },
+  { name: "电话沟通", value: 3, percentage: 25, color: "#10b981" },
+  { name: "线上会议", value: 2, percentage: 16, color: "#f97316" },
+  { name: "报告发送", value: 1, percentage: 8, color: "#ef4444" },
   { name: "招待客户", value: 1, percentage: 8, color: "#f59e0b" },
 ];
 
