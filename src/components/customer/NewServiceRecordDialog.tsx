@@ -5,49 +5,85 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState } from "react";
+import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+
+interface ServiceRecord {
+  id: string;
+  date: string;
+  type: string;
+  notes: string;
+  amount?: number;
+  department?: string;
+  person?: string;
+  purpose?: string;
+}
 
 interface NewServiceRecordDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSubmit?: (data: any) => void;
+  onSubmit: (record: ServiceRecord) => void;
+  contactTypes: string[];
 }
 
-export function NewServiceRecordDialog({ open, onOpenChange, onSubmit }: NewServiceRecordDialogProps) {
+export function NewServiceRecordDialog({ 
+  open, 
+  onOpenChange, 
+  onSubmit,
+  contactTypes 
+}: NewServiceRecordDialogProps) {
   const { toast } = useToast();
-  const [formData, setFormData] = useState({
+  const [record, setRecord] = useState<Partial<ServiceRecord>>({
     date: new Date().toISOString().split('T')[0],
-    amount: "",
-    contactType: "",
-    description: "",
+    type: "",
+    notes: "",
+    amount: undefined,
     department: "",
-    servicePerson: ""
+    person: "",
+    purpose: "",
   });
 
-  const handleInputChange = (field: string, value: any) => {
-    setFormData({
-      ...formData,
-      [field]: value
-    });
+  const handleChange = (field: string, value: any) => {
+    setRecord({ ...record, [field]: value });
   };
 
   const handleSubmit = () => {
-    if (!formData.date || !formData.contactType) {
+    if (!record.type || !record.date) {
       toast({
         title: "请填写必填项",
-        description: "日期和联系类型为必填项",
+        description: "联系类型和日期为必填项",
         variant: "destructive"
       });
       return;
     }
-    
-    if (onSubmit) {
-      onSubmit(formData);
-    }
+
+    const newRecord: ServiceRecord = {
+      id: Date.now().toString(),
+      date: record.date || new Date().toISOString().split('T')[0],
+      type: record.type || "",
+      notes: record.notes || "",
+      amount: record.amount,
+      department: record.department,
+      person: record.person,
+      purpose: record.purpose,
+    };
+
+    onSubmit(newRecord);
     
     toast({
       title: "操作成功",
-      description: "触达记录已添加",
+      description: "新服务记录已添加",
+    });
+    
+    // Reset form
+    setRecord({
+      date: new Date().toISOString().split('T')[0],
+      type: "",
+      notes: "",
+      amount: undefined,
+      department: "",
+      person: "",
+      purpose: "",
     });
     
     onOpenChange(false);
@@ -64,73 +100,80 @@ export function NewServiceRecordDialog({ open, onOpenChange, onSubmit }: NewServ
             <Label>日期</Label>
             <Input 
               type="date" 
-              value={formData.date} 
-              onChange={(e) => handleInputChange('date', e.target.value)}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label>金额 (折合HKD)</Label>
-            <Input 
-              type="number" 
-              placeholder="请输入金额" 
-              value={formData.amount} 
-              onChange={(e) => handleInputChange('amount', e.target.value)}
+              value={record.date} 
+              onChange={(e) => handleChange('date', e.target.value)}
             />
           </div>
 
           <div className="space-y-2">
             <Label>联系类型</Label>
             <Select
-              value={formData.contactType}
-              onValueChange={(value) => handleInputChange('contactType', value)}
+              value={record.type}
+              onValueChange={(value) => handleChange('type', value)}
             >
               <SelectTrigger>
-                <SelectValue placeholder="请选择联系类型" />
+                <SelectValue placeholder="选择联系类型" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="research">投研服务</SelectItem>
-                <SelectItem value="phone">电话沟通</SelectItem>
-                <SelectItem value="meeting">线上会议</SelectItem>
-                <SelectItem value="report">报告发送</SelectItem>
-                <SelectItem value="visit">招待客户</SelectItem>
+                {contactTypes.map((type) => (
+                  <SelectItem key={type} value={type}>{type}</SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
 
           <div className="space-y-2">
-            <Label>联系描述</Label>
+            <Label>业务部门</Label>
             <Input 
-              placeholder="请输入联系描述" 
-              value={formData.description} 
-              onChange={(e) => handleInputChange('description', e.target.value)}
+              placeholder="请输入业务部门" 
+              value={record.department} 
+              onChange={(e) => handleChange('department', e.target.value)}
             />
           </div>
 
           <div className="space-y-2">
-            <Label>联系部门</Label>
+            <Label>业务人员</Label>
             <Input 
-              placeholder="请输入联系部门" 
-              value={formData.department} 
-              onChange={(e) => handleInputChange('department', e.target.value)}
+              placeholder="请输入业务人员" 
+              value={record.person} 
+              onChange={(e) => handleChange('person', e.target.value)}
             />
           </div>
 
           <div className="space-y-2">
-            <Label>服务人</Label>
+            <Label>金额（万元）</Label>
             <Input 
-              placeholder="请输入服务人" 
-              value={formData.servicePerson} 
-              onChange={(e) => handleInputChange('servicePerson', e.target.value)}
+              type="number" 
+              placeholder="请输入金额" 
+              value={record.amount === undefined ? '' : record.amount} 
+              onChange={(e) => handleChange('amount', parseFloat(e.target.value) || undefined)}
             />
           </div>
 
-          <div className="flex justify-end space-x-2 mt-6">
-            <Button variant="outline" onClick={() => onOpenChange(false)}>
-              取消
-            </Button>
-            <Button onClick={handleSubmit}>保存</Button>
+          <div className="space-y-2">
+            <Label>用途</Label>
+            <Input 
+              placeholder="请输入用途" 
+              value={record.purpose} 
+              onChange={(e) => handleChange('purpose', e.target.value)}
+            />
           </div>
+
+          <div className="space-y-2">
+            <Label>备注</Label>
+            <Textarea 
+              placeholder="请输入备注" 
+              value={record.notes} 
+              onChange={(e) => handleChange('notes', e.target.value)}
+              rows={3}
+            />
+          </div>
+        </div>
+        <div className="flex justify-end space-x-2 mt-4">
+          <Button variant="outline" onClick={() => onOpenChange(false)}>
+            取消
+          </Button>
+          <Button onClick={handleSubmit}>保存</Button>
         </div>
       </DialogContent>
     </Dialog>

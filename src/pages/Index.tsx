@@ -1,21 +1,14 @@
 
 import { useState } from "react";
-import { Search, File, PlusCircle } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Search, File, PlusCircle, Tags, List } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { CustomerFilters } from "@/components/CustomerFilters";
 import { CustomerDetail } from "@/components/CustomerDetail";
 import { NewCustomerDialog } from "@/components/NewCustomerDialog";
 import { useToast } from "@/hooks/use-toast";
 import { CustomerList } from "@/components/customer/CustomerList";
+import { TagManagementDialog } from "@/components/management/TagManagementDialog";
+import { ContactTypeManagementDialog } from "@/components/management/ContactTypeManagementDialog";
 
 export interface Customer {
   id: number;
@@ -80,6 +73,11 @@ export default function Index() {
   const [customers, setCustomers] = useState<Customer[]>(initialCustomers);
   const [selectedCustomer, setSelectedCustomer] = useState<number | null>(null);
   const [showNewCustomerDialog, setShowNewCustomerDialog] = useState(false);
+  const [showTagManagement, setShowTagManagement] = useState(false);
+  const [showContactTypeManagement, setShowContactTypeManagement] = useState(false);
+  const [productOptions, setProductOptions] = useState<string[]>(["股票交易", "咨询", "债券交易", "IPO", "发债"]);
+  const [tagOptions, setTagOptions] = useState<string[]>(["零售经纪", "机构经纪", "跨资产", "DCM", "ECM"]);
+  const [contactTypes, setContactTypes] = useState<string[]>(["电话", "会议", "邮件", "拜访", "社交活动"]);
   const { toast } = useToast();
 
   const handleAddCustomer = (newCustomer: Partial<Customer>) => {
@@ -112,6 +110,14 @@ export default function Index() {
     });
   };
 
+  const handleUpdateTags = (updatedTags: string[]) => {
+    setTagOptions(updatedTags);
+  };
+
+  const handleUpdateContactTypes = (updatedContactTypes: string[]) => {
+    setContactTypes(updatedContactTypes);
+  };
+
   if (selectedCustomer !== null) {
     const customer = customers.find((c) => c.id === selectedCustomer);
     if (customer) {
@@ -126,6 +132,7 @@ export default function Index() {
           <CustomerDetail 
             customer={customer} 
             onEditCustomer={(updatedCustomer) => handleUpdateCustomer(updatedCustomer)}
+            contactTypes={contactTypes}
           />
         </div>
       );
@@ -134,7 +141,29 @@ export default function Index() {
 
   return (
     <div className="container mx-auto py-6 space-y-6">
-      <h1 className="text-2xl font-bold">客户关系管理系统</h1>
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-bold">客户关系管理系统</h1>
+        <div className="flex gap-2">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="flex items-center gap-1"
+            onClick={() => setShowTagManagement(true)}
+          >
+            <Tags className="h-4 w-4" />
+            管理标签
+          </Button>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="flex items-center gap-1"
+            onClick={() => setShowContactTypeManagement(true)}
+          >
+            <List className="h-4 w-4" />
+            管理联系类型
+          </Button>
+        </div>
+      </div>
 
       <div className="flex flex-col space-y-4">
         <CustomerFilters />
@@ -164,10 +193,27 @@ export default function Index() {
           onSelectCustomer={customerId => setSelectedCustomer(customerId)} 
         />
       </div>
+      
       <NewCustomerDialog 
         open={showNewCustomerDialog} 
         onOpenChange={setShowNewCustomerDialog}
         onSubmit={handleAddCustomer}
+        productOptions={productOptions}
+        tagOptions={tagOptions}
+      />
+      
+      <TagManagementDialog
+        open={showTagManagement}
+        onOpenChange={setShowTagManagement}
+        tags={tagOptions}
+        onUpdate={handleUpdateTags}
+      />
+      
+      <ContactTypeManagementDialog
+        open={showContactTypeManagement}
+        onOpenChange={setShowContactTypeManagement}
+        contactTypes={contactTypes}
+        onUpdate={handleUpdateContactTypes}
       />
     </div>
   );

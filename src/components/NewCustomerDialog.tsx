@@ -6,7 +6,6 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState } from "react";
 import type { Customer } from "@/pages/Index";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Check } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -15,9 +14,18 @@ interface NewCustomerDialogProps {
   onOpenChange: (open: boolean) => void;
   initialData?: Customer;
   onSubmit?: (customer: Partial<Customer>) => void;
+  productOptions: string[];
+  tagOptions: string[];
 }
 
-export function NewCustomerDialog({ open, onOpenChange, initialData, onSubmit }: NewCustomerDialogProps) {
+export function NewCustomerDialog({ 
+  open, 
+  onOpenChange, 
+  initialData, 
+  onSubmit,
+  productOptions,
+  tagOptions 
+}: NewCustomerDialogProps) {
   const { toast } = useToast();
   const [formData, setFormData] = useState<Partial<Customer>>(initialData || {
     customerNumber: "",
@@ -93,8 +101,8 @@ export function NewCustomerDialog({ open, onOpenChange, initialData, onSubmit }:
     onOpenChange(false);
   };
 
-  const productOptions = ["股票交易", "咨询", "债券交易", "IPO", "发债"];
-  const tagOptions = ["零售经纪", "机构经纪", "跨资产", "DCM", "ECM"];
+  // Group options for the dropdown
+  const groupOptions = ["小米集团", "腾讯", "阿里", "字节"];
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -115,11 +123,19 @@ export function NewCustomerDialog({ open, onOpenChange, initialData, onSubmit }:
 
             <div className="space-y-2">
               <Label>所属集团</Label>
-              <Input 
-                placeholder="请输入所属集团" 
-                value={formData.groupName} 
-                onChange={(e) => handleInputChange('groupName', e.target.value)}
-              />
+              <Select
+                value={formData.groupName}
+                onValueChange={(value) => handleInputChange('groupName', value)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="请选择所属集团" />
+                </SelectTrigger>
+                <SelectContent>
+                  {groupOptions.map((group) => (
+                    <SelectItem key={group} value={group}>{group}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="space-y-2">
