@@ -2,14 +2,26 @@
 import React, { useState } from "react";
 import { ServiceRecordChart, type ServiceRecord } from "./ServiceRecordChart";
 import { TransactionTable, type Transaction } from "./TransactionTable";
+import { TransactionData } from "@/components/CustomerDetail";
 
 interface InteractionRecordsProps {
   contactData: ServiceRecord[];
-  transactionData: Transaction[];
+  transactionData: TransactionData[];
 }
 
 export function InteractionRecords({ contactData, transactionData }: InteractionRecordsProps) {
   const [dateRange, setDateRange] = useState({ start: "2025-03-01", end: "2025-03-31" });
+
+  // Convert TransactionData to Transaction for the TransactionTable component
+  const transactions: Transaction[] = transactionData.map(item => ({
+    id: item.id,
+    date: item.date,
+    amount: item.amount,
+    type: item.type,
+    purpose: item.purpose,
+    department: item.department,
+    person: item.person
+  }));
 
   return (
     <div className="space-y-6">
@@ -38,7 +50,7 @@ export function InteractionRecords({ contactData, transactionData }: Interaction
 
       <div className="mt-8">
         <h3 className="text-lg font-medium mb-4">服务记录明细</h3>
-        <TransactionTable transactions={transactionData} />
+        <TransactionTable transactions={transactions} />
       </div>
     </div>
   );

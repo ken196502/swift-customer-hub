@@ -12,6 +12,7 @@ import { NewServiceRecordDialog } from "./customer/NewServiceRecordDialog";
 
 interface CustomerDetailProps {
   customer: Customer;
+  onEditCustomer?: (updatedCustomer: Partial<Customer>) => void;
 }
 
 const contactData = [
@@ -22,7 +23,17 @@ const contactData = [
   { name: "招待客户", value: 1, percentage: 8, color: "#f59e0b" },
 ];
 
-const transactionData = [
+export interface TransactionData {
+  id: number;
+  date: string;
+  amount: number;
+  type: string;
+  purpose: string;
+  department: string;
+  person: string;
+}
+
+const initialTransactions: TransactionData[] = [
   {
     id: 1,
     date: "2025-03-26",
@@ -70,10 +81,42 @@ const transactionData = [
   },
 ];
 
-export function CustomerDetail({ customer }: CustomerDetailProps) {
+export function CustomerDetail({ customer, onEditCustomer }: CustomerDetailProps) {
   const [activeTab, setActiveTab] = useState("basic");
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [newServiceDialogOpen, setNewServiceDialogOpen] = useState(false);
+  const [transactionData, setTransactionData] = useState<TransactionData[]>(initialTransactions);
+
+  const handleUpdateCustomer = (updatedCustomer: Partial<Customer>) => {
+    if (onEditCustomer) {
+      onEditCustomer(updatedCustomer);
+    }
+    setEditDialogOpen(false);
+  };
+
+  const handleAddServiceRecord = (data: any) => {
+    const contactTypeMap: Record<string, string> = {
+      "research": "投研服务",
+      "phone": "电话沟通",
+      "meeting": "线上会议",
+      "report": "报告发送",
+      "visit": "招待客户"
+    };
+
+    // Create a new transaction record
+    const newTransaction: TransactionData = {
+      id: transactionData.length + 1,
+      date: data.date,
+      amount: parseFloat(data.amount) || 0,
+      type: contactTypeMap[data.contactType] || data.contactType,
+      purpose: data.description,
+      department: data.department,
+      person: data.servicePerson
+    };
+
+    // Add the new transaction to the list
+    setTransactionData([newTransaction, ...transactionData]);
+  };
 
   return (
     <Card>
@@ -136,11 +179,13 @@ export function CustomerDetail({ customer }: CustomerDetailProps) {
         open={editDialogOpen} 
         onOpenChange={setEditDialogOpen}
         initialData={customer}
+        onSubmit={handleUpdateCustomer}
       />
 
       <NewServiceRecordDialog
         open={newServiceDialogOpen}
         onOpenChange={setNewServiceDialogOpen}
+        onSubmit={handleAddServiceRecord}
       />
     </Card>
   );
