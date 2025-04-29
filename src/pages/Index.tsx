@@ -1,14 +1,11 @@
 
 import { useState } from "react";
-import { Search, File, PlusCircle, Tags, List } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { CustomerFilters } from "@/components/CustomerFilters";
-import { CustomerDetail } from "@/components/CustomerDetail";
-import { NewCustomerDialog } from "@/components/NewCustomerDialog";
-import { useToast } from "@/hooks/use-toast";
 import { CustomerList } from "@/components/customer/CustomerList";
-import { TagManagementDialog } from "@/components/management/TagManagementDialog";
-import { ContactTypeManagementDialog } from "@/components/management/ContactTypeManagementDialog";
+import { CustomerHeader } from "@/components/customer/CustomerHeader";
+import { CustomerDetailView } from "@/components/customer/CustomerDetailView";
+import { ManagementDialogs } from "@/components/customer/ManagementDialogs";
+import { useToast } from "@/hooks/use-toast";
 
 export interface Customer {
   id: number;
@@ -122,100 +119,47 @@ export default function Index() {
     const customer = customers.find((c) => c.id === selectedCustomer);
     if (customer) {
       return (
-        <div className="container mx-auto py-6 space-y-6">
-          <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold">客户详情</h1>
-            <Button variant="outline" onClick={() => setSelectedCustomer(null)}>
-              返回列表
-            </Button>
-          </div>
-          <CustomerDetail 
-            customer={customer} 
-            onEditCustomer={handleUpdateCustomer}
-            productOptions={productOptions}
-            tagOptions={tagOptions}
-            contactTypes={contactTypes}
-          />
-        </div>
+        <CustomerDetailView
+          customer={customer}
+          onBack={() => setSelectedCustomer(null)}
+          onEditCustomer={handleUpdateCustomer}
+          productOptions={productOptions}
+          tagOptions={tagOptions}
+          contactTypes={contactTypes}
+        />
       );
     }
   }
 
   return (
     <div className="container mx-auto py-6 space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">客户关系管理系统</h1>
-        <div className="flex gap-2">
-          <Button 
-            variant="outline" 
-            size="sm" 
-            className="flex items-center gap-1"
-            onClick={() => setShowTagManagement(true)}
-          >
-            <Tags className="h-4 w-4" />
-            管理标签
-          </Button>
-          <Button 
-            variant="outline" 
-            size="sm" 
-            className="flex items-center gap-1"
-            onClick={() => setShowContactTypeManagement(true)}
-          >
-            <List className="h-4 w-4" />
-            管理联系类型
-          </Button>
-        </div>
-      </div>
+      <CustomerHeader
+        onShowNewCustomerDialog={() => setShowNewCustomerDialog(true)}
+        onShowTagManagement={() => setShowTagManagement(true)}
+        onShowContactTypeManagement={() => setShowContactTypeManagement(true)}
+      />
 
       <div className="flex flex-col space-y-4">
         <CustomerFilters />
-
-        <div className="flex flex-wrap gap-2">
-          <Button variant="default" size="sm" className="bg-blue-500 hover:bg-blue-600">
-            <Search className="h-4 w-4 mr-2" />
-            查询
-          </Button>
-          <Button variant="default" size="sm" className="bg-orange-500 hover:bg-orange-600">
-            <File className="h-4 w-4 mr-2" />
-            导出
-          </Button>
-          <Button 
-            variant="default" 
-            size="sm" 
-            className="bg-green-500 hover:bg-green-600"
-            onClick={() => setShowNewCustomerDialog(true)}
-          >
-            <PlusCircle className="h-4 w-4 mr-2" />
-            新建
-          </Button>
-        </div>
-
         <CustomerList 
           customers={customers} 
           onSelectCustomer={customerId => setSelectedCustomer(customerId)} 
         />
       </div>
       
-      <NewCustomerDialog 
-        open={showNewCustomerDialog} 
-        onOpenChange={setShowNewCustomerDialog}
-        onSubmit={handleAddCustomer}
-        productOptions={productOptions}
+      <ManagementDialogs
+        showNewCustomerDialog={showNewCustomerDialog}
+        setShowNewCustomerDialog={setShowNewCustomerDialog}
+        showTagManagement={showTagManagement}
+        setShowTagManagement={setShowTagManagement}
+        showContactTypeManagement={showContactTypeManagement}
+        setShowContactTypeManagement={setShowContactTypeManagement}
+        handleAddCustomer={handleAddCustomer}
         tagOptions={tagOptions}
-      />
-      
-      <TagManagementDialog
-        open={showTagManagement}
-        onOpenChange={setShowTagManagement}
-        tags={tagOptions}
-        onUpdate={handleUpdateTags}
-      />
-      
-      <ContactTypeManagementDialog
-        open={showContactTypeManagement}
-        onOpenChange={setShowContactTypeManagement}
+        productOptions={productOptions}
         contactTypes={contactTypes}
-        onUpdate={handleUpdateContactTypes}
+        onUpdateTags={handleUpdateTags}
+        onUpdateContactTypes={handleUpdateContactTypes}
       />
     </div>
   );

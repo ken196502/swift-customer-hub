@@ -3,12 +3,11 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Edit, CircleDot, Plus } from "lucide-react";
+import { Edit } from "lucide-react";
 import type { Customer } from "@/pages/Index";
 import { BasicInformation } from "./customer/BasicInformation";
 import { InteractionRecords } from "./customer/InteractionRecords";
 import { NewCustomerDialog } from "./NewCustomerDialog";
-import { NewServiceRecordDialog } from "./customer/NewServiceRecordDialog";
 
 interface CustomerDetailProps {
   customer: Customer;
@@ -34,6 +33,7 @@ export interface TransactionData {
   purpose: string;
   department: string;
   person: string;
+  description?: string;
 }
 
 const initialTransactions: TransactionData[] = [
@@ -87,7 +87,6 @@ const initialTransactions: TransactionData[] = [
 export function CustomerDetail({ customer, onEditCustomer, productOptions = [], tagOptions = [], contactTypes }: CustomerDetailProps) {
   const [activeTab, setActiveTab] = useState("basic");
   const [editDialogOpen, setEditDialogOpen] = useState(false);
-  const [newServiceDialogOpen, setNewServiceDialogOpen] = useState(false);
   const [transactionData, setTransactionData] = useState<TransactionData[]>(initialTransactions);
 
   const handleUpdateCustomer = (updatedCustomer: Partial<Customer>) => {
@@ -97,24 +96,17 @@ export function CustomerDetail({ customer, onEditCustomer, productOptions = [], 
     setEditDialogOpen(false);
   };
 
-  const handleAddServiceRecord = (data: any) => {
-    const contactTypeMap: Record<string, string> = {
-      "research": "投研服务",
-      "phone": "电话沟通",
-      "meeting": "线上会议",
-      "report": "报告发送",
-      "visit": "招待客户"
-    };
-
+  const handleAddServiceRecord = (record: any) => {
     // Create a new transaction record
     const newTransaction: TransactionData = {
       id: transactionData.length + 1,
-      date: data.date,
-      amount: parseFloat(data.amount) || 0,
-      type: contactTypeMap[data.contactType] || data.contactType,
-      purpose: data.description,
-      department: data.department,
-      person: data.servicePerson
+      date: record.date,
+      amount: parseFloat(record.amount) || 0,
+      type: record.type,
+      purpose: record.purpose || "",
+      department: record.department || "",
+      person: record.person || "",
+      description: record.notes || ""
     };
 
     // Add the new transaction to the list
@@ -139,7 +131,7 @@ export function CustomerDetail({ customer, onEditCustomer, productOptions = [], 
           <div className="flex items-center space-x-2">
             <span>活跃状态:</span>
             <div className="flex items-center space-x-1">
-              <CircleDot className="h-3 w-3 text-green-500" />
+              <div className="h-3 w-3 rounded-full bg-green-500"></div>
               <span className="text-gray-700">{customer.activeStatus}</span>
             </div>
           </div>
@@ -152,15 +144,10 @@ export function CustomerDetail({ customer, onEditCustomer, productOptions = [], 
               <TabsTrigger value="basic">基本信息</TabsTrigger>
               <TabsTrigger value="interaction">触达记录</TabsTrigger>
             </TabsList>
-            {activeTab === "basic" ? (
+            {activeTab === "basic" && (
               <Button variant="outline" size="sm" onClick={() => setEditDialogOpen(true)}>
                 <Edit className="h-4 w-4 mr-2" />
                 编辑
-              </Button>
-            ) : (
-              <Button size="sm" onClick={() => setNewServiceDialogOpen(true)}>
-                <Plus className="h-4 w-4 mr-2" />
-                新增触达记录
               </Button>
             )}
           </div>
@@ -187,13 +174,6 @@ export function CustomerDetail({ customer, onEditCustomer, productOptions = [], 
         onSubmit={handleUpdateCustomer}
         productOptions={productOptions}
         tagOptions={tagOptions}
-      />
-
-      <NewServiceRecordDialog
-        open={newServiceDialogOpen}
-        onOpenChange={setNewServiceDialogOpen}
-        onSubmit={handleAddServiceRecord}
-        contactTypes={contactTypes}
       />
     </Card>
   );

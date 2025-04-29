@@ -31,7 +31,8 @@ export function InteractionRecords({
     type: item.type,
     purpose: item.purpose,
     department: item.department,
-    person: item.person
+    person: item.person,
+    description: item.description
   }));
 
   return (
