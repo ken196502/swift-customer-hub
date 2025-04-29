@@ -36,19 +36,7 @@ export function CustomerHeader({
             <List className="h-4 w-4" />
             管理联系类型
           </Button>
-        </div>
-      </div>
-
-      <div className="flex flex-wrap gap-2">
-        <Button variant="default" size="sm" className="bg-blue-500 hover:bg-blue-600">
-          <Search className="h-4 w-4 mr-2" />
-          查询
-        </Button>
-        <Button variant="default" size="sm" className="bg-orange-500 hover:bg-orange-600">
-          <File className="h-4 w-4 mr-2" />
-          导出
-        </Button>
-        <Button 
+          <Button 
           variant="default" 
           size="sm" 
           className="bg-green-500 hover:bg-green-600"
@@ -57,6 +45,7 @@ export function CustomerHeader({
           <PlusCircle className="h-4 w-4 mr-2" />
           新建
         </Button>
+        </div>
       </div>
     </>
   );
