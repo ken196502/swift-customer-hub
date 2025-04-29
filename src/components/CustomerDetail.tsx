@@ -13,6 +13,9 @@ import { NewServiceRecordDialog } from "./customer/NewServiceRecordDialog";
 interface CustomerDetailProps {
   customer: Customer;
   onEditCustomer?: (updatedCustomer: Partial<Customer>) => void;
+  productOptions?: string[];
+  tagOptions?: string[];
+  contactTypes: string[];
 }
 
 const contactData = [
@@ -81,7 +84,7 @@ const initialTransactions: TransactionData[] = [
   },
 ];
 
-export function CustomerDetail({ customer, onEditCustomer }: CustomerDetailProps) {
+export function CustomerDetail({ customer, onEditCustomer, productOptions = [], tagOptions = [], contactTypes }: CustomerDetailProps) {
   const [activeTab, setActiveTab] = useState("basic");
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [newServiceDialogOpen, setNewServiceDialogOpen] = useState(false);
@@ -170,6 +173,8 @@ export function CustomerDetail({ customer, onEditCustomer }: CustomerDetailProps
             <InteractionRecords 
               contactData={contactData} 
               transactionData={transactionData} 
+              onAddServiceRecord={handleAddServiceRecord}
+              contactTypes={contactTypes}
             />
           </TabsContent>
         </Tabs>
@@ -180,12 +185,15 @@ export function CustomerDetail({ customer, onEditCustomer }: CustomerDetailProps
         onOpenChange={setEditDialogOpen}
         initialData={customer}
         onSubmit={handleUpdateCustomer}
+        productOptions={productOptions}
+        tagOptions={tagOptions}
       />
 
       <NewServiceRecordDialog
         open={newServiceDialogOpen}
         onOpenChange={setNewServiceDialogOpen}
         onSubmit={handleAddServiceRecord}
+        contactTypes={contactTypes}
       />
     </Card>
   );

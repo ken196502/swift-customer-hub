@@ -131,7 +131,9 @@ export default function Index() {
           </div>
           <CustomerDetail 
             customer={customer} 
-            onEditCustomer={(updatedCustomer) => handleUpdateCustomer(updatedCustomer)}
+            onEditCustomer={handleUpdateCustomer}
+            productOptions={productOptions}
+            tagOptions={tagOptions}
             contactTypes={contactTypes}
           />
         </div>
