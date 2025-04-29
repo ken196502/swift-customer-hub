@@ -14,6 +14,7 @@ import {
 import { CustomerFilters } from "@/components/CustomerFilters";
 import { CustomerDetail } from "@/components/CustomerDetail";
 import { NewCustomerDialog } from "@/components/NewCustomerDialog";
+import { useToast } from "@/hooks/use-toast";
 
 export interface Customer {
   id: number;
@@ -44,7 +45,7 @@ export interface Customer {
 }
 
 // Updated mock data
-const customers: Customer[] = [
+const initialCustomers: Customer[] = [
   {
     id: 1,
     customerNumber: "C20240001",
@@ -75,8 +76,42 @@ const customers: Customer[] = [
 ];
 
 export default function Index() {
+  const [customers, setCustomers] = useState<Customer[]>(initialCustomers);
   const [selectedCustomer, setSelectedCustomer] = useState<number | null>(null);
   const [showNewCustomerDialog, setShowNewCustomerDialog] = useState(false);
+  const { toast } = useToast();
+
+  const handleAddCustomer = (newCustomer: Partial<Customer>) => {
+    const nextId = Math.max(...customers.map(c => c.id)) + 1;
+    
+    const customer = {
+      ...newCustomer,
+      id: nextId,
+      customerNumber: newCustomer.customerNumber || `C${new Date().getFullYear()}${String(nextId).padStart(4, '0')}`,
+      products: newCustomer.products || [],
+      tags: newCustomer.tags || [],
+    } as Customer;
+    
+    setCustomers([...customers, customer]);
+    
+    toast({
+      title: "操作成功",
+      description: "新客户已添加",
+    });
+  };
+
+  const handleUpdateCustomer = (updatedCustomer: Partial<Customer>) => {
+    setCustomers(customers.map(c => 
+      c.id === updatedCustomer.id ? { ...c, ...updatedCustomer } as Customer : c
+    ));
+    
+    setSelectedCustomer(null);
+    
+    toast({
+      title: "操作成功",
+      description: "客户信息已更新",
+    });
+  };
 
   if (selectedCustomer !== null) {
     const customer = customers.find((c) => c.id === selectedCustomer);
@@ -89,7 +124,10 @@ export default function Index() {
               返回列表
             </Button>
           </div>
-          <CustomerDetail customer={customer} />
+          <CustomerDetail 
+            customer={customer} 
+            onEditCustomer={(updatedCustomer) => handleUpdateCustomer(updatedCustomer)}
+          />
         </div>
       );
     }
@@ -204,7 +242,8 @@ export default function Index() {
       </div>
       <NewCustomerDialog 
         open={showNewCustomerDialog} 
-        onOpenChange={setShowNewCustomerDialog} 
+        onOpenChange={setShowNewCustomerDialog}
+        onSubmit={handleAddCustomer}
       />
     </div>
   );
