@@ -1,7 +1,7 @@
 
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
+import { Button } from "@/components/ui/button";
 export function CustomerFilters() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
