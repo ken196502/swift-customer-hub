@@ -10,6 +10,7 @@ interface CustomerDetailViewProps {
   productOptions: string[];
   tagOptions: string[];
   contactTypes: string[];
+  groupOptions: string[];
 }
 
 export function CustomerDetailView({
@@ -18,7 +19,8 @@ export function CustomerDetailView({
   onEditCustomer,
   productOptions,
   tagOptions,
-  contactTypes
+  contactTypes,
+  groupOptions
 }: CustomerDetailViewProps) {
   return (
     <div className="container mx-auto py-6 space-y-6">
@@ -34,6 +36,7 @@ export function CustomerDetailView({
         productOptions={productOptions}
         tagOptions={tagOptions}
         contactTypes={contactTypes}
+        groupOptions={groupOptions}
       />
     </div>
   );

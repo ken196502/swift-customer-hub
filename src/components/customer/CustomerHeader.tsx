@@ -1,17 +1,19 @@
 
 import { Button } from "@/components/ui/button";
-import { Tags, List, PlusCircle } from "lucide-react";
+import { Tags, List, PlusCircle, Users } from "lucide-react";
 
 interface CustomerHeaderProps {
   onShowNewCustomerDialog: () => void;
   onShowTagManagement: () => void;
   onShowContactTypeManagement: () => void;
+  onShowGroupManagement: () => void;
 }
 
 export function CustomerHeader({ 
   onShowNewCustomerDialog, 
   onShowTagManagement,
-  onShowContactTypeManagement 
+  onShowContactTypeManagement,
+  onShowGroupManagement
 }: CustomerHeaderProps) {
   return (
     <div className="flex justify-between items-center">
@@ -34,6 +36,15 @@ export function CustomerHeader({
         >
           <List className="h-4 w-4" />
           管理联系类型
+        </Button>
+        <Button 
+          variant="outline" 
+          size="sm" 
+          className="flex items-center gap-1"
+          onClick={onShowGroupManagement}
+        >
+          <Users className="h-4 w-4" />
+          管理集团
         </Button>
         <Button 
           variant="default" 

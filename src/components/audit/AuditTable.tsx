@@ -1,16 +1,8 @@
 
-import { useState } from "react";
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
-} from "@/components/ui/table";
-import { Checkbox } from "@/components/ui/checkbox";
-import { AuditItem } from "@/pages/Audit";
+import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
+import type { AuditItem } from "@/pages/Audit";
 
 interface AuditTableProps {
   items: AuditItem[];
@@ -19,100 +11,90 @@ interface AuditTableProps {
 }
 
 export function AuditTable({ items, actionColumn, showStatus = false }: AuditTableProps) {
-  const [selectedIds, setSelectedIds] = useState<number[]>([]);
-
-  const toggleSelectAll = () => {
-    if (selectedIds.length === items.length) {
-      setSelectedIds([]);
-    } else {
-      setSelectedIds(items.map(item => item.id));
+  const getBadgeColor = (type: string) => {
+    switch (type) {
+      case "新增":
+        return "bg-green-500";
+      case "修改":
+        return "bg-blue-500";
+      case "删除":
+        return "bg-red-500";
+      default:
+        return "bg-gray-500";
     }
   };
 
-  const toggleSelect = (id: number) => {
-    if (selectedIds.includes(id)) {
-      setSelectedIds(selectedIds.filter(itemId => itemId !== id));
-    } else {
-      setSelectedIds([...selectedIds, id]);
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case "approved":
+        return <Badge className="bg-green-500">已通过</Badge>;
+      case "rejected":
+        return <Badge className="bg-red-500">已驳回</Badge>;
+      case "pending":
+        return <Badge className="bg-yellow-500">待审核</Badge>;
+      default:
+        return <Badge>未知</Badge>;
     }
-  };
-
-  const renderStatusBadge = (status: string) => {
-    if (status === "approved") {
-      return <Badge className="bg-green-100 text-green-800 hover:bg-green-200">已通过</Badge>;
-    } else if (status === "rejected") {
-      return <Badge className="bg-red-100 text-red-800 hover:bg-red-200">已驳回</Badge>;
-    }
-    return null;
   };
 
   return (
-    <div className="border rounded-md">
+    <div className="border rounded-md overflow-x-auto">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[50px]">
-              <Checkbox 
-                checked={selectedIds.length === items.length && items.length > 0}
-                onCheckedChange={toggleSelectAll}
-              />
+            <TableHead className="w-[40px]">
+              <Checkbox />
             </TableHead>
             <TableHead>提交时间</TableHead>
             <TableHead>客户</TableHead>
             <TableHead>类型</TableHead>
+            <TableHead>变动类型</TableHead>
             <TableHead>变更前</TableHead>
             <TableHead>变更后</TableHead>
             <TableHead>备注</TableHead>
             <TableHead>变更人</TableHead>
             {showStatus && <TableHead>状态</TableHead>}
-            {actionColumn && <TableHead>操作</TableHead>}
+            {actionColumn && <TableHead className="text-right">操作</TableHead>}
           </TableRow>
         </TableHeader>
         <TableBody>
-          {items.length === 0 ? (
+          {items.map((item) => (
+            <TableRow key={item.id}>
+              <TableCell>
+                <Checkbox />
+              </TableCell>
+              <TableCell>{item.submitTime}</TableCell>
+              <TableCell>{item.customer}</TableCell>
+              <TableCell>
+                <Badge variant="outline">{item.category}</Badge>
+              </TableCell>
+              <TableCell>
+                <Badge className={getBadgeColor(item.type)}>{item.type}</Badge>
+              </TableCell>
+              <TableCell className="max-w-[200px] whitespace-pre-wrap">
+                {item.before || "—"}
+              </TableCell>
+              <TableCell className="max-w-[200px] whitespace-pre-wrap">
+                {item.after || "—"}
+              </TableCell>
+              <TableCell>{item.note || "—"}</TableCell>
+              <TableCell>{item.submitter}</TableCell>
+              {showStatus && (
+                <TableCell>{getStatusBadge(item.status)}</TableCell>
+              )}
+              {actionColumn && (
+                <TableCell className="text-right">
+                  {actionColumn(item.id)}
+                </TableCell>
+              )}
+            </TableRow>
+          ))}
+          {items.length === 0 && (
             <TableRow>
-              <TableCell colSpan={showStatus ? 9 : 8} className="text-center py-10 text-muted-foreground">
+              <TableCell colSpan={showStatus ? 10 : 9} className="h-24 text-center">
                 暂无数据
               </TableCell>
             </TableRow>
-          ) : (
-            items.map((item) => (
-              <TableRow key={item.id}>
-                <TableCell>
-                  <Checkbox 
-                    checked={selectedIds.includes(item.id)}
-                    onCheckedChange={() => toggleSelect(item.id)}
-                  />
-                </TableCell>
-                <TableCell>{item.submitTime}</TableCell>
-                <TableCell>{item.customer}</TableCell>
-                <TableCell>
-                  <Badge 
-                    className={
-                      item.type === "新增" ? "bg-blue-100 text-blue-800 hover:bg-blue-200" :
-                      item.type === "修改" ? "bg-yellow-100 text-yellow-800 hover:bg-yellow-200" :
-                      "bg-red-100 text-red-800 hover:bg-red-200"
-                    }
-                  >
-                    {item.type}
-                  </Badge>
-                </TableCell>
-                <TableCell className="max-w-[200px]">
-                  <div className="whitespace-pre-line text-sm">{item.before}</div>
-                </TableCell>
-                <TableCell className="max-w-[200px]">
-                  <div className="whitespace-pre-line text-sm">{item.after}</div>
-                </TableCell>
-                <TableCell>{item.note}</TableCell>
-                <TableCell>{item.submitter}</TableCell>
-                {showStatus && (
-                  <TableCell>{renderStatusBadge(item.status)}</TableCell>
-                )}
-                {actionColumn && (
-                  <TableCell>{actionColumn(item.id)}</TableCell>
-                )}
-              </TableRow>
-            ))
           )}
         </TableBody>
       </Table>

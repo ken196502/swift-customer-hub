@@ -15,6 +15,7 @@ interface CustomerDetailProps {
   productOptions?: string[];
   tagOptions?: string[];
   contactTypes: string[];
+  groupOptions: string[];
 }
 
 const contactData = [
@@ -84,7 +85,14 @@ const initialTransactions: TransactionData[] = [
   },
 ];
 
-export function CustomerDetail({ customer, onEditCustomer, productOptions = [], tagOptions = [], contactTypes }: CustomerDetailProps) {
+export function CustomerDetail({ 
+  customer, 
+  onEditCustomer, 
+  productOptions = [], 
+  tagOptions = [], 
+  contactTypes,
+  groupOptions = []
+}: CustomerDetailProps) {
   const [activeTab, setActiveTab] = useState("basic");
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [transactionData, setTransactionData] = useState<TransactionData[]>(initialTransactions);
@@ -174,6 +182,7 @@ export function CustomerDetail({ customer, onEditCustomer, productOptions = [], 
         onSubmit={handleUpdateCustomer}
         productOptions={productOptions}
         tagOptions={tagOptions}
+        groupOptions={groupOptions}
       />
     </Card>
   );

@@ -6,7 +6,7 @@ import { Search } from "lucide-react";
 
 export function AuditFilters() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
       <div className="flex gap-2">
         <Input type="date" className="w-full" placeholder="开始日期" />
         <Input type="date" className="w-full" placeholder="结束日期" />
@@ -16,6 +16,18 @@ export function AuditFilters() {
       </div>
       <div>
         <Input placeholder="变更人" />
+      </div>
+      <div>
+        <Select>
+          <SelectTrigger>
+            <SelectValue placeholder="类型" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">全部</SelectItem>
+            <SelectItem value="customer">客户信息</SelectItem>
+            <SelectItem value="interaction">触达记录</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
       <div>
         <Select>

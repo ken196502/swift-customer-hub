@@ -63,6 +63,33 @@ const initialCustomers: Customer[] = [
     activeStatus: "活跃",
     products: ["股票交易", "咨询", "债券交易", "IPO", "发债"],
     tags: ["零售经纪", "机构经纪", "跨资产", "DCM", "ECM"],
+  },
+  {
+    id: 2,
+    customerNumber: "C20240002",
+    groupName: "小米科技",
+    nameEn: "Xiaomi Tech",
+    shortNameEn: "Xiaomi Tech",
+    fullNameEn: "Xiaomi Technology Co., Ltd.",
+    shortNameCn: "小米科技",
+    fullNameCn: "小米科技有限公司",
+    type: "公司户",
+    isListed: true,
+    stockCode: "1810.HK",
+    city: "北京",
+    idType: "统一社会信用代码",
+    idNumber: "91110000YYYYY",
+    shareholders: "雷军",
+    actualController: "雷军",
+    registeredCapital: "120亿元",
+    establishDate: "2010-04-06",
+    registeredAddress: "北京市海淀区安宁庄路66号",
+    legalRepresentative: "雷军",
+    riskLevel: "低",
+    entryDate: "2018-05-15",
+    activeStatus: "活跃",
+    products: ["股票交易", "咨询", "债券交易"],
+    tags: ["零售经纪", "机构经纪"],
   }
 ];
 
@@ -72,9 +99,11 @@ export default function Index() {
   const [showNewCustomerDialog, setShowNewCustomerDialog] = useState(false);
   const [showTagManagement, setShowTagManagement] = useState(false);
   const [showContactTypeManagement, setShowContactTypeManagement] = useState(false);
+  const [showGroupManagement, setShowGroupManagement] = useState(false);
   const [productOptions, setProductOptions] = useState<string[]>(["股票交易", "咨询", "债券交易", "IPO", "发债"]);
   const [tagOptions, setTagOptions] = useState<string[]>(["零售经纪", "机构经纪", "跨资产", "DCM", "ECM"]);
   const [contactTypes, setContactTypes] = useState<string[]>(["电话", "会议", "邮件", "拜访", "社交活动"]);
+  const [groupOptions, setGroupOptions] = useState<string[]>(["小米集团", "腾讯", "阿里", "字节", "小米科技"]);
   const { toast } = useToast();
 
   const handleAddCustomer = (newCustomer: Partial<Customer>) => {
@@ -115,6 +144,10 @@ export default function Index() {
     setContactTypes(updatedContactTypes);
   };
 
+  const handleUpdateGroups = (updatedGroups: string[]) => {
+    setGroupOptions(updatedGroups);
+  };
+
   if (selectedCustomer !== null) {
     const customer = customers.find((c) => c.id === selectedCustomer);
     if (customer) {
@@ -126,6 +159,7 @@ export default function Index() {
           productOptions={productOptions}
           tagOptions={tagOptions}
           contactTypes={contactTypes}
+          groupOptions={groupOptions}
         />
       );
     }
@@ -137,6 +171,7 @@ export default function Index() {
         onShowNewCustomerDialog={() => setShowNewCustomerDialog(true)}
         onShowTagManagement={() => setShowTagManagement(true)}
         onShowContactTypeManagement={() => setShowContactTypeManagement(true)}
+        onShowGroupManagement={() => setShowGroupManagement(true)}
       />
 
       <div className="flex flex-col space-y-4">
@@ -154,12 +189,16 @@ export default function Index() {
         setShowTagManagement={setShowTagManagement}
         showContactTypeManagement={showContactTypeManagement}
         setShowContactTypeManagement={setShowContactTypeManagement}
+        showGroupManagement={showGroupManagement}
+        setShowGroupManagement={setShowGroupManagement}
         handleAddCustomer={handleAddCustomer}
         tagOptions={tagOptions}
         productOptions={productOptions}
         contactTypes={contactTypes}
+        groupOptions={groupOptions}
         onUpdateTags={handleUpdateTags}
         onUpdateContactTypes={handleUpdateContactTypes}
+        onUpdateGroups={handleUpdateGroups}
       />
     </div>
   );

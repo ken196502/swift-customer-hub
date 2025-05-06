@@ -14,6 +14,7 @@ interface NewCustomerDialogProps {
   onSubmit?: (customer: Partial<Customer>) => void;
   productOptions: string[];
   tagOptions: string[];
+  groupOptions: string[];
 }
 
 export function NewCustomerDialog({ 
@@ -22,7 +23,8 @@ export function NewCustomerDialog({
   initialData, 
   onSubmit,
   productOptions,
-  tagOptions 
+  tagOptions,
+  groupOptions 
 }: NewCustomerDialogProps) {
   const { toast } = useToast();
   const [formData, setFormData] = useState<Partial<Customer>>(initialData || {
@@ -98,9 +100,6 @@ export function NewCustomerDialog({
     
     onOpenChange(false);
   };
-
-  // Group options for the dropdown
-  const groupOptions = ["小米集团", "腾讯", "阿里", "字节"];
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
