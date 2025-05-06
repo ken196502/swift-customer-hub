@@ -1,7 +1,6 @@
-
 import { Button } from "@/components/ui/button";
 import { CustomerDetail } from "@/components/CustomerDetail";
-import type { Customer } from "@/pages/Index";
+import { Customer } from "@/contexts/CustomerContext";
 
 interface CustomerDetailViewProps {
   customer: Customer;

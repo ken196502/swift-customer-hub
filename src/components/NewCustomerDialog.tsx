@@ -2,7 +2,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import type { Customer } from "@/pages/Index";
+import { Customer } from "@/contexts/CustomerContext";
 import { useToast } from "@/hooks/use-toast";
 import { CustomerFormSection } from "./customer/CustomerFormSection";
 import { TagSelector } from "./customer/TagSelector";

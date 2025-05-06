@@ -1,9 +1,8 @@
-
 import { TagManagementDialog } from "@/components/management/TagManagementDialog";
 import { ContactTypeManagementDialog } from "@/components/management/ContactTypeManagementDialog";
 import { GroupManagementDialog } from "@/components/management/GroupManagementDialog";
 import { NewCustomerDialog } from "@/components/NewCustomerDialog";
-import type { Customer } from "@/pages/Index";
+import { Customer } from "@/contexts/CustomerContext";
 
 interface ManagementDialogsProps {
   showNewCustomerDialog: boolean;

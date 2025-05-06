@@ -1,7 +1,6 @@
-
 import { Check } from "lucide-react";
 import { Label } from "@/components/ui/label";
-import type { Customer } from "@/pages/Index";
+import { Customer } from "@/contexts/CustomerContext";
 
 interface TagSelectorProps {
   label: string;

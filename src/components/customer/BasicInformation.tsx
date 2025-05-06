@@ -1,6 +1,5 @@
-
 import React from "react";
-import type { Customer } from "@/pages/Index";
+import { Customer } from "@/contexts/CustomerContext";
 
 interface BasicInformationProps {
   customer: Customer;

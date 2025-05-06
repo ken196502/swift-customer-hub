@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Search, File, Reset, Grid, Rows } from "lucide-react";
+import { Search, File, RotateCcw, Grid, Rows } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -179,7 +179,7 @@ export function CustomerFilters() {
           className="bg-gray-100 hover:bg-gray-200"
           onClick={resetFilters}
         >
-          <Reset className="h-4 w-4 mr-2" />
+          <RotateCcw className="h-4 w-4 mr-2" />
           重置
         </Button>
         <Button 

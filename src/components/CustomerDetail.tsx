@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Edit } from "lucide-react";
-import type { Customer } from "@/pages/Index";
+import { Customer } from "@/contexts/CustomerContext";
 import { BasicInformation } from "./customer/BasicInformation";
 import { InteractionRecords } from "./customer/InteractionRecords";
 import { NewCustomerDialog } from "./NewCustomerDialog";

@@ -1,4 +1,3 @@
-
 import { Badge } from "@/components/ui/badge";
 import {
   Table,
@@ -15,7 +14,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ChevronDown } from "lucide-react";
-import type { Customer } from "@/pages/Index";
+import { Customer } from "@/contexts/CustomerContext";
 
 interface CustomerListProps {
   customers: Customer[];
