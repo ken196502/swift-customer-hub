@@ -57,7 +57,7 @@ export function CustomerGroupView({ customers, onSelectCustomer }: CustomerGroup
                     <TableHead>客户名称</TableHead>
                     <TableHead>客户类型</TableHead>
                     <TableHead>提供产品</TableHead>
-                    <TableHead>触达部门</TableHead>
+                    <TableHead>触达部门(按触达先后排列)</TableHead>
                     <TableHead>录入时间</TableHead>
                   </TableRow>
                 </TableHeader>
