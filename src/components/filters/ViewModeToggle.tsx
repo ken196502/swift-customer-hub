@@ -18,12 +18,12 @@ export function ViewModeToggle({ viewMode, onToggle }: ViewModeToggleProps) {
       {viewMode === "customer" ? (
         <>
           <Grid className="h-4 w-4" />
-          按集团
+          按集团展示
         </>
       ) : (
         <>
           <Rows className="h-4 w-4" />
-          按客户
+          按客户展示
         </>
       )}
     </Button>
