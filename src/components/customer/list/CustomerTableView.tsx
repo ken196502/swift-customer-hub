@@ -27,7 +27,7 @@ export function CustomerTableView({ customers, onSelectCustomer }: CustomerTable
             <TableHead>客户类型</TableHead>
             <TableHead>所属集团</TableHead>
             <TableHead>提供产品</TableHead>
-            <TableHead>触达部门</TableHead>
+            <TableHead>触达部门(按触达先后排列)</TableHead>
             <TableHead>录入时间</TableHead>
           </TableRow>
         </TableHeader>
