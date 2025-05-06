@@ -42,7 +42,7 @@ export function CustomerFilters() {
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+      <div className="grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
         <div className="md:col-span-3">
           <Input 
             placeholder="客户名称" 
@@ -50,7 +50,7 @@ export function CustomerFilters() {
             onChange={(e) => setCustomerName(e.target.value)}
           />
         </div>
-        <div className="md:col-span-2">
+        <div className="md:col-span-1">
           <Select value={customerType} onValueChange={setCustomerType}>
             <SelectTrigger>
               <SelectValue placeholder="客户类型" />
@@ -61,7 +61,7 @@ export function CustomerFilters() {
             </SelectContent>
           </Select>
         </div>
-        <div className="md:col-span-2">
+        <div className="md:col-span-1">
           <Select value={productType} onValueChange={setProductType}>
             <SelectTrigger>
               <SelectValue placeholder="产品类型" />
@@ -74,7 +74,7 @@ export function CustomerFilters() {
             </SelectContent>
           </Select>
         </div>
-        <div className="md:col-span-2">
+        <div className="md:col-span-1">
           <FilterPopover 
             label="提供产品"
             options={productOptions}
@@ -82,7 +82,7 @@ export function CustomerFilters() {
             onItemSelect={handleProductSelect}
           />
         </div>
-        <div className="md:col-span-2">
+        <div className="md:col-span-1">
           <FilterPopover
             label="标签"
             options={tagOptions}
@@ -98,8 +98,7 @@ export function CustomerFilters() {
           />
         </div>
       </div>
-
-      <div className="flex justify-end">
+      <div className="flex">
         <ViewModeToggle viewMode={viewMode} onToggle={toggleViewMode} />
       </div>
     </div>
