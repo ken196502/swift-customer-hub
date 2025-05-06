@@ -30,7 +30,7 @@ export function CustomerHeader({
           onClick={onShowTagManagement}
         >
           <Tags className="h-4 w-4" />
-          管理标签
+          管理触达部门
         </Button>
         <Button 
           variant="outline" 
