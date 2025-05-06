@@ -6,20 +6,24 @@ import { Search } from "lucide-react";
 
 export function AuditFilters() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
-      <div className="flex gap-2">
-        <Input type="date" className="w-full" placeholder="开始日期" />
-        <Input type="date" className="w-full" placeholder="结束日期" />
+    <div className="flex flex-wrap gap-3 items-center">
+      <div className="flex gap-2 w-full md:w-auto">
+        <div className="w-full md:w-auto">
+          <Input type="date" className="w-36" placeholder="开始日期" />
+        </div>
+        <div className="w-full md:w-auto">
+          <Input type="date" className="w-36" placeholder="结束日期" />
+        </div>
       </div>
-      <div>
-        <Input placeholder="客户名称" />
+      <div className="w-full md:w-auto">
+        <Input placeholder="客户名称" className="w-36" />
       </div>
-      <div>
-        <Input placeholder="变更人" />
+      <div className="w-full md:w-auto">
+        <Input placeholder="变更人" className="w-36" />
       </div>
-      <div>
+      <div className="w-full md:w-auto">
         <Select>
-          <SelectTrigger>
+          <SelectTrigger className="w-32">
             <SelectValue placeholder="类型" />
           </SelectTrigger>
           <SelectContent>
@@ -29,9 +33,9 @@ export function AuditFilters() {
           </SelectContent>
         </Select>
       </div>
-      <div>
+      <div className="w-full md:w-auto">
         <Select>
-          <SelectTrigger>
+          <SelectTrigger className="w-32">
             <SelectValue placeholder="变动类型" />
           </SelectTrigger>
           <SelectContent>
@@ -42,7 +46,7 @@ export function AuditFilters() {
           </SelectContent>
         </Select>
       </div>
-      <div className="flex flex-wrap gap-2">
+      <div className="w-full md:w-auto">
         <Button variant="default" size="sm" className="bg-blue-500 hover:bg-blue-600">
           <Search className="h-4 w-4 mr-2" />
           查询

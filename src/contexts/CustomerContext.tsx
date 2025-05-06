@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useState, ReactNode } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Customer, CustomerContextType } from "./customer/customerTypes";
@@ -32,7 +31,7 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
     const customer = {
       ...newCustomer,
       id: nextId,
-      customerNumber: newCustomer.customerNumber || `C${new Date().getFullYear()}${String(nextId).padStart(4, '0')}`,
+      customerNumber: newCustomer.customerNumber || `TFI${new Date().getFullYear()}${String(nextId).padStart(4, '0')}`,
       products: newCustomer.products || [],
       tags: newCustomer.tags || [],
     } as Customer;

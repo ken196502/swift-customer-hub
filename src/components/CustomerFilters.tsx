@@ -42,15 +42,16 @@ export function CustomerFilters() {
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-1 md:grid-cols-6 gap-4 items-center">
-        <div className="md:col-span-3">
+      <div className="flex flex-wrap items-center gap-3">
+        <div className="w-40 sm:w-48">
           <Input 
             placeholder="客户名称" 
             value={customerName}
             onChange={(e) => setCustomerName(e.target.value)}
+            className="w-full"
           />
         </div>
-        <div className="md:col-span-1">
+        <div className="w-28 sm:w-32">
           <Select value={customerType} onValueChange={setCustomerType}>
             <SelectTrigger>
               <SelectValue placeholder="客户类型" />
@@ -61,7 +62,7 @@ export function CustomerFilters() {
             </SelectContent>
           </Select>
         </div>
-        <div className="md:col-span-1">
+        <div className="w-28 sm:w-32">
           <Select value={productType} onValueChange={setProductType}>
             <SelectTrigger>
               <SelectValue placeholder="产品类型" />
@@ -74,7 +75,7 @@ export function CustomerFilters() {
             </SelectContent>
           </Select>
         </div>
-        <div className="md:col-span-1">
+        <div className="w-28 sm:w-32">
           <FilterPopover 
             label="提供产品"
             options={productOptions}
@@ -82,7 +83,7 @@ export function CustomerFilters() {
             onItemSelect={handleProductSelect}
           />
         </div>
-        <div className="md:col-span-1">
+        <div className="w-28 sm:w-32">
           <FilterPopover
             label="标签"
             options={tagOptions}
@@ -90,7 +91,7 @@ export function CustomerFilters() {
             onItemSelect={handleTagSelect}
           />
         </div>
-        <div className="md:col-span-1">
+        <div className="flex-grow">
           <SearchControls 
             onReset={resetFilters}
             onSearch={() => console.log("Search with filters:", {customerName, customerType, productType, selectedProducts, selectedTags})}
