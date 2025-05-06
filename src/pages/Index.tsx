@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { CustomerFilters } from "@/components/CustomerFilters";
 import { CustomerList } from "@/components/customer/CustomerList";
@@ -67,7 +66,7 @@ const initialCustomers: Customer[] = [
   {
     id: 2,
     customerNumber: "C20240002",
-    groupName: "小米科技",
+    groupName: "小米集团",
     nameEn: "Xiaomi Tech",
     shortNameEn: "Xiaomi Tech",
     fullNameEn: "Xiaomi Technology Co., Ltd.",
@@ -103,7 +102,8 @@ export default function Index() {
   const [productOptions, setProductOptions] = useState<string[]>(["股票交易", "咨询", "债券交易", "IPO", "发债"]);
   const [tagOptions, setTagOptions] = useState<string[]>(["零售经纪", "机构经纪", "跨资产", "DCM", "ECM"]);
   const [contactTypes, setContactTypes] = useState<string[]>(["电话", "会议", "邮件", "拜访", "社交活动"]);
-  const [groupOptions, setGroupOptions] = useState<string[]>(["小米集团", "腾讯", "阿里", "字节", "小米科技"]);
+  const [groupOptions, setGroupOptions] = useState<string[]>(["小米集团", "腾讯", "阿里", "字节"]);
+  const [viewMode, setViewMode] = useState<"customer" | "group">("customer");
   const { toast } = useToast();
 
   const handleAddCustomer = (newCustomer: Partial<Customer>) => {
@@ -148,6 +148,10 @@ export default function Index() {
     setGroupOptions(updatedGroups);
   };
 
+  const toggleViewMode = () => {
+    setViewMode(viewMode === "customer" ? "group" : "customer");
+  };
+
   if (selectedCustomer !== null) {
     const customer = customers.find((c) => c.id === selectedCustomer);
     if (customer) {
@@ -172,6 +176,8 @@ export default function Index() {
         onShowTagManagement={() => setShowTagManagement(true)}
         onShowContactTypeManagement={() => setShowContactTypeManagement(true)}
         onShowGroupManagement={() => setShowGroupManagement(true)}
+        viewMode={viewMode}
+        onToggleViewMode={toggleViewMode}
       />
 
       <div className="flex flex-col space-y-4">
@@ -179,6 +185,7 @@ export default function Index() {
         <CustomerList 
           customers={customers} 
           onSelectCustomer={customerId => setSelectedCustomer(customerId)} 
+          viewMode={viewMode}
         />
       </div>
       
