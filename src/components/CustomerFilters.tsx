@@ -83,14 +83,14 @@ export function CustomerFilters() {
             onItemSelect={handleProductSelect}
           />
         </div>
-{/*         <div className="w-28 sm:w-32">
+        <div className="w-28 sm:w-32">
           <FilterPopover
-            label="标签"
+            label="触达部门"
             options={tagOptions}
             selectedItems={selectedTags}
             onItemSelect={handleTagSelect}
           />
-        </div> */}
+        </div>
         <div className="flex-grow">
           <SearchControls 
             onReset={resetFilters}
