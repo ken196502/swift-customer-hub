@@ -132,7 +132,7 @@ export function NewCustomerDialog({
           />
           
           <TagSelector
-            label="标签"
+            label="触达部门"
             options={tagOptions}
             selectedItems={formData.tags || []}
             onToggle={handleTagToggle}
