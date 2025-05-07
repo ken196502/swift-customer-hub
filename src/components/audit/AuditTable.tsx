@@ -8,9 +8,19 @@ interface AuditTableProps {
   items: AuditItem[];
   actionColumn?: (id: number) => React.ReactNode;
   showStatus?: boolean;
+  selectedIds?: number[];
+  onItemSelect?: (id: number, isSelected: boolean) => void;
+  onSelectAll?: (isSelected: boolean, items: AuditItem[]) => void;
 }
 
-export function AuditTable({ items, actionColumn, showStatus = false }: AuditTableProps) {
+export function AuditTable({ 
+  items, 
+  actionColumn, 
+  showStatus = false, 
+  selectedIds = [],
+  onItemSelect,
+  onSelectAll
+}: AuditTableProps) {
   const getBadgeColor = (type: string) => {
     switch (type) {
       case "新增":
@@ -37,14 +47,23 @@ export function AuditTable({ items, actionColumn, showStatus = false }: AuditTab
     }
   };
 
+  const isSelectable = onItemSelect !== undefined && onSelectAll !== undefined;
+
   return (
     <div className="border rounded-md overflow-x-auto">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[40px]">
-              <Checkbox />
-            </TableHead>
+            {isSelectable && (
+              <TableHead className="w-[40px]">
+                <Checkbox
+                  checked={items.length > 0 && selectedIds.length === items.length}
+                  onCheckedChange={(checked) => {
+                    onSelectAll?.(!!checked, items);
+                  }}
+                />
+              </TableHead>
+            )}
             <TableHead>提交时间</TableHead>
             <TableHead>客户</TableHead>
             <TableHead>类型</TableHead>
@@ -60,9 +79,16 @@ export function AuditTable({ items, actionColumn, showStatus = false }: AuditTab
         <TableBody>
           {items.map((item) => (
             <TableRow key={item.id}>
-              <TableCell>
-                <Checkbox />
-              </TableCell>
+              {isSelectable && (
+                <TableCell>
+                  <Checkbox 
+                    checked={selectedIds.includes(item.id)}
+                    onCheckedChange={(checked) => {
+                      onItemSelect?.(item.id, !!checked);
+                    }}
+                  />
+                </TableCell>
+              )}
               <TableCell>{item.submitTime}</TableCell>
               <TableCell>{item.customer}</TableCell>
               <TableCell>
@@ -91,7 +117,7 @@ export function AuditTable({ items, actionColumn, showStatus = false }: AuditTab
           ))}
           {items.length === 0 && (
             <TableRow>
-              <TableCell colSpan={showStatus ? 10 : 9} className="h-24 text-center">
+              <TableCell colSpan={showStatus ? (isSelectable ? 10 : 9) : (isSelectable ? 9 : 8)} className="h-24 text-center">
                 暂无数据
               </TableCell>
             </TableRow>

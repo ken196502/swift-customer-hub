@@ -1,11 +1,11 @@
-
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AuditTable } from "@/components/audit/AuditTable";
 import { AuditFilters } from "@/components/audit/AuditFilters";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { Check, X, Download } from "lucide-react";
+import { Download } from "lucide-react";
+import { AuditBatchActions } from "@/components/audit/AuditBatchActions";
 
 // Define the audit item type
 export interface AuditItem {
@@ -111,30 +111,41 @@ const mockAuditItems: AuditItem[] = [
 
 export default function Audit() {
   const [auditItems, setAuditItems] = useState<AuditItem[]>(mockAuditItems);
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const { toast } = useToast();
 
-  const handleApprove = (id: number) => {
-    setAuditItems(
-      auditItems.map(item => 
-        item.id === id ? { ...item, status: "approved" } : item
-      )
-    );
-    toast({
-      title: "操作成功",
-      description: "已通过该审核项",
-    });
+  const handleItemSelect = (id: number, isSelected: boolean) => {
+    if (isSelected) {
+      setSelectedIds([...selectedIds, id]);
+    } else {
+      setSelectedIds(selectedIds.filter(itemId => itemId !== id));
+    }
   };
 
-  const handleReject = (id: number) => {
+  const handleSelectAll = (isSelected: boolean, items: AuditItem[]) => {
+    if (isSelected) {
+      setSelectedIds(items.map(item => item.id));
+    } else {
+      setSelectedIds([]);
+    }
+  };
+
+  const handleApprove = (ids: number[], reason?: string) => {
     setAuditItems(
       auditItems.map(item => 
-        item.id === id ? { ...item, status: "rejected" } : item
+        ids.includes(item.id) ? { ...item, status: "approved", note: reason || item.note } : item
       )
     );
-    toast({
-      title: "操作成功",
-      description: "已驳回该审核项",
-    });
+    setSelectedIds([]);
+  };
+
+  const handleReject = (ids: number[], reason?: string) => {
+    setAuditItems(
+      auditItems.map(item => 
+        ids.includes(item.id) ? { ...item, status: "rejected", note: reason || item.note } : item
+      )
+    );
+    setSelectedIds([]);
   };
 
   const handleExport = () => {
@@ -159,32 +170,18 @@ export default function Audit() {
 
         <TabsContent value="pending" className="space-y-4">
           <AuditFilters />
+          
+          <AuditBatchActions 
+            selectedIds={selectedIds} 
+            onApprove={handleApprove} 
+            onReject={handleReject} 
+          />
+          
           <AuditTable 
             items={pendingItems}
-            actionColumn={
-              (id: number) => (
-                <div className="flex space-x-2">
-                  <Button 
-                    variant="default" 
-                    size="sm" 
-                    className="bg-green-500 hover:bg-green-600"
-                    onClick={() => handleApprove(id)}
-                  >
-                    <Check className="h-4 w-4 mr-2" />
-                    通过
-                  </Button>
-                  <Button 
-                    variant="default" 
-                    size="sm" 
-                    className="bg-red-500 hover:bg-red-600"
-                    onClick={() => handleReject(id)}
-                  >
-                    <X className="h-4 w-4 mr-2" />
-                    驳回
-                  </Button>
-                </div>
-              )
-            }
+            selectedIds={selectedIds}
+            onItemSelect={handleItemSelect}
+            onSelectAll={handleSelectAll}
           />
         </TabsContent>
 

@@ -30,7 +30,7 @@ export function AppSidebar() {
   ];
 
   return (
-    <Sidebar>
+    <Sidebar className="w-[9.6rem]"> {/* Reduced width to 60% of original (16rem) */}
       <SidebarHeader>
         <div className="px-4 py-2">
           <h3 className="text-lg font-semibold">客户关系管理</h3>
