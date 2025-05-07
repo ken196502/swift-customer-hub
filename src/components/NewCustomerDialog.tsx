@@ -5,7 +5,6 @@ import { useState } from "react";
 import { Customer } from "@/contexts/CustomerContext";
 import { useToast } from "@/hooks/use-toast";
 import { CustomerFormSection } from "./customer/CustomerFormSection";
-import { TagSelector } from "./customer/TagSelector";
 
 interface NewCustomerDialogProps {
   open: boolean;
@@ -70,15 +69,6 @@ export function NewCustomerDialog({
     }
   };
 
-  const handleTagToggle = (value: string) => {
-    const tags = formData.tags || [];
-    if (tags.includes(value)) {
-      handleInputChange('tags', tags.filter(t => t !== value));
-    } else {
-      handleInputChange('tags', [...tags, value]);
-    }
-  };
-
   const handleSubmit = () => {
     if (!formData.customerNumber || !formData.shortNameCn || !formData.idType || !formData.idNumber) {
       toast({
@@ -104,13 +94,13 @@ export function NewCustomerDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-6xl max-h-[80vh] overflow-y-auto">
-        <DialogHeader className="sticky top-0 bg-white z-10 pb-4 mb-4 border-b">
+        <DialogHeader className="sticky top-0 bg-white z-10 pb-4 border-b">
           <DialogTitle>{initialData ? "编辑客户" : "新建客户"}</DialogTitle>
           <DialogDescription>
             填写客户信息，带*为必填项
           </DialogDescription>
         </DialogHeader>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <CustomerFormSection 
             formData={formData} 
             handleInputChange={handleInputChange} 
@@ -123,23 +113,6 @@ export function NewCustomerDialog({
             section="details"
             groupOptions={groupOptions}
           />
-          <div className="space-y-4">
-            <TagSelector
-              label="提供产品"
-              options={productOptions}
-              selectedItems={formData.products || []}
-              onToggle={handleProductToggle}
-              bgColorClass="bg-blue-100"
-            />
-            
-            <TagSelector
-              label="触达部门"
-              options={tagOptions}
-              selectedItems={formData.tags || []}
-              onToggle={handleTagToggle}
-              bgColorClass="bg-green-100"
-            />
-          </div>
         </div>
         
         <div className="flex justify-end space-x-2 mt-6 pt-4">

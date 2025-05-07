@@ -43,6 +43,8 @@ export function NewServiceRecordDialog({
     purpose: "",
   });
 
+  const departments = ["零售经纪", "机构经纪", "跨资产", "DCM", "ECM"];
+
   const handleChange = (field: string, value: any) => {
     setRecord({ ...record, [field]: value });
   };
@@ -124,11 +126,19 @@ export function NewServiceRecordDialog({
 
           <div className="space-y-2">
             <Label>业务部门</Label>
-            <Input 
-              placeholder="请输入业务部门" 
-              value={record.department} 
-              onChange={(e) => handleChange('department', e.target.value)}
-            />
+            <Select
+              value={record.department}
+              onValueChange={(value) => handleChange('department', value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="选择业务部门" />
+              </SelectTrigger>
+              <SelectContent>
+                {departments.map((dept) => (
+                  <SelectItem key={dept} value={dept}>{dept}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="space-y-2">

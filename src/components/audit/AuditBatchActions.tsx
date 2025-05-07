@@ -49,7 +49,7 @@ export function AuditBatchActions({ selectedIds, onApprove, onReject }: AuditBat
   };
 
   return (
-    <div className="mb-4 flex justify-end space-x-2">
+    <div className="mb-4 flex justify-start space-x-2">
       <Button
         variant="default"
         size="sm"
