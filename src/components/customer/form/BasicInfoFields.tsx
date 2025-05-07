@@ -14,7 +14,7 @@ export function BasicInfoFields({ formData, handleInputChange, groupOptions }: B
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <Label>客户号</Label>
+        <Label>客户号 <span className="text-red-500">*</span></Label>
         <Input 
           placeholder="请输入客户号" 
           value={formData.customerNumber} 
@@ -49,7 +49,7 @@ export function BasicInfoFields({ formData, handleInputChange, groupOptions }: B
       </div>
 
       <div className="space-y-2">
-        <Label>中文简称</Label>
+        <Label>中文简称 <span className="text-red-500">*</span></Label>
         <Input 
           placeholder="请输入中文简称" 
           value={formData.shortNameCn} 

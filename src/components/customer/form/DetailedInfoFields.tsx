@@ -13,7 +13,7 @@ export function DetailedInfoFields({ formData, handleInputChange }: DetailedInfo
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <Label>证件类型</Label>
+        <Label>证件类型 <span className="text-red-500">*</span></Label>
         <Select
           value={formData.idType}
           onValueChange={(value) => handleInputChange('idType', value)}
@@ -23,13 +23,14 @@ export function DetailedInfoFields({ formData, handleInputChange }: DetailedInfo
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="id">统一社会信用代码</SelectItem>
+            <SelectItem value="idcard">身份证</SelectItem>
             <SelectItem value="other">其他</SelectItem>
           </SelectContent>
         </Select>
       </div>
 
       <div className="space-y-2">
-        <Label>证件号码</Label>
+        <Label>证件号码 <span className="text-red-500">*</span></Label>
         <Input 
           placeholder="请输入证件号码" 
           value={formData.idNumber} 

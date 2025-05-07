@@ -41,7 +41,6 @@ export function CustomerTableView({ customers, onSelectCustomer }: CustomerTable
               <TableCell>{customer.customerNumber}</TableCell>
               <TableCell>
                 <div className="font-medium">{customer.shortNameCn}</div>
-                <div className="text-sm text-gray-500">{customer.shortNameEn}</div>
               </TableCell>
               <TableCell>{customer.type}</TableCell>
               <TableCell>{customer.groupName}</TableCell>

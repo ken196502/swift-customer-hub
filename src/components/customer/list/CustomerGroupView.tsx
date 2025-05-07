@@ -69,7 +69,6 @@ export function CustomerGroupView({ customers, onSelectCustomer }: CustomerGroup
                 </div>
                 <div className="flex flex-wrap gap-4">
                   <div className="flex flex-wrap gap-1">
-                    <span className="text-sm font-medium">提供产品:</span>
                     {getGroupProducts(groupCustomers).map((product) => (
                       <Badge
                         key={product}
@@ -81,7 +80,6 @@ export function CustomerGroupView({ customers, onSelectCustomer }: CustomerGroup
                     ))}
                   </div>
                   <div className="flex flex-wrap gap-1">
-                    <span className="text-sm font-medium">触达部门:</span>
                     {getGroupTags(groupCustomers).map((tag) => (
                       <Badge
                         key={tag}
@@ -117,7 +115,6 @@ export function CustomerGroupView({ customers, onSelectCustomer }: CustomerGroup
                       <TableCell>{customer.customerNumber}</TableCell>
                       <TableCell>
                         <div className="font-medium">{customer.shortNameCn}</div>
-                        <div className="text-sm text-gray-500">{customer.shortNameEn}</div>
                       </TableCell>
                       <TableCell>{customer.type}</TableCell>
                       <TableCell>

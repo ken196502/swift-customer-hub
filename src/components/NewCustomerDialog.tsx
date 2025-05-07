@@ -80,10 +80,10 @@ export function NewCustomerDialog({
   };
 
   const handleSubmit = () => {
-    if (!formData.customerNumber || !formData.shortNameCn) {
+    if (!formData.customerNumber || !formData.shortNameCn || !formData.idType || !formData.idNumber) {
       toast({
         title: "请填写必填项",
-        description: "客户号和中文简称为必填项",
+        description: "客户号、中文简称、证件类型和证件号码为必填项",
         variant: "destructive"
       });
       return;
@@ -104,7 +104,7 @@ export function NewCustomerDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-6xl max-h-[80vh] overflow-y-auto">
-        <DialogHeader>
+        <DialogHeader className="sticky top-0 bg-white z-10 pb-4 mb-4 border-b">
           <DialogTitle>{initialData ? "编辑客户" : "新建客户"}</DialogTitle>
           <DialogDescription>
             填写客户信息，带*为必填项
@@ -142,7 +142,7 @@ export function NewCustomerDialog({
           </div>
         </div>
         
-        <div className="flex justify-end space-x-2 mt-6 pt-4 border-t sticky bottom-0 bg-white">
+        <div className="flex justify-end space-x-2 mt-6 pt-4">
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             取消
           </Button>
