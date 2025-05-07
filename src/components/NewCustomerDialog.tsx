@@ -1,5 +1,5 @@
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Customer } from "@/contexts/CustomerContext";
@@ -106,6 +106,9 @@ export function NewCustomerDialog({
       <DialogContent className="max-w-6xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{initialData ? "编辑客户" : "新建客户"}</DialogTitle>
+          <DialogDescription>
+            填写客户信息，带*为必填项
+          </DialogDescription>
         </DialogHeader>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <CustomerFormSection 
@@ -139,7 +142,7 @@ export function NewCustomerDialog({
           </div>
         </div>
         
-        <div className="flex justify-end space-x-2 mt-6">
+        <div className="flex justify-end space-x-2 mt-6 pt-4 border-t sticky bottom-0 bg-white">
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             取消
           </Button>

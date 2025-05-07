@@ -60,15 +60,15 @@ export function CustomerGroupView({ customers, onSelectCustomer }: CustomerGroup
         {groupEntries.map(([groupName, groupCustomers]) => (
           <AccordionItem key={groupName} value={groupName}>
             <AccordionTrigger className="px-4 py-3 bg-gray-50 hover:bg-gray-100">
-              <div className="flex flex-col w-full">
+              <div className="flex justify-between items-center w-full">
                 <div className="flex items-center">
                   <span className="font-medium">{groupName}</span>
                   <Badge className="ml-2 bg-blue-100 text-blue-800 hover:bg-blue-100">
                     {groupCustomers.length} 个客户
                   </Badge>
                 </div>
-                <div className="flex flex-wrap gap-2 mt-2">
-                  <div className="flex flex-wrap gap-1 mr-4">
+                <div className="flex flex-wrap gap-4">
+                  <div className="flex flex-wrap gap-1">
                     <span className="text-sm font-medium">提供产品:</span>
                     {getGroupProducts(groupCustomers).map((product) => (
                       <Badge

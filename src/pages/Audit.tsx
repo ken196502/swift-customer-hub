@@ -1,11 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AuditTable } from "@/components/audit/AuditTable";
-import { AuditFilters } from "@/components/audit/AuditFilters";
-import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { Download } from "lucide-react";
-import { AuditBatchActions } from "@/components/audit/AuditBatchActions";
+import { AuditContent } from "@/components/audit/AuditContent";
 
 // Define the audit item type
 export interface AuditItem {
@@ -111,24 +107,7 @@ const mockAuditItems: AuditItem[] = [
 
 export default function Audit() {
   const [auditItems, setAuditItems] = useState<AuditItem[]>(mockAuditItems);
-  const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const { toast } = useToast();
-
-  const handleItemSelect = (id: number, isSelected: boolean) => {
-    if (isSelected) {
-      setSelectedIds([...selectedIds, id]);
-    } else {
-      setSelectedIds(selectedIds.filter(itemId => itemId !== id));
-    }
-  };
-
-  const handleSelectAll = (isSelected: boolean, items: AuditItem[]) => {
-    if (isSelected) {
-      setSelectedIds(items.map(item => item.id));
-    } else {
-      setSelectedIds([]);
-    }
-  };
 
   const handleApprove = (ids: number[], reason?: string) => {
     setAuditItems(
@@ -136,7 +115,6 @@ export default function Audit() {
         ids.includes(item.id) ? { ...item, status: "approved", note: reason || item.note } : item
       )
     );
-    setSelectedIds([]);
   };
 
   const handleReject = (ids: number[], reason?: string) => {
@@ -145,15 +123,27 @@ export default function Audit() {
         ids.includes(item.id) ? { ...item, status: "rejected", note: reason || item.note } : item
       )
     );
-    setSelectedIds([]);
   };
 
-  const handleExport = () => {
-    toast({
-      title: "导出成功",
-      description: "审核数据已导出",
-    });
-  };
+  useEffect(() => {
+    const handleApproveEvent = (e: CustomEvent) => {
+      const { ids, reason } = e.detail;
+      handleApprove(ids, reason);
+    };
+
+    const handleRejectEvent = (e: CustomEvent) => {
+      const { ids, reason } = e.detail;
+      handleReject(ids, reason);
+    };
+
+    window.addEventListener('audit:approve', handleApproveEvent as EventListener);
+    window.addEventListener('audit:reject', handleRejectEvent as EventListener);
+
+    return () => {
+      window.removeEventListener('audit:approve', handleApproveEvent as EventListener);
+      window.removeEventListener('audit:reject', handleRejectEvent as EventListener);
+    };
+  }, [auditItems]);
 
   const pendingItems = auditItems.filter(item => item.status === "pending");
   const processedItems = auditItems.filter(item => item.status !== "pending");
@@ -168,40 +158,12 @@ export default function Audit() {
           <TabsTrigger value="processed">已审核</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="pending" className="space-y-4">
-          <AuditFilters />
-          
-          <AuditBatchActions 
-            selectedIds={selectedIds} 
-            onApprove={handleApprove} 
-            onReject={handleReject} 
-          />
-          
-          <AuditTable 
-            items={pendingItems}
-            selectedIds={selectedIds}
-            onItemSelect={handleItemSelect}
-            onSelectAll={handleSelectAll}
-          />
+        <TabsContent value="pending">
+          <AuditContent items={pendingItems} isPending={true} />
         </TabsContent>
 
-        <TabsContent value="processed" className="space-y-4">
-          <AuditFilters />
-          <div className="flex justify-end mb-4">
-            <Button 
-              variant="default" 
-              size="sm" 
-              className="bg-blue-500 hover:bg-blue-600"
-              onClick={handleExport}
-            >
-              <Download className="h-4 w-4 mr-2" />
-              导出
-            </Button>
-          </div>
-          <AuditTable 
-            items={processedItems}
-            showStatus={true}
-          />
+        <TabsContent value="processed">
+          <AuditContent items={processedItems} isPending={false} />
         </TabsContent>
       </Tabs>
     </div>
