@@ -103,11 +103,11 @@ export function NewCustomerDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+      <DialogContent className="max-w-6xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{initialData ? "编辑客户" : "新建客户"}</DialogTitle>
         </DialogHeader>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <CustomerFormSection 
             formData={formData} 
             handleInputChange={handleInputChange} 
@@ -120,24 +120,23 @@ export function NewCustomerDialog({
             section="details"
             groupOptions={groupOptions}
           />
-        </div>
-        
-        <div className="space-y-4 mt-6">
-          <TagSelector
-            label="提供产品"
-            options={productOptions}
-            selectedItems={formData.products || []}
-            onToggle={handleProductToggle}
-            bgColorClass="bg-blue-100"
-          />
-          
-          <TagSelector
-            label="触达部门"
-            options={tagOptions}
-            selectedItems={formData.tags || []}
-            onToggle={handleTagToggle}
-            bgColorClass="bg-green-100"
-          />
+          <div className="space-y-4">
+            <TagSelector
+              label="提供产品"
+              options={productOptions}
+              selectedItems={formData.products || []}
+              onToggle={handleProductToggle}
+              bgColorClass="bg-blue-100"
+            />
+            
+            <TagSelector
+              label="触达部门"
+              options={tagOptions}
+              selectedItems={formData.tags || []}
+              onToggle={handleTagToggle}
+              bgColorClass="bg-green-100"
+            />
+          </div>
         </div>
         
         <div className="flex justify-end space-x-2 mt-6">

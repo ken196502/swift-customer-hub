@@ -36,17 +36,63 @@ export function CustomerGroupView({ customers, onSelectCustomer }: CustomerGroup
   // Convert to array of group entries for rendering
   const groupEntries = Object.entries(groupedCustomers);
 
+  // Helper function to get unique products across all customers in a group
+  const getGroupProducts = (groupCustomers: Customer[]) => {
+    const uniqueProducts = new Set<string>();
+    groupCustomers.forEach(customer => {
+      customer.products.forEach(product => uniqueProducts.add(product));
+    });
+    return Array.from(uniqueProducts);
+  };
+
+  // Helper function to get unique tags across all customers in a group
+  const getGroupTags = (groupCustomers: Customer[]) => {
+    const uniqueTags = new Set<string>();
+    groupCustomers.forEach(customer => {
+      customer.tags.forEach(tag => uniqueTags.add(tag));
+    });
+    return Array.from(uniqueTags);
+  };
+
   return (
     <div className="border rounded-md">
       <Accordion type="multiple" className="w-full">
         {groupEntries.map(([groupName, groupCustomers]) => (
           <AccordionItem key={groupName} value={groupName}>
             <AccordionTrigger className="px-4 py-3 bg-gray-50 hover:bg-gray-100">
-              <div className="flex items-center">
-                <span className="font-medium">{groupName}</span>
-                <Badge className="ml-2 bg-blue-100 text-blue-800 hover:bg-blue-100">
-                  {groupCustomers.length} 个客户
-                </Badge>
+              <div className="flex flex-col w-full">
+                <div className="flex items-center">
+                  <span className="font-medium">{groupName}</span>
+                  <Badge className="ml-2 bg-blue-100 text-blue-800 hover:bg-blue-100">
+                    {groupCustomers.length} 个客户
+                  </Badge>
+                </div>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  <div className="flex flex-wrap gap-1 mr-4">
+                    <span className="text-sm font-medium">提供产品:</span>
+                    {getGroupProducts(groupCustomers).map((product) => (
+                      <Badge
+                        key={product}
+                        variant="outline"
+                        className={getProductColor(product)}
+                      >
+                        {product}
+                      </Badge>
+                    ))}
+                  </div>
+                  <div className="flex flex-wrap gap-1">
+                    <span className="text-sm font-medium">触达部门:</span>
+                    {getGroupTags(groupCustomers).map((tag) => (
+                      <Badge
+                        key={tag}
+                        variant="outline"
+                        className={getTagColor(tag)}
+                      >
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
               </div>
             </AccordionTrigger>
             <AccordionContent>
