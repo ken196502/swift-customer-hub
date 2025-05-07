@@ -44,7 +44,7 @@ const initialTransactions: TransactionData[] = [
     amount: -34000.0,
     type: "出差费用",
     purpose: "出差实访客户",
-    department: "销售三部",
+    department: "零售经纪",
     person: "张三",
   },
   {
@@ -53,14 +53,14 @@ const initialTransactions: TransactionData[] = [
     amount: 0.0,
     type: "电话沟通",
     purpose: "运营和销售沟通",
-    department: "销售部",
+    department: "机构经纪",
     person: "李四",
   },
   {
     id: 3,
     date: "2025-03-21",
     amount: 0.0,
-    type: "服务反馈",
+    type: "跨资产",
     purpose: "运营和销售服务反馈",
     department: "销售部",
     person: "李四",
@@ -71,7 +71,7 @@ const initialTransactions: TransactionData[] = [
     amount: -1234.56,
     type: "招待客户",
     purpose: "招待客户",
-    department: "销售三部",
+    department: "DCM",
     person: "张三，王五",
   },
   {
@@ -80,7 +80,7 @@ const initialTransactions: TransactionData[] = [
     amount: 0.0,
     type: "线上会议",
     purpose: "线上1on1",
-    department: "CRM",
+    department: "ECM",
     person: "赵六",
   },
 ];
