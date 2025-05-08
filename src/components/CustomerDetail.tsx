@@ -13,7 +13,7 @@ interface CustomerDetailProps {
   customer: Customer;
   onEditCustomer?: (updatedCustomer: Partial<Customer>) => void;
   productOptions?: string[];
-  tagOptions?: string[];
+  reachOptions?: string[];
   contactTypes: string[];
   groupOptions: string[];
 }
@@ -89,7 +89,7 @@ export function CustomerDetail({
   customer, 
   onEditCustomer, 
   productOptions = [], 
-  tagOptions = [], 
+  reachOptions = [], 
   contactTypes,
   groupOptions = []
 }: CustomerDetailProps) {
@@ -181,7 +181,6 @@ export function CustomerDetail({
         initialData={customer}
         onSubmit={handleUpdateCustomer}
         productOptions={productOptions}
-        tagOptions={tagOptions}
         groupOptions={groupOptions}
       />
     </Card>

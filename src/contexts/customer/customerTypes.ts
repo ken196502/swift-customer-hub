@@ -24,7 +24,7 @@ export interface Customer {
   entryDate: string;
   activeStatus: string;
   products: string[];
-  tags: string[];
+  reaches: string[];
 }
 
 export interface CustomerContextType {
@@ -32,22 +32,18 @@ export interface CustomerContextType {
   selectedCustomer: number | null;
   viewMode: "customer" | "group";
   showNewCustomerDialog: boolean;
-  showTagManagement: boolean;
   showContactTypeManagement: boolean;
   showGroupManagement: boolean;
   productOptions: string[];
-  tagOptions: string[];
   contactTypes: string[];
   groupOptions: string[];
   setSelectedCustomer: (id: number | null) => void;
   setShowNewCustomerDialog: (show: boolean) => void;
-  setShowTagManagement: (show: boolean) => void;
   setShowContactTypeManagement: (show: boolean) => void;
   setShowGroupManagement: (show: boolean) => void;
   toggleViewMode: () => void;
   handleAddCustomer: (newCustomer: Partial<Customer>) => void;
   handleUpdateCustomer: (updatedCustomer: Partial<Customer>) => void;
-  handleUpdateTags: (updatedTags: string[]) => void;
   handleUpdateContactTypes: (updatedContactTypes: string[]) => void;
   handleUpdateGroups: (updatedGroups: string[]) => void;
 }

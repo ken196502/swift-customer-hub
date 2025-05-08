@@ -26,8 +26,8 @@ export const initialCustomers: Customer[] = [
     riskLevel: "低",
     entryDate: "2019-10-01",
     activeStatus: "活跃",
-    products: ["股票交易", "咨询", "债券交易", "IPO", "发债"],
-    tags: ["零售经纪", "机构经纪", "跨资产", "DCM", "ECM"],
+    products: ["股票交易", "咨询"],
+    reaches: ["跨资产", "DCM", "ECM"],
   },
   {
     id: 2,
@@ -53,8 +53,8 @@ export const initialCustomers: Customer[] = [
     riskLevel: "低",
     entryDate: "2018-05-15",
     activeStatus: "活跃",
-    products: ["股票交易", "咨询", "债券交易"],
-    tags: ["零售经纪", "机构经纪"],
+    products: ["债券交易", "IPO", "发债"],
+    reaches: ["零售经纪", "机构经纪"],
   }
 ];
 

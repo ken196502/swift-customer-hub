@@ -8,20 +8,18 @@ import { ViewModeToggle } from "@/components/filters/ViewModeToggle";
 import { useCustomer } from "@/contexts/CustomerContext";
 
 export function CustomerFilters() {
-  const { productOptions, tagOptions, viewMode, toggleViewMode } = useCustomer();
+  const { productOptions, viewMode, toggleViewMode } = useCustomer();
   
   const [customerName, setCustomerName] = useState("");
   const [customerType, setCustomerType] = useState("");
   const [productType, setProductType] = useState("");
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const resetFilters = () => {
     setCustomerName("");
     setCustomerType("");
     setProductType("");
     setSelectedProducts([]);
-    setSelectedTags([]);
   };
 
   const handleProductSelect = (product: string) => {
@@ -29,14 +27,6 @@ export function CustomerFilters() {
       prev.includes(product) 
         ? prev.filter(p => p !== product) 
         : [...prev, product]
-    );
-  };
-
-  const handleTagSelect = (tag: string) => {
-    setSelectedTags(prev => 
-      prev.includes(tag) 
-        ? prev.filter(t => t !== tag) 
-        : [...prev, tag]
     );
   };
 
@@ -83,19 +73,11 @@ export function CustomerFilters() {
             onItemSelect={handleProductSelect}
           />
         </div>
-        <div className="w-28 sm:w-32">
-          <FilterPopover
-            label="触达部门"
-            options={tagOptions}
-            selectedItems={selectedTags}
-            onItemSelect={handleTagSelect}
-          />
-        </div>
         <div className="flex-grow">
           <SearchControls 
             onReset={resetFilters}
-            onSearch={() => console.log("Search with filters:", {customerName, customerType, productType, selectedProducts, selectedTags})}
-            onExport={() => console.log("Export with filters:", {customerName, customerType, productType, selectedProducts, selectedTags})}
+            onSearch={() => console.log("Search with filters:", {customerName, customerType, productType, selectedProducts})}
+            onExport={() => console.log("Export with filters:", {customerName, customerType, productType, selectedProducts})}
           />
         </div>
       </div>

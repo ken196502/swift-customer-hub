@@ -12,7 +12,6 @@ interface NewCustomerDialogProps {
   initialData?: Customer;
   onSubmit?: (customer: Partial<Customer>) => void;
   productOptions: string[];
-  tagOptions: string[];
   groupOptions: string[];
 }
 
@@ -22,7 +21,6 @@ export function NewCustomerDialog({
   initialData, 
   onSubmit,
   productOptions,
-  tagOptions,
   groupOptions 
 }: NewCustomerDialogProps) {
   const { toast } = useToast();
@@ -50,7 +48,6 @@ export function NewCustomerDialog({
     entryDate: new Date().toISOString().split('T')[0],
     activeStatus: "活跃",
     products: [],
-    tags: []
   });
 
   const handleInputChange = (field: string, value: any) => {

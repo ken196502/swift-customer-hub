@@ -7,7 +7,6 @@ interface CustomerDetailViewProps {
   onBack: () => void;
   onEditCustomer: (updatedCustomer: Partial<Customer>) => void;
   productOptions: string[];
-  tagOptions: string[];
   contactTypes: string[];
   groupOptions: string[];
 }
@@ -17,7 +16,6 @@ export function CustomerDetailView({
   onBack,
   onEditCustomer,
   productOptions,
-  tagOptions,
   contactTypes,
   groupOptions
 }: CustomerDetailViewProps) {
@@ -33,7 +31,6 @@ export function CustomerDetailView({
         customer={customer} 
         onEditCustomer={onEditCustomer}
         productOptions={productOptions}
-        tagOptions={tagOptions}
         contactTypes={contactTypes}
         groupOptions={groupOptions}
       />

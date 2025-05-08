@@ -45,14 +45,6 @@ export function CustomerGroupView({ customers, onSelectCustomer }: CustomerGroup
     return Array.from(uniqueProducts);
   };
 
-  // Helper function to get unique tags across all customers in a group
-  const getGroupTags = (groupCustomers: Customer[]) => {
-    const uniqueTags = new Set<string>();
-    groupCustomers.forEach(customer => {
-      customer.tags.forEach(tag => uniqueTags.add(tag));
-    });
-    return Array.from(uniqueTags);
-  };
 
   return (
     <div className="border rounded-md">
@@ -76,17 +68,6 @@ export function CustomerGroupView({ customers, onSelectCustomer }: CustomerGroup
                         className={getProductColor(product)}
                       >
                         {product}
-                      </Badge>
-                    ))}
-                  </div>
-                  <div className="flex flex-wrap gap-1">
-                    {getGroupTags(groupCustomers).map((tag) => (
-                      <Badge
-                        key={tag}
-                        variant="outline"
-                        className={getTagColor(tag)}
-                      >
-                        {tag}
                       </Badge>
                     ))}
                   </div>
@@ -132,13 +113,13 @@ export function CustomerGroupView({ customers, onSelectCustomer }: CustomerGroup
                       </TableCell>
                       <TableCell>
                         <div className="flex flex-wrap gap-1">
-                          {customer.tags.map((tag, i) => (
+                          {customer.reaches.map((reach, i) => (
                             <Badge
                               key={i}
                               variant="outline"
-                              className={getTagColor(tag)}
+                              className={getTagColor(reach)}
                             >
-                              {tag}
+                              {reach}
                             </Badge>
                           ))}
                         </div>

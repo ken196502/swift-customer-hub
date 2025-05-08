@@ -59,13 +59,13 @@ export function CustomerTableView({ customers, onSelectCustomer }: CustomerTable
               </TableCell>
               <TableCell>
                 <div className="flex flex-wrap gap-1">
-                  {customer.tags.map((tag, i) => (
+                  {customer.reaches.map((reach, i) => (
                     <Badge
                       key={i}
                       variant="outline"
-                      className={getTagColor(tag)}
+                      className={getTagColor(reach)}
                     >
-                      {tag}
+                      {reach}
                     </Badge>
                   ))}
                 </div>

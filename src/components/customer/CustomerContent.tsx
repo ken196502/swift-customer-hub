@@ -13,22 +13,18 @@ export function CustomerContent() {
     selectedCustomer,
     viewMode,
     showNewCustomerDialog,
-    showTagManagement,
     showContactTypeManagement,
     showGroupManagement,
     productOptions,
-    tagOptions,
     contactTypes,
     groupOptions,
     setSelectedCustomer,
     setShowNewCustomerDialog,
-    setShowTagManagement,
     setShowContactTypeManagement,
     setShowGroupManagement,
     toggleViewMode,
     handleAddCustomer,
     handleUpdateCustomer,
-    handleUpdateTags,
     handleUpdateContactTypes,
     handleUpdateGroups,
   } = useCustomer();
@@ -42,7 +38,6 @@ export function CustomerContent() {
           onBack={() => setSelectedCustomer(null)}
           onEditCustomer={handleUpdateCustomer}
           productOptions={productOptions}
-          tagOptions={tagOptions}
           contactTypes={contactTypes}
           groupOptions={groupOptions}
         />
@@ -54,7 +49,6 @@ export function CustomerContent() {
     <div className="container mx-auto py-6 space-y-6">
       <CustomerHeader
         onShowNewCustomerDialog={() => setShowNewCustomerDialog(true)}
-        onShowTagManagement={() => setShowTagManagement(true)}
         onShowContactTypeManagement={() => setShowContactTypeManagement(true)}
         onShowGroupManagement={() => setShowGroupManagement(true)}
         viewMode={viewMode}
@@ -73,18 +67,14 @@ export function CustomerContent() {
       <ManagementDialogs
         showNewCustomerDialog={showNewCustomerDialog}
         setShowNewCustomerDialog={setShowNewCustomerDialog}
-        showTagManagement={showTagManagement}
-        setShowTagManagement={setShowTagManagement}
         showContactTypeManagement={showContactTypeManagement}
         setShowContactTypeManagement={setShowContactTypeManagement}
         showGroupManagement={showGroupManagement}
         setShowGroupManagement={setShowGroupManagement}
         handleAddCustomer={handleAddCustomer}
-        tagOptions={tagOptions}
         productOptions={productOptions}
         contactTypes={contactTypes}
         groupOptions={groupOptions}
-        onUpdateTags={handleUpdateTags}
         onUpdateContactTypes={handleUpdateContactTypes}
         onUpdateGroups={handleUpdateGroups}
       />

@@ -2,7 +2,7 @@ import { Check } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Customer } from "@/contexts/CustomerContext";
 
-interface TagSelectorProps {
+interface ReachSelectorProps {
   label: string;
   options: string[];
   selectedItems: string[];
@@ -10,7 +10,7 @@ interface TagSelectorProps {
   bgColorClass?: string;
 }
 
-export function TagSelector({ label, options, selectedItems, onToggle, bgColorClass = "bg-blue-100" }: TagSelectorProps) {
+export function ReachSelector({ label, options, selectedItems, onToggle, bgColorClass = "bg-blue-100" }: ReachSelectorProps) {
   return (
     <div className="space-y-2">
       <Label>{label}</Label>

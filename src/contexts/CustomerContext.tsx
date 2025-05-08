@@ -3,8 +3,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Customer, CustomerContextType } from "./customer/customerTypes";
 import { 
   initialCustomers, 
-  initialProductOptions, 
-  initialTagOptions, 
+  initialProductOptions,  
   initialContactTypes, 
   initialGroupOptions 
 } from "./customer/mockData";
@@ -15,11 +14,9 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
   const [customers, setCustomers] = useState<Customer[]>(initialCustomers);
   const [selectedCustomer, setSelectedCustomer] = useState<number | null>(null);
   const [showNewCustomerDialog, setShowNewCustomerDialog] = useState(false);
-  const [showTagManagement, setShowTagManagement] = useState(false);
   const [showContactTypeManagement, setShowContactTypeManagement] = useState(false);
   const [showGroupManagement, setShowGroupManagement] = useState(false);
   const [productOptions, setProductOptions] = useState<string[]>(initialProductOptions);
-  const [tagOptions, setTagOptions] = useState<string[]>(initialTagOptions);
   const [contactTypes, setContactTypes] = useState<string[]>(initialContactTypes);
   const [groupOptions, setGroupOptions] = useState<string[]>(initialGroupOptions);
   const [viewMode, setViewMode] = useState<"customer" | "group">("customer");
@@ -33,7 +30,7 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
       id: nextId,
       customerNumber: newCustomer.customerNumber || `TFI${new Date().getFullYear()}${String(nextId).padStart(4, '0')}`,
       products: newCustomer.products || [],
-      tags: newCustomer.tags || [],
+      reaches: newCustomer.reaches || [],
     } as Customer;
     
     setCustomers([...customers, customer]);
@@ -55,10 +52,6 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  const handleUpdateTags = (updatedTags: string[]) => {
-    setTagOptions(updatedTags);
-  };
-
   const handleUpdateContactTypes = (updatedContactTypes: string[]) => {
     setContactTypes(updatedContactTypes);
   };
@@ -76,22 +69,18 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
     selectedCustomer,
     viewMode,
     showNewCustomerDialog,
-    showTagManagement,
     showContactTypeManagement,
     showGroupManagement,
     productOptions,
-    tagOptions,
     contactTypes,
     groupOptions,
     setSelectedCustomer,
     setShowNewCustomerDialog,
-    setShowTagManagement,
     setShowContactTypeManagement,
     setShowGroupManagement,
     toggleViewMode,
     handleAddCustomer,
     handleUpdateCustomer,
-    handleUpdateTags,
     handleUpdateContactTypes,
     handleUpdateGroups,
   };
