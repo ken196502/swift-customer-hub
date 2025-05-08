@@ -1,5 +1,4 @@
 
-import { useState } from "react";
 import { CustomerFilters } from "@/components/CustomerFilters";
 import { CustomerList } from "@/components/customer/CustomerList";
 import { CustomerHeader } from "@/components/customer/CustomerHeader";
@@ -11,6 +10,7 @@ export function CustomerContent() {
   const {
     customers,
     selectedCustomer,
+    selectedCustomers,
     viewMode,
     showNewCustomerDialog,
     showContactTypeManagement,
@@ -18,7 +18,10 @@ export function CustomerContent() {
     productOptions,
     contactTypes,
     groupOptions,
+    countries,
+    departments,
     setSelectedCustomer,
+    toggleSelectCustomer,
     setShowNewCustomerDialog,
     setShowContactTypeManagement,
     setShowGroupManagement,
@@ -40,6 +43,8 @@ export function CustomerContent() {
           productOptions={productOptions}
           contactTypes={contactTypes}
           groupOptions={groupOptions}
+          departments={departments}
+          countries={countries}
         />
       );
     }
@@ -61,6 +66,8 @@ export function CustomerContent() {
           customers={customers} 
           onSelectCustomer={customerId => setSelectedCustomer(customerId)} 
           viewMode={viewMode}
+          selectedCustomers={selectedCustomers}
+          onToggleSelect={toggleSelectCustomer}
         />
       </div>
       
@@ -75,6 +82,8 @@ export function CustomerContent() {
         productOptions={productOptions}
         contactTypes={contactTypes}
         groupOptions={groupOptions}
+        countries={countries}
+        departments={departments}
         onUpdateContactTypes={handleUpdateContactTypes}
         onUpdateGroups={handleUpdateGroups}
       />

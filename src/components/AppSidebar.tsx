@@ -1,5 +1,5 @@
 
-import { Users, FileText } from "lucide-react";
+import { Users, FileText, MessageSquare, Building } from "lucide-react";
 import { useLocation, Link } from "react-router-dom";
 import {
   Sidebar,
@@ -27,10 +27,20 @@ export function AppSidebar() {
       url: "/audit",
       icon: FileText,
     },
+    {
+      title: "联系类型管理",
+      url: "/contact-types",
+      icon: MessageSquare,
+    },
+    {
+      title: "集团管理",
+      url: "/groups",
+      icon: Building,
+    },
   ];
 
   return (
-    <Sidebar className="w-[11.52rem]"> {/* Increased width to 120% of original (9.6rem) */}
+    <Sidebar className="w-[11.52rem]">
       <SidebarHeader>
         <div className="px-4 py-2">
           <h3 className="text-lg font-semibold">客户关系管理</h3>

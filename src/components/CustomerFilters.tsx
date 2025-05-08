@@ -6,9 +6,21 @@ import { FilterPopover } from "@/components/filters/FilterPopover";
 import { SearchControls } from "@/components/filters/SearchControls";
 import { ViewModeToggle } from "@/components/filters/ViewModeToggle";
 import { useCustomer } from "@/contexts/CustomerContext";
+import { Button } from "@/components/ui/button";
+import { SponsorDepartmentDialog } from "./customer/SponsorDepartmentDialog";
+import { UsersRound } from "lucide-react";
 
 export function CustomerFilters() {
-  const { productOptions, viewMode, toggleViewMode } = useCustomer();
+  const { 
+    productOptions, 
+    viewMode, 
+    toggleViewMode, 
+    departments,
+    selectedCustomers,
+    showSponsorDepartmentDialog,
+    setShowSponsorDepartmentDialog,
+    handleUpdateSponsorDepartments
+  } = useCustomer();
   
   const [customerName, setCustomerName] = useState("");
   const [customerType, setCustomerType] = useState("");
@@ -30,6 +42,10 @@ export function CustomerFilters() {
     );
   };
 
+  const handleSponsorDepartmentSubmit = (departments: string[]) => {
+    handleUpdateSponsorDepartments(selectedCustomers, departments);
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
@@ -47,9 +63,9 @@ export function CustomerFilters() {
               <SelectValue placeholder="客户类型" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="company">公司户</SelectItem>
-              <SelectItem value="personal">个人户</SelectItem>
-              <SelectItem value="institute">机构户</SelectItem>
+              <SelectItem value="公司户">公司户</SelectItem>
+              <SelectItem value="个人户">个人户</SelectItem>
+              <SelectItem value="机构户">机构户</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -69,9 +85,28 @@ export function CustomerFilters() {
           />
         </div>
       </div>
-      <div className="flex">
+      <div className="flex justify-between items-center">
         <ViewModeToggle viewMode={viewMode} onToggle={toggleViewMode} />
+        {viewMode === "group" && (
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={() => setShowSponsorDepartmentDialog(true)} 
+            disabled={selectedCustomers.length === 0}
+          >
+            <UsersRound className="h-4 w-4 mr-2" />
+            设置主办部门
+          </Button>
+        )}
       </div>
+
+      <SponsorDepartmentDialog
+        open={showSponsorDepartmentDialog}
+        onOpenChange={setShowSponsorDepartmentDialog}
+        departments={departments}
+        onSubmit={handleSponsorDepartmentSubmit}
+        selectedCustomerCount={selectedCustomers.length}
+      />
     </div>
   );
 }

@@ -3,54 +3,30 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Customer } from "@/contexts/CustomerContext";
+import { Button } from "@/components/ui/button";
 
 interface DetailedInfoFieldsProps {
   formData: Partial<Customer>;
   handleInputChange: (field: string, value: any) => void;
+  countries?: string[];
 }
 
-export function DetailedInfoFields({ formData, handleInputChange }: DetailedInfoFieldsProps) {
+export function DetailedInfoFields({ formData, handleInputChange, countries = [] }: DetailedInfoFieldsProps) {
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <Label>证件类型 <span className="text-red-500">*</span></Label>
-        <Select
-          value={formData.idType}
-          onValueChange={(value) => handleInputChange('idType', value)}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="请选择证件类型" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="id">统一社会信用代码</SelectItem>
-            <SelectItem value="idcard">身份证</SelectItem>
-            <SelectItem value="other">其他</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="space-y-2">
-        <Label>证件号码 <span className="text-red-500">*</span></Label>
+        <Label>主要股东</Label>
         <Input 
-          placeholder="请输入证件号码" 
-          value={formData.idNumber} 
-          onChange={(e) => handleInputChange('idNumber', e.target.value)}
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label>股东</Label>
-        <Input 
-          placeholder="请输入股东信息" 
+          placeholder="请输入主要股东" 
           value={formData.shareholders} 
           onChange={(e) => handleInputChange('shareholders', e.target.value)}
         />
       </div>
 
       <div className="space-y-2">
-        <Label>实控人</Label>
+        <Label>实际控制人</Label>
         <Input 
-          placeholder="请输入实控人" 
+          placeholder="请输入实际控制人" 
           value={formData.actualController} 
           onChange={(e) => handleInputChange('actualController', e.target.value)}
         />
@@ -69,6 +45,7 @@ export function DetailedInfoFields({ formData, handleInputChange }: DetailedInfo
         <Label>成立日期</Label>
         <Input 
           type="date" 
+          placeholder="请选择成立日期" 
           value={formData.establishDate} 
           onChange={(e) => handleInputChange('establishDate', e.target.value)}
         />
@@ -76,17 +53,31 @@ export function DetailedInfoFields({ formData, handleInputChange }: DetailedInfo
 
       <div className="space-y-2">
         <Label>注册地址</Label>
-        <Input 
-          placeholder="请输入注册地址" 
-          value={formData.registeredAddress} 
-          onChange={(e) => handleInputChange('registeredAddress', e.target.value)}
-        />
+        <div className="flex space-x-2">
+          <div className="w-1/3">
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full justify-between"
+              onClick={() => {}}
+            >
+              {formData.country || "请选择国家"}
+            </Button>
+          </div>
+          <div className="w-2/3">
+            <Input 
+              placeholder="请输入详细地址" 
+              value={formData.registeredAddress} 
+              onChange={(e) => handleInputChange('registeredAddress', e.target.value)}
+            />
+          </div>
+        </div>
       </div>
 
       <div className="space-y-2">
-        <Label>法人代表</Label>
+        <Label>法定代表人</Label>
         <Input 
-          placeholder="请输入法人代表" 
+          placeholder="请输入法定代表人" 
           value={formData.legalRepresentative} 
           onChange={(e) => handleInputChange('legalRepresentative', e.target.value)}
         />
@@ -110,6 +101,16 @@ export function DetailedInfoFields({ formData, handleInputChange }: DetailedInfo
       </div>
 
       <div className="space-y-2">
+        <Label>录入时间</Label>
+        <Input 
+          type="date" 
+          placeholder="请选择录入时间" 
+          value={formData.entryDate} 
+          onChange={(e) => handleInputChange('entryDate', e.target.value)}
+        />
+      </div>
+
+      <div className="space-y-2">
         <Label>活跃状态</Label>
         <Select
           value={formData.activeStatus}
@@ -121,6 +122,7 @@ export function DetailedInfoFields({ formData, handleInputChange }: DetailedInfo
           <SelectContent>
             <SelectItem value="活跃">活跃</SelectItem>
             <SelectItem value="不活跃">不活跃</SelectItem>
+            <SelectItem value="潜在">潜在</SelectItem>
           </SelectContent>
         </Select>
       </div>

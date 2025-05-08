@@ -12,13 +12,15 @@ interface InteractionRecordsProps {
   transactionData: TransactionData[];
   onAddServiceRecord: (record: any) => void;
   contactTypes: string[];
+  departments: string[];
 }
 
 export function InteractionRecords({ 
   contactData, 
   transactionData, 
   onAddServiceRecord,
-  contactTypes
+  contactTypes,
+  departments
 }: InteractionRecordsProps) {
   const [showNewServiceRecord, setShowNewServiceRecord] = useState(false);
   
@@ -58,6 +60,7 @@ export function InteractionRecords({
         onOpenChange={setShowNewServiceRecord}
         onSubmit={onAddServiceRecord}
         contactTypes={contactTypes}
+        departments={departments}
       />
     </div>
   );

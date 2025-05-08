@@ -13,6 +13,8 @@ interface NewCustomerDialogProps {
   onSubmit?: (customer: Partial<Customer>) => void;
   productOptions: string[];
   groupOptions: string[];
+  countries: string[];
+  departments: string[];
 }
 
 export function NewCustomerDialog({ 
@@ -21,7 +23,9 @@ export function NewCustomerDialog({
   initialData, 
   onSubmit,
   productOptions,
-  groupOptions 
+  groupOptions,
+  countries,
+  departments
 }: NewCustomerDialogProps) {
   const { toast } = useToast();
   const [formData, setFormData] = useState<Partial<Customer>>(initialData || {
@@ -36,7 +40,8 @@ export function NewCustomerDialog({
     isListed: false,
     stockCode: "",
     city: "",
-    idType: "",
+    country: "中国",
+    idType: "营业执照",
     idNumber: "",
     shareholders: "",
     actualController: "",
@@ -48,6 +53,8 @@ export function NewCustomerDialog({
     entryDate: new Date().toISOString().split('T')[0],
     activeStatus: "活跃",
     products: [],
+    sponsorDepartments: [],
+    entryDepartment: departments[0],
   });
 
   const handleInputChange = (field: string, value: any) => {
@@ -97,22 +104,24 @@ export function NewCustomerDialog({
             填写客户信息，带*为必填项
           </DialogDescription>
         </DialogHeader>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
           <CustomerFormSection 
             formData={formData} 
             handleInputChange={handleInputChange} 
             section="basic"
             groupOptions={groupOptions}
+            countries={countries}
           />
           <CustomerFormSection 
             formData={formData} 
             handleInputChange={handleInputChange} 
             section="details"
             groupOptions={groupOptions}
+            countries={countries}
           />
         </div>
         
-        <div className="flex justify-end space-x-2 mt-6 pt-4">
+        <div className="flex justify-end space-x-2">
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             取消
           </Button>

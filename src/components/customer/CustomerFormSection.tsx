@@ -8,15 +8,23 @@ interface CustomerFormSectionProps {
   handleInputChange: (field: string, value: any) => void;
   section: "basic" | "details";
   groupOptions: string[];
+  countries: string[];
 }
 
-export function CustomerFormSection({ formData, handleInputChange, section, groupOptions }: CustomerFormSectionProps) {
+export function CustomerFormSection({ 
+  formData, 
+  handleInputChange, 
+  section, 
+  groupOptions,
+  countries 
+}: CustomerFormSectionProps) {
   if (section === "basic") {
     return (
       <BasicInfoFields 
         formData={formData} 
         handleInputChange={handleInputChange} 
         groupOptions={groupOptions} 
+        countries={countries}
       />
     );
   }
@@ -24,7 +32,8 @@ export function CustomerFormSection({ formData, handleInputChange, section, grou
   return (
     <DetailedInfoFields 
       formData={formData} 
-      handleInputChange={handleInputChange} 
+      handleInputChange={handleInputChange}
+      countries={countries}
     />
   );
 }

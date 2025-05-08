@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 
@@ -12,6 +12,7 @@ interface ServiceRecord {
   id: string;
   date: string;
   type: string;
+  customType?: string;
   notes: string;
   amount?: number;
   department?: string;
@@ -24,18 +25,21 @@ interface NewServiceRecordDialogProps {
   onOpenChange: (open: boolean) => void;
   onSubmit: (record: ServiceRecord) => void;
   contactTypes: string[];
+  departments: string[];
 }
 
 export function NewServiceRecordDialog({ 
   open, 
   onOpenChange, 
   onSubmit,
-  contactTypes 
+  contactTypes,
+  departments
 }: NewServiceRecordDialogProps) {
   const { toast } = useToast();
   const [record, setRecord] = useState<Partial<ServiceRecord>>({
     date: new Date().toISOString().split('T')[0],
     type: "",
+    customType: "",
     notes: "",
     amount: undefined,
     department: "",
@@ -43,7 +47,7 @@ export function NewServiceRecordDialog({
     purpose: "",
   });
 
-  const departments = ["零售经纪", "机构经纪", "跨资产", "DCM", "ECM"];
+  const showCustomTypeInput = record.type === "其他";
 
   const handleChange = (field: string, value: any) => {
     setRecord({ ...record, [field]: value });
@@ -59,10 +63,20 @@ export function NewServiceRecordDialog({
       return;
     }
 
+    if (record.type === "其他" && !record.customType) {
+      toast({
+        title: "请填写自定义类型",
+        description: "选择其他类型时，自定义类型为必填项",
+        variant: "destructive"
+      });
+      return;
+    }
+
     const newRecord: ServiceRecord = {
       id: Date.now().toString(),
       date: record.date || new Date().toISOString().split('T')[0],
       type: record.type || "",
+      customType: record.customType,
       notes: record.notes || "",
       amount: record.amount,
       department: record.department,
@@ -81,6 +95,7 @@ export function NewServiceRecordDialog({
     setRecord({
       date: new Date().toISOString().split('T')[0],
       type: "",
+      customType: "",
       notes: "",
       amount: undefined,
       department: "",
@@ -90,6 +105,13 @@ export function NewServiceRecordDialog({
     
     onOpenChange(false);
   };
+
+  // Reset customType when type changes
+  useEffect(() => {
+    if (record.type !== "其他") {
+      setRecord(prev => ({ ...prev, customType: "" }));
+    }
+  }, [record.type]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -123,6 +145,17 @@ export function NewServiceRecordDialog({
               </SelectContent>
             </Select>
           </div>
+
+          {showCustomTypeInput && (
+            <div className="space-y-2">
+              <Label>自定义类型</Label>
+              <Input 
+                placeholder="请输入自定义类型" 
+                value={record.customType} 
+                onChange={(e) => handleChange('customType', e.target.value)}
+              />
+            </div>
+          )}
 
           <div className="space-y-2">
             <Label>业务部门</Label>
