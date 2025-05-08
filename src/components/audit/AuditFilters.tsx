@@ -30,6 +30,7 @@ export function AuditFilters() {
             <SelectItem value="all">全部</SelectItem>
             <SelectItem value="customer">客户信息</SelectItem>
             <SelectItem value="interaction">触达记录</SelectItem>
+            <SelectItem value="permissions">共享权限</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -43,6 +44,7 @@ export function AuditFilters() {
             <SelectItem value="新增">新增</SelectItem>
             <SelectItem value="修改">修改</SelectItem>
             <SelectItem value="删除">删除</SelectItem>
+            <SelectItem value="权限变更">权限变更</SelectItem>
           </SelectContent>
         </Select>
       </div>

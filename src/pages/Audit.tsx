@@ -186,12 +186,15 @@ export default function Audit() {
       
       <div className="flex items-center justify-end">
         <div className="w-60">
-          <Select value={selectedCategory || ""} onValueChange={(value) => setSelectedCategory(value || null)}>
+          <Select 
+            value={selectedCategory || "all"} 
+            onValueChange={(value) => setSelectedCategory(value === "all" ? null : value)}
+          >
             <SelectTrigger>
               <SelectValue placeholder="全部类型" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">全部类型</SelectItem>
+              <SelectItem value="all">全部类型</SelectItem>
               <SelectItem value="客户信息">客户信息</SelectItem>
               <SelectItem value="触达记录">触达记录</SelectItem>
               <SelectItem value="共享权限">共享权限</SelectItem>
