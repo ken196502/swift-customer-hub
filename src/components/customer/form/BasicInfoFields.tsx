@@ -13,13 +13,21 @@ interface BasicInfoFieldsProps {
 export function BasicInfoFields({ formData, handleInputChange, groupOptions }: BasicInfoFieldsProps) {
   return (
     <div className="space-y-4">
+      
       <div className="space-y-2">
-        <Label>客户号 <span className="text-red-500">*</span></Label>
-        <Input 
-          placeholder="请输入客户号" 
-          value={formData.customerNumber} 
-          onChange={(e) => handleInputChange('customerNumber', e.target.value)}
-        />
+        <Label>客户类型</Label>
+        <Select
+          value={formData.type}
+          onValueChange={(value) => handleInputChange('type', value)}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="请选择客户类型" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="公司户">公司户</SelectItem>
+            <SelectItem value="个人户">个人户</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
 
       <div className="space-y-2">
@@ -74,23 +82,6 @@ export function BasicInfoFields({ formData, handleInputChange, groupOptions }: B
           onChange={(e) => handleInputChange('fullNameCn', e.target.value)}
         />
       </div>
-
-      <div className="space-y-2">
-        <Label>客户类型</Label>
-        <Select
-          value={formData.type}
-          onValueChange={(value) => handleInputChange('type', value)}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="请选择客户类型" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="公司户">公司户</SelectItem>
-            <SelectItem value="个人户">个人户</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
       <div className="space-y-2">
         <Label>是否上市</Label>
         <Select

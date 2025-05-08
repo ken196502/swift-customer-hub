@@ -49,6 +49,7 @@ export function CustomerFilters() {
             <SelectContent>
               <SelectItem value="company">公司户</SelectItem>
               <SelectItem value="personal">个人户</SelectItem>
+              <SelectItem value="institute">机构户</SelectItem>
             </SelectContent>
           </Select>
         </div>

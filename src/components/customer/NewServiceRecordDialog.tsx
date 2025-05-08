@@ -151,10 +151,10 @@ export function NewServiceRecordDialog({
           </div>
 
           <div className="space-y-2">
-            <Label>金额（万元）</Label>
+            <Label>成本金额</Label>
             <Input 
               type="number" 
-              placeholder="请输入金额" 
+              placeholder="请输入成本金额" 
               value={record.amount === undefined ? '' : record.amount} 
               onChange={(e) => handleChange('amount', parseFloat(e.target.value) || undefined)}
             />
@@ -163,16 +163,16 @@ export function NewServiceRecordDialog({
           <div className="space-y-2">
             <Label>用途</Label>
             <Input 
-              placeholder="请输入用途" 
+              placeholder="请输入成本用途" 
               value={record.purpose} 
               onChange={(e) => handleChange('purpose', e.target.value)}
             />
           </div>
 
           <div className="space-y-2">
-            <Label>备注</Label>
+            <Label>触达内容<span className="text-red-500">*</span></Label>
             <Textarea 
-              placeholder="请输入备注" 
+              placeholder="请输入触达内容" 
               value={record.notes} 
               onChange={(e) => handleChange('notes', e.target.value)}
               rows={3}
