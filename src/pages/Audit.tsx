@@ -1,15 +1,17 @@
+
 import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { AuditContent } from "@/components/audit/AuditContent";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 // Define the audit item type
 export interface AuditItem {
   id: number;
   submitTime: string;
   customer: string;
-  type: "新增" | "修改" | "删除";
-  category: "客户信息" | "触达记录";
+  type: "新增" | "修改" | "删除" | "权限变更";
+  category: "客户信息" | "触达记录" | "共享权限";
   before: string;
   after: string;
   note: string;
@@ -102,11 +104,36 @@ const mockAuditItems: AuditItem[] = [
     note: "添加参与人员和备注",
     submitter: "王五",
     status: "approved"
+  },
+  {
+    id: 8,
+    submitTime: "2025-04-19 09:30",
+    customer: "阿里",
+    type: "权限变更",
+    category: "共享权限",
+    before: "部门: 机构经纪\n内容: 触达记录\n产品: 股票交易",
+    after: "部门: 机构经纪, DCM\n内容: 触达记录, 客户画像\n产品: 股票交易, 发债",
+    note: "新增DCM部门查看权限",
+    submitter: "孙八",
+    status: "pending"
+  },
+  {
+    id: 9,
+    submitTime: "2025-04-18 14:45",
+    customer: "百度",
+    type: "权限变更",
+    category: "共享权限",
+    before: "",
+    after: "部门: 零售经纪\n内容: 触达记录\n产品: 咨询",
+    note: "新增查看权限",
+    submitter: "王五",
+    status: "approved"
   }
 ];
 
 export default function Audit() {
   const [auditItems, setAuditItems] = useState<AuditItem[]>(mockAuditItems);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const { toast } = useToast();
 
   const handleApprove = (ids: number[], reason?: string) => {
@@ -124,6 +151,14 @@ export default function Audit() {
       )
     );
   };
+
+  // Filter items based on selected category
+  const filteredItems = selectedCategory 
+    ? auditItems.filter(item => item.category === selectedCategory)
+    : auditItems;
+    
+  const pendingItems = filteredItems.filter(item => item.status === "pending");
+  const processedItems = filteredItems.filter(item => item.status !== "pending");
 
   useEffect(() => {
     const handleApproveEvent = (e: CustomEvent) => {
@@ -145,12 +180,25 @@ export default function Audit() {
     };
   }, [auditItems]);
 
-  const pendingItems = auditItems.filter(item => item.status === "pending");
-  const processedItems = auditItems.filter(item => item.status !== "pending");
-
   return (
     <div className="container mx-auto py-6 space-y-6">
       <h1 className="text-2xl font-bold">审核管理</h1>
+      
+      <div className="flex items-center justify-end">
+        <div className="w-60">
+          <Select value={selectedCategory || ""} onValueChange={(value) => setSelectedCategory(value || null)}>
+            <SelectTrigger>
+              <SelectValue placeholder="全部类型" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="">全部类型</SelectItem>
+              <SelectItem value="客户信息">客户信息</SelectItem>
+              <SelectItem value="触达记录">触达记录</SelectItem>
+              <SelectItem value="共享权限">共享权限</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
 
       <Tabs defaultValue="pending" className="w-full">
         <TabsList className="grid w-[400px] grid-cols-2">

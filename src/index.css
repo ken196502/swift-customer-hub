@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -98,4 +99,15 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Add wider container width */
+.container {
+  max-width: 120%;
+  width: 120%;
+}
+
+/* Right-aligned page titles */
+h1.text-2xl, h2.text-2xl, h1.text-xl, h2.text-xl {
+  text-align: right;
 }

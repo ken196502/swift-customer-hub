@@ -3,17 +3,40 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Customer } from "@/contexts/CustomerContext";
-import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import { cn } from "@/lib/utils";
 
 interface DetailedInfoFieldsProps {
   formData: Partial<Customer>;
   handleInputChange: (field: string, value: any) => void;
-  countries?: string[];
 }
 
-export function DetailedInfoFields({ formData, handleInputChange, countries = [] }: DetailedInfoFieldsProps) {
+export function DetailedInfoFields({ formData, handleInputChange }: DetailedInfoFieldsProps) {
+  const isPersonalCustomer = formData.type === "个人户";
+
   return (
     <div className="space-y-4">
+      <div className="flex items-center space-x-2">
+        <Switch
+          id="isListed"
+          checked={formData.isListed || false}
+          onCheckedChange={(checked) => handleInputChange("isListed", checked)}
+          disabled={isPersonalCustomer}
+        />
+        <Label htmlFor="isListed" className={cn(isPersonalCustomer && "text-muted-foreground")}>是否上市</Label>
+      </div>
+      
+      {!isPersonalCustomer && formData.isListed && (
+        <div className="space-y-2">
+          <Label htmlFor="stockCode">股票代码</Label>
+          <Input
+            id="stockCode"
+            value={formData.stockCode || ""}
+            onChange={(e) => handleInputChange("stockCode", e.target.value)}
+          />
+        </div>
+      )}
+
       <div className="space-y-2">
         <Label>主要股东</Label>
         <Input 
@@ -42,36 +65,12 @@ export function DetailedInfoFields({ formData, handleInputChange, countries = []
       </div>
 
       <div className="space-y-2">
-        <Label>成立日期</Label>
-        <Input 
-          type="date" 
-          placeholder="请选择成立日期" 
-          value={formData.establishDate} 
-          onChange={(e) => handleInputChange('establishDate', e.target.value)}
-        />
-      </div>
-
-      <div className="space-y-2">
         <Label>注册地址</Label>
-        <div className="flex space-x-2">
-          <div className="w-1/3">
-            <Button
-              type="button"
-              variant="outline"
-              className="w-full justify-between"
-              onClick={() => {}}
-            >
-              {formData.country || "请选择国家"}
-            </Button>
-          </div>
-          <div className="w-2/3">
-            <Input 
-              placeholder="请输入详细地址" 
-              value={formData.registeredAddress} 
-              onChange={(e) => handleInputChange('registeredAddress', e.target.value)}
-            />
-          </div>
-        </div>
+        <Input 
+          placeholder="请输入详细地址" 
+          value={formData.registeredAddress} 
+          onChange={(e) => handleInputChange('registeredAddress', e.target.value)}
+        />
       </div>
 
       <div className="space-y-2">
@@ -98,16 +97,6 @@ export function DetailedInfoFields({ formData, handleInputChange, countries = []
             <SelectItem value="高">高</SelectItem>
           </SelectContent>
         </Select>
-      </div>
-
-      <div className="space-y-2">
-        <Label>录入时间</Label>
-        <Input 
-          type="date" 
-          placeholder="请选择录入时间" 
-          value={formData.entryDate} 
-          onChange={(e) => handleInputChange('entryDate', e.target.value)}
-        />
       </div>
 
       <div className="space-y-2">

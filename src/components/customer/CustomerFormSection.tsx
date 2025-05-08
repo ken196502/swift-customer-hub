@@ -33,7 +33,6 @@ export function CustomerFormSection({
           <DetailedInfoFields 
             formData={formData} 
             handleInputChange={handleInputChange}
-            countries={countries}
           />
         </div>
       )}

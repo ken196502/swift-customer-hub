@@ -29,6 +29,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 // Define types for permissions data structures
 interface PermissionDetail {
@@ -37,8 +38,8 @@ interface PermissionDetail {
   customerName: string; // "全公司客户" or customer name
   customerNumber?: string;
   departments: string[] | null; // null means "all departments"
-  visibleContents: ("触达记录" | "客户画像" | "收入")[];
-  visibleProducts: ("股票交易" | "咨询" | "债券交易" | "IPO" | "发债")[];
+  visibleContent: "触达记录" | "客户画像" | "收入";
+  visibleProduct: "股票交易" | "咨询" | "债券交易" | "IPO" | "发债";
 }
 
 interface UserPermission {
@@ -65,8 +66,8 @@ export default function Permissions() {
           customerId: null,
           customerName: "全公司客户",
           departments: null,
-          visibleContents: ["触达记录", "客户画像", "收入"],
-          visibleProducts: ["股票交易", "咨询", "债券交易", "IPO", "发债"],
+          visibleContent: "触达记录",
+          visibleProduct: "股票交易",
         }
       ]
     },
@@ -81,8 +82,8 @@ export default function Permissions() {
           customerId: null,
           customerName: "全公司客户",
           departments: ["机构经纪"],
-          visibleContents: ["触达记录", "客户画像"],
-          visibleProducts: ["股票交易", "咨询"],
+          visibleContent: "触达记录",
+          visibleProduct: "股票交易",
         }
       ]
     },
@@ -98,8 +99,8 @@ export default function Permissions() {
           customerName: customers[0]?.shortNameCn || "某客户",
           customerNumber: customers[0]?.customerNumber,
           departments: ["DCM"],
-          visibleContents: ["触达记录"],
-          visibleProducts: ["IPO", "发债"],
+          visibleContent: "触达记录",
+          visibleProduct: "发债",
         }
       ]
     },
@@ -121,8 +122,8 @@ export default function Permissions() {
     customerId: null,
     customerName: "全公司客户",
     departments: [],
-    visibleContents: [],
-    visibleProducts: []
+    visibleContent: "触达记录",
+    visibleProduct: "股票交易"
   });
 
   // Filter users based on search criteria
@@ -165,8 +166,8 @@ export default function Permissions() {
       customerName: detail.customerName,
       customerNumber: detail.customerNumber,
       departments: detail.departments,
-      visibleContents: [...detail.visibleContents],
-      visibleProducts: [...detail.visibleProducts]
+      visibleContent: detail.visibleContent,
+      visibleProduct: detail.visibleProduct
     });
   };
 
@@ -209,8 +210,8 @@ export default function Permissions() {
       customerId: null,
       customerName: "全公司客户",
       departments: [],
-      visibleContents: [],
-      visibleProducts: []
+      visibleContent: "触达记录",
+      visibleProduct: "股票交易"
     };
     
     // Add the new detail to the user's permissions
@@ -230,8 +231,8 @@ export default function Permissions() {
       customerId: null,
       customerName: "全公司客户",
       departments: [],
-      visibleContents: [],
-      visibleProducts: []
+      visibleContent: "触达记录",
+      visibleProduct: "股票交易"
     });
   };
 
@@ -257,38 +258,6 @@ export default function Permissions() {
   const handleResetSearch = () => {
     setSearchName("");
     setSearchDepartment(null);
-  };
-
-  // Toggle content visibility selection
-  const toggleContent = (content: "触达记录" | "客户画像" | "收入") => {
-    const currentContents = newPermissionDetail.visibleContents || [];
-    if (currentContents.includes(content)) {
-      setNewPermissionDetail({
-        ...newPermissionDetail,
-        visibleContents: currentContents.filter(c => c !== content)
-      });
-    } else {
-      setNewPermissionDetail({
-        ...newPermissionDetail,
-        visibleContents: [...currentContents, content]
-      });
-    }
-  };
-
-  // Toggle product visibility selection
-  const toggleProduct = (product: "股票交易" | "咨询" | "债券交易" | "IPO" | "发债") => {
-    const currentProducts = newPermissionDetail.visibleProducts || [];
-    if (currentProducts.includes(product)) {
-      setNewPermissionDetail({
-        ...newPermissionDetail,
-        visibleProducts: currentProducts.filter(p => p !== product)
-      });
-    } else {
-      setNewPermissionDetail({
-        ...newPermissionDetail,
-        visibleProducts: [...currentProducts, product]
-      });
-    }
   };
 
   const contentOptions = ["触达记录", "客户画像", "收入"] as const;
@@ -441,18 +410,10 @@ export default function Permissions() {
                           )}
                         </TableCell>
                         <TableCell>
-                          <div className="flex flex-wrap gap-1">
-                            {detail.visibleContents.map(content => (
-                              <Badge key={content} variant="outline">{content}</Badge>
-                            ))}
-                          </div>
+                          <Badge variant="outline">{detail.visibleContent}</Badge>
                         </TableCell>
                         <TableCell>
-                          <div className="flex flex-wrap gap-1">
-                            {detail.visibleProducts.map(product => (
-                              <Badge key={product} variant="outline">{product}</Badge>
-                            ))}
-                          </div>
+                          <Badge variant="outline">{detail.visibleProduct}</Badge>
                         </TableCell>
                         {editMode && (
                           <TableCell>
@@ -589,38 +550,42 @@ export default function Permissions() {
                       )}
                     </div>
 
-                    <div>
+                    <div className="space-y-2">
                       <Label>可见内容</Label>
-                      <div className="flex flex-wrap gap-2 mt-2">
+                      <RadioGroup
+                        value={newPermissionDetail.visibleContent as string}
+                        onValueChange={(value) => setNewPermissionDetail({
+                          ...newPermissionDetail,
+                          visibleContent: value as typeof contentOptions[number]
+                        })}
+                        className="flex flex-wrap gap-2"
+                      >
                         {contentOptions.map((content) => (
-                          <Button
-                            key={content}
-                            type="button"
-                            variant={newPermissionDetail.visibleContents?.includes(content) ? "default" : "outline"}
-                            size="sm"
-                            onClick={() => toggleContent(content)}
-                          >
-                            {content}
-                          </Button>
+                          <div key={content} className="flex items-center space-x-2">
+                            <RadioGroupItem value={content} id={`content-${content}`} />
+                            <Label htmlFor={`content-${content}`}>{content}</Label>
+                          </div>
                         ))}
-                      </div>
+                      </RadioGroup>
                     </div>
 
-                    <div>
+                    <div className="space-y-2">
                       <Label>可见产品</Label>
-                      <div className="flex flex-wrap gap-2 mt-2">
+                      <RadioGroup
+                        value={newPermissionDetail.visibleProduct as string}
+                        onValueChange={(value) => setNewPermissionDetail({
+                          ...newPermissionDetail,
+                          visibleProduct: value as typeof productOptions[number]
+                        })}
+                        className="flex flex-wrap gap-2"
+                      >
                         {productOptions.map((product) => (
-                          <Button
-                            key={product}
-                            type="button"
-                            variant={newPermissionDetail.visibleProducts?.includes(product) ? "default" : "outline"}
-                            size="sm"
-                            onClick={() => toggleProduct(product)}
-                          >
-                            {product}
-                          </Button>
+                          <div key={product} className="flex items-center space-x-2">
+                            <RadioGroupItem value={product} id={`product-${product}`} />
+                            <Label htmlFor={`product-${product}`}>{product}</Label>
+                          </div>
                         ))}
-                      </div>
+                      </RadioGroup>
                     </div>
                     
                     <div className="flex justify-end space-x-2">

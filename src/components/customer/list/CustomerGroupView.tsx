@@ -27,6 +27,46 @@ interface CustomerGroupViewProps {
   allSelected: boolean;
 }
 
+// Helper function to render progress badge
+const ProgressBadge = ({ progress }: { progress?: string }) => (
+  <Badge
+    variant={progress === "已开户" ? "default" : "outline"}
+    className={progress === "已开户" ? "bg-green-100 text-green-800 hover:bg-green-100" : "bg-yellow-100 text-yellow-800 hover:bg-yellow-100"}
+  >
+    {progress || "意向"}
+  </Badge>
+);
+
+// Helper function to render departments
+const DepartmentBadges = ({ departments }: { departments?: string[] }) => (
+  <div className="flex flex-wrap gap-1">
+    {departments?.map((dept, i) => (
+      <Badge
+        key={i}
+        variant="outline"
+        className={getTagColor(dept)}
+      >
+        {dept}
+      </Badge>
+    ))}
+  </div>
+);
+
+// Helper function to render products
+const ProductBadges = ({ products }: { products: string[] }) => (
+  <div className="flex flex-wrap gap-1">
+    {products.map((product, i) => (
+      <Badge
+        key={i}
+        variant="outline"
+        className={getProductColor(product)}
+      >
+        {product}
+      </Badge>
+    ))}
+  </div>
+);
+
 export function CustomerGroupView({ 
   customers, 
   onSelectCustomer,
@@ -56,7 +96,6 @@ export function CustomerGroupView({
     });
     return Array.from(uniqueProducts);
   };
-
 
   return (
     <div className="border rounded-md">
@@ -128,39 +167,14 @@ export function CustomerGroupView({
                           <div className="font-medium">{customer.shortNameCn}</div>
                         </TableCell>
                         <TableCell>
-                          <Badge
-                            variant={customer.progress === "已开户" ? "default" : "outline"}
-                            className={customer.progress === "已开户" ? "bg-green-100 text-green-800 hover:bg-green-100" : "bg-yellow-100 text-yellow-800 hover:bg-yellow-100"}
-                          >
-                            {customer.progress || "意向"}
-                          </Badge>
+                          <ProgressBadge progress={customer.progress} />
                         </TableCell>
                         <TableCell>{customer.type}</TableCell>
                         <TableCell>
-                          <div className="flex flex-wrap gap-1">
-                            {customer.sponsorDepartments?.map((dept, i) => (
-                              <Badge
-                                key={i}
-                                variant="outline"
-                                className={getTagColor(dept)}
-                              >
-                                {dept}
-                              </Badge>
-                            ))}
-                          </div>
+                          <DepartmentBadges departments={customer.sponsorDepartments} />
                         </TableCell>
                         <TableCell>
-                          <div className="flex flex-wrap gap-1">
-                            {customer.products.map((product, i) => (
-                              <Badge
-                                key={i}
-                                variant="outline"
-                                className={getProductColor(product)}
-                              >
-                                {product}
-                              </Badge>
-                            ))}
-                          </div>
+                          <ProductBadges products={customer.products} />
                         </TableCell>
                         <TableCell>{customer.entryDepartment}</TableCell>
                         <TableCell>{customer.entryDate}</TableCell>
@@ -187,12 +201,7 @@ export function CustomerGroupView({
                         />
                         <div className="font-medium">{customer.shortNameCn}</div>
                       </div>
-                      <Badge
-                        variant={customer.progress === "已开户" ? "default" : "outline"}
-                        className={customer.progress === "已开户" ? "bg-green-100 text-green-800 hover:bg-green-100" : "bg-yellow-100 text-yellow-800 hover:bg-yellow-100"}
-                      >
-                        {customer.progress || "意向"}
-                      </Badge>
+                      <ProgressBadge progress={customer.progress} />
                     </div>
                     
                     <div className="text-sm space-y-1">
@@ -211,15 +220,7 @@ export function CustomerGroupView({
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">主办部门:</span>
                         <div className="flex flex-wrap gap-1 justify-end">
-                          {customer.sponsorDepartments?.map((dept, i) => (
-                            <Badge
-                              key={i}
-                              variant="outline"
-                              className={getTagColor(dept)}
-                            >
-                              {dept}
-                            </Badge>
-                          ))}
+                          <DepartmentBadges departments={customer.sponsorDepartments} />
                         </div>
                       </div>
                     </div>

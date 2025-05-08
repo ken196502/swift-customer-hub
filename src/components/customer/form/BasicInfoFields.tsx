@@ -1,6 +1,5 @@
 
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
@@ -24,6 +23,7 @@ export function BasicInfoFields({
   disabled = false 
 }: BasicInfoFieldsProps) {
   const isPersonalCustomer = formData.type === "个人户";
+  const establishDateLabel = isPersonalCustomer ? "出生日期" : "成立日期";
 
   return (
     <div className="space-y-4">
@@ -142,22 +142,23 @@ export function BasicInfoFields({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="flex items-center space-x-2">
-          <Switch
-            id="isListed"
-            checked={formData.isListed || false}
-            onCheckedChange={(checked) => handleInputChange("isListed", checked)}
-            disabled={disabled || isPersonalCustomer}
+        <div>
+          <Label htmlFor="establishDate">{establishDateLabel}</Label>
+          <Input 
+            type="date" 
+            id="establishDate"
+            placeholder={`请选择${establishDateLabel}`} 
+            value={formData.establishDate || ""} 
+            onChange={(e) => handleInputChange('establishDate', e.target.value)}
           />
-          <Label htmlFor="isListed" className={cn(isPersonalCustomer && "text-muted-foreground")}>是否上市</Label>
         </div>
-        {!isPersonalCustomer && formData.isListed && (
+        {isPersonalCustomer && (
           <div>
-            <Label htmlFor="stockCode">股票代码</Label>
+            <Label htmlFor="phone">手机号</Label>
             <Input
-              id="stockCode"
-              value={formData.stockCode || ""}
-              onChange={(e) => handleInputChange("stockCode", e.target.value)}
+              id="phone"
+              value={formData.phone || ""}
+              onChange={(e) => handleInputChange("phone", e.target.value)}
               disabled={disabled}
             />
           </div>
@@ -165,28 +166,17 @@ export function BasicInfoFields({
       </div>
 
       {isPersonalCustomer && (
-        <>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="phone">手机号</Label>
-              <Input
-                id="phone"
-                value={formData.phone || ""}
-                onChange={(e) => handleInputChange("phone", e.target.value)}
-                disabled={disabled}
-              />
-            </div>
-            <div>
-              <Label htmlFor="email">邮箱</Label>
-              <Input
-                id="email"
-                value={formData.email || ""}
-                onChange={(e) => handleInputChange("email", e.target.value)}
-                disabled={disabled}
-              />
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="email">邮箱</Label>
+            <Input
+              id="email"
+              value={formData.email || ""}
+              onChange={(e) => handleInputChange("email", e.target.value)}
+              disabled={disabled}
+            />
           </div>
-        </>
+        </div>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -258,14 +248,16 @@ export function BasicInfoFields({
         </div>
       </div>
 
-      <div>
-        <Label htmlFor="entryDate">录入时间</Label>
-        <Input
-          id="entryDate"
-          value={formData.entryDate || ""}
-          onChange={(e) => handleInputChange("entryDate", e.target.value)}
-          disabled
-        />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <Label htmlFor="entryDate">录入时间</Label>
+          <Input
+            id="entryDate"
+            value={formData.entryDate || ""}
+            onChange={(e) => handleInputChange("entryDate", e.target.value)}
+            disabled
+          />
+        </div>
       </div>
     </div>
   );

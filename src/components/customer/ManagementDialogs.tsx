@@ -29,7 +29,7 @@ export function ManagementDialogs({
   const currentDate = new Date();
   const formattedDate = `${currentDate.getFullYear()}/${String(currentDate.getMonth() + 1).padStart(2, "0")}/${String(currentDate.getDate()).padStart(2, "0")}`;
 
-  const [newCustomerType, setNewCustomerType] = useState<"公司户" | "个人户" | "机构户">("公司户");
+  const [newCustomerType, setNewCustomerType] = useState<"公司户" | "机构户" | "个人户">("公司户");
   const [newCustomerData, setNewCustomerData] = useState<Partial<Customer>>({
     type: "公司户",
     entryDate: formattedDate,
@@ -99,19 +99,19 @@ export function ManagementDialogs({
             </Button>
             <Button
               type="button"
-              variant={newCustomerType === "个人户" ? "default" : "outline"}
-              onClick={() => handleCustomerInputChange("type", "个人户")}
-              className="flex-1"
-            >
-              个人户
-            </Button>
-            <Button
-              type="button"
               variant={newCustomerType === "机构户" ? "default" : "outline"}
               onClick={() => handleCustomerInputChange("type", "机构户")}
               className="flex-1"
             >
               机构户
+            </Button>
+            <Button
+              type="button"
+              variant={newCustomerType === "个人户" ? "default" : "outline"}
+              onClick={() => handleCustomerInputChange("type", "个人户")}
+              className="flex-1"
+            >
+              个人户
             </Button>
           </div>
           <CustomerFormSection
