@@ -44,6 +44,7 @@ export function CustomerTableView({
               </TableHead>
               <TableHead>客户号</TableHead>
               <TableHead>客户名称</TableHead>
+              <TableHead>进展</TableHead>
               <TableHead>客户类型</TableHead>
               <TableHead>主办部门</TableHead>
               <TableHead>提供产品</TableHead>
@@ -74,6 +75,14 @@ export function CustomerTableView({
                 <TableCell>
                   <div className="font-medium">{customer.shortNameCn}</div>
                   <div className="text-sm text-muted-foreground">{customer.groupName}</div>
+                </TableCell>
+                <TableCell>
+                  <Badge
+                    variant={customer.progress === "已开户" ? "default" : "outline"}
+                    className={customer.progress === "已开户" ? "bg-green-100 text-green-800 hover:bg-green-100" : "bg-yellow-100 text-yellow-800 hover:bg-yellow-100"}
+                  >
+                    {customer.progress || "意向"}
+                  </Badge>
                 </TableCell>
                 <TableCell>{customer.type}</TableCell>
                 <TableCell>
@@ -140,6 +149,14 @@ export function CustomerTableView({
               <div>
                 <div className="font-medium">{customer.shortNameCn}</div>
                 <div className="text-sm text-muted-foreground">{customer.groupName}</div>
+              </div>
+              <div className="ml-auto">
+                <Badge
+                  variant={customer.progress === "已开户" ? "default" : "outline"}
+                  className={customer.progress === "已开户" ? "bg-green-100 text-green-800 hover:bg-green-100" : "bg-yellow-100 text-yellow-800 hover:bg-yellow-100"}
+                >
+                  {customer.progress || "意向"}
+                </Badge>
               </div>
             </div>
             

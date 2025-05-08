@@ -55,6 +55,7 @@ export function NewCustomerDialog({
     products: [],
     sponsorDepartments: [],
     entryDepartment: departments[0],
+    progress: "意向",
   });
 
   const handleInputChange = (field: string, value: any) => {
@@ -74,10 +75,10 @@ export function NewCustomerDialog({
   };
 
   const handleSubmit = () => {
-    if (!formData.customerNumber || !formData.shortNameCn || !formData.idType || !formData.idNumber) {
+    if (!formData.shortNameCn) {
       toast({
         title: "请填写必填项",
-        description: "客户号、中文简称、证件类型和证件号码为必填项",
+        description: "中文名称为必填项",
         variant: "destructive"
       });
       return;
@@ -97,31 +98,22 @@ export function NewCustomerDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-6xl max-h-[80vh] overflow-y-auto">
+      <DialogContent className="max-w-5xl max-h-[80vh] overflow-y-auto">
         <DialogHeader className="sticky top-0 bg-white z-10 pb-4 border-b">
           <DialogTitle>{initialData ? "编辑客户" : "新建客户"}</DialogTitle>
           <DialogDescription>
             填写客户信息，带*为必填项
           </DialogDescription>
         </DialogHeader>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
-          <CustomerFormSection 
-            formData={formData} 
-            handleInputChange={handleInputChange} 
-            section="basic"
-            groupOptions={groupOptions}
-            countries={countries}
-          />
-          <CustomerFormSection 
-            formData={formData} 
-            handleInputChange={handleInputChange} 
-            section="details"
-            groupOptions={groupOptions}
-            countries={countries}
-          />
-        </div>
         
-        <div className="flex justify-end space-x-2">
+        <CustomerFormSection 
+          formData={formData} 
+          handleInputChange={handleInputChange} 
+          groupOptions={groupOptions}
+          countries={countries}
+        />
+        
+        <div className="flex justify-end space-x-2 mt-6">
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             取消
           </Button>

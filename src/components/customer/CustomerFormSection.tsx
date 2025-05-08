@@ -6,7 +6,6 @@ import { DetailedInfoFields } from "./form/DetailedInfoFields";
 interface CustomerFormSectionProps {
   formData: Partial<Customer>;
   handleInputChange: (field: string, value: any) => void;
-  section: "basic" | "details";
   groupOptions: string[];
   countries: string[];
 }
@@ -14,26 +13,30 @@ interface CustomerFormSectionProps {
 export function CustomerFormSection({ 
   formData, 
   handleInputChange, 
-  section, 
   groupOptions,
   countries 
 }: CustomerFormSectionProps) {
-  if (section === "basic") {
-    return (
-      <BasicInfoFields 
-        formData={formData} 
-        handleInputChange={handleInputChange} 
-        groupOptions={groupOptions} 
-        countries={countries}
-      />
-    );
-  }
+  const isPersonalCustomer = formData.type === "个人户";
 
   return (
-    <DetailedInfoFields 
-      formData={formData} 
-      handleInputChange={handleInputChange}
-      countries={countries}
-    />
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <BasicInfoFields 
+          formData={formData} 
+          handleInputChange={handleInputChange} 
+          groupOptions={groupOptions} 
+          countries={countries}
+        />
+      </div>
+      {!isPersonalCustomer && (
+        <div>
+          <DetailedInfoFields 
+            formData={formData} 
+            handleInputChange={handleInputChange}
+            countries={countries}
+          />
+        </div>
+      )}
+    </div>
   );
 }

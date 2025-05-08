@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch";
 import { Customer } from "@/contexts/CustomerContext";
 import { cn } from "@/lib/utils";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 interface BasicInfoFieldsProps {
   formData: Partial<Customer>;
@@ -103,6 +104,23 @@ export function BasicInfoFields({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
+          <Label htmlFor="progress">进展</Label>
+          <RadioGroup
+            value={formData.progress || "意向"}
+            onValueChange={(value) => handleInputChange("progress", value)}
+            className="flex space-x-4 pt-2"
+          >
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="意向" id="progress-intent" />
+              <Label htmlFor="progress-intent">意向</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="已开户" id="progress-opened" />
+              <Label htmlFor="progress-opened">已开户</Label>
+            </div>
+          </RadioGroup>
+        </div>
+        <div>
           <Label htmlFor="groupName">所属集团</Label>
           <Select
             value={formData.groupName || ""}
@@ -121,6 +139,9 @@ export function BasicInfoFields({
             </SelectContent>
           </Select>
         </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex items-center space-x-2">
           <Switch
             id="isListed"
@@ -130,19 +151,18 @@ export function BasicInfoFields({
           />
           <Label htmlFor="isListed" className={cn(isPersonalCustomer && "text-muted-foreground")}>是否上市</Label>
         </div>
+        {!isPersonalCustomer && formData.isListed && (
+          <div>
+            <Label htmlFor="stockCode">股票代码</Label>
+            <Input
+              id="stockCode"
+              value={formData.stockCode || ""}
+              onChange={(e) => handleInputChange("stockCode", e.target.value)}
+              disabled={disabled}
+            />
+          </div>
+        )}
       </div>
-
-      {!isPersonalCustomer && formData.isListed && (
-        <div>
-          <Label htmlFor="stockCode">股票代码</Label>
-          <Input
-            id="stockCode"
-            value={formData.stockCode || ""}
-            onChange={(e) => handleInputChange("stockCode", e.target.value)}
-            disabled={disabled}
-          />
-        </div>
-      )}
 
       {isPersonalCustomer && (
         <>

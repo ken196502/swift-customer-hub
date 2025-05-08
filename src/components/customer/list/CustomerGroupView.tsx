@@ -98,6 +98,7 @@ export function CustomerGroupView({
                       </TableHead>
                       <TableHead>客户号</TableHead>
                       <TableHead>客户名称</TableHead>
+                      <TableHead>进展</TableHead>
                       <TableHead>客户类型</TableHead>
                       <TableHead>主办部门</TableHead>
                       <TableHead>提供产品</TableHead>
@@ -125,6 +126,14 @@ export function CustomerGroupView({
                         <TableCell>{customer.customerNumber}</TableCell>
                         <TableCell>
                           <div className="font-medium">{customer.shortNameCn}</div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge
+                            variant={customer.progress === "已开户" ? "default" : "outline"}
+                            className={customer.progress === "已开户" ? "bg-green-100 text-green-800 hover:bg-green-100" : "bg-yellow-100 text-yellow-800 hover:bg-yellow-100"}
+                          >
+                            {customer.progress || "意向"}
+                          </Badge>
                         </TableCell>
                         <TableCell>{customer.type}</TableCell>
                         <TableCell>
@@ -169,13 +178,21 @@ export function CustomerGroupView({
                     className="p-3 border rounded-md cursor-pointer hover:bg-gray-50 space-y-2"
                     onClick={() => onSelectCustomer(customer.id)}
                   >
-                    <div className="flex items-center space-x-2">
-                      <Checkbox 
-                        checked={selectedCustomers.includes(customer.id)}
-                        onCheckedChange={() => onToggleSelect(customer.id)}
-                        onClick={(e) => e.stopPropagation()}
-                      />
-                      <div className="font-medium">{customer.shortNameCn}</div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <Checkbox 
+                          checked={selectedCustomers.includes(customer.id)}
+                          onCheckedChange={() => onToggleSelect(customer.id)}
+                          onClick={(e) => e.stopPropagation()}
+                        />
+                        <div className="font-medium">{customer.shortNameCn}</div>
+                      </div>
+                      <Badge
+                        variant={customer.progress === "已开户" ? "default" : "outline"}
+                        className={customer.progress === "已开户" ? "bg-green-100 text-green-800 hover:bg-green-100" : "bg-yellow-100 text-yellow-800 hover:bg-yellow-100"}
+                      >
+                        {customer.progress || "意向"}
+                      </Badge>
                     </div>
                     
                     <div className="text-sm space-y-1">

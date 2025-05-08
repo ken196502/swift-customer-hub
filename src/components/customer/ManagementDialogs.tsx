@@ -4,7 +4,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Customer } from "@/contexts/CustomerContext";
 import { CustomerFormSection } from "./CustomerFormSection";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface ManagementDialogsProps {
   showNewCustomerDialog: boolean;
@@ -38,8 +37,8 @@ export function ManagementDialogs({
     reaches: [],
     isListed: false,
     sponsorDepartments: [],
+    progress: "意向",
   });
-  const [activeTab, setActiveTab] = useState("basic");
 
   const handleCustomerInputChange = (field: string, value: any) => {
     let updatedData = { ...newCustomerData, [field]: value };
@@ -72,8 +71,8 @@ export function ManagementDialogs({
       reaches: [],
       isListed: false,
       sponsorDepartments: [],
+      progress: "意向",
     });
-    setActiveTab("basic");
     setNewCustomerType("公司户");
   };
 
@@ -85,56 +84,43 @@ export function ManagementDialogs({
   return (
     <>
       <Dialog open={showNewCustomerDialog} onOpenChange={setShowNewCustomerDialog}>
-        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>新建客户</DialogTitle>
           </DialogHeader>
-          <Tabs 
-            value={activeTab} 
-            onValueChange={setActiveTab}
-            className="w-full"
-          >
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="basic">基本信息</TabsTrigger>
-              <TabsTrigger value="details">详细信息</TabsTrigger>
-            </TabsList>
-            <div className="pt-4 pb-2">
-              <div className="flex gap-4 mb-6">
-                <Button
-                  type="button"
-                  variant={newCustomerType === "公司户" ? "default" : "outline"}
-                  onClick={() => handleCustomerInputChange("type", "公司户")}
-                  className="flex-1"
-                >
-                  公司户
-                </Button>
-                <Button
-                  type="button"
-                  variant={newCustomerType === "个人户" ? "default" : "outline"}
-                  onClick={() => handleCustomerInputChange("type", "个人户")}
-                  className="flex-1"
-                >
-                  个人户
-                </Button>
-                <Button
-                  type="button"
-                  variant={newCustomerType === "机构户" ? "default" : "outline"}
-                  onClick={() => handleCustomerInputChange("type", "机构户")}
-                  className="flex-1"
-                >
-                  机构户
-                </Button>
-              </div>
-              <CustomerFormSection
-                formData={newCustomerData}
-                handleInputChange={handleCustomerInputChange}
-                section={activeTab as "basic" | "details"}
-                groupOptions={groupOptions}
-                countries={countries}
-              />
-            </div>
-          </Tabs>
-          <div className="flex justify-end space-x-2">
+          <div className="flex gap-4 mb-6">
+            <Button
+              type="button"
+              variant={newCustomerType === "公司户" ? "default" : "outline"}
+              onClick={() => handleCustomerInputChange("type", "公司户")}
+              className="flex-1"
+            >
+              公司户
+            </Button>
+            <Button
+              type="button"
+              variant={newCustomerType === "个人户" ? "default" : "outline"}
+              onClick={() => handleCustomerInputChange("type", "个人户")}
+              className="flex-1"
+            >
+              个人户
+            </Button>
+            <Button
+              type="button"
+              variant={newCustomerType === "机构户" ? "default" : "outline"}
+              onClick={() => handleCustomerInputChange("type", "机构户")}
+              className="flex-1"
+            >
+              机构户
+            </Button>
+          </div>
+          <CustomerFormSection
+            formData={newCustomerData}
+            handleInputChange={handleCustomerInputChange}
+            groupOptions={groupOptions}
+            countries={countries}
+          />
+          <div className="flex justify-end space-x-2 mt-6">
             <Button variant="outline" onClick={handleCancelNewCustomer}>
               取消
             </Button>
