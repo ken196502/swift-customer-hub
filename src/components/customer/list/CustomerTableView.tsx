@@ -17,13 +17,17 @@ interface CustomerTableViewProps {
   onSelectCustomer: (id: number) => void;
   selectedCustomers: number[];
   onToggleSelect: (id: number) => void;
+  onToggleSelectAll?: () => void;
+  allSelected: boolean;
 }
 
 export function CustomerTableView({ 
   customers, 
   onSelectCustomer, 
   selectedCustomers,
-  onToggleSelect
+  onToggleSelect,
+  onToggleSelectAll,
+  allSelected
 }: CustomerTableViewProps) {
   return (
     <div className="border rounded-md">
@@ -31,14 +35,20 @@ export function CustomerTableView({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-12"></TableHead>
+              <TableHead className="w-12">
+                <Checkbox 
+                  checked={allSelected}
+                  onCheckedChange={onToggleSelectAll}
+                  className="checkbox-header"
+                />
+              </TableHead>
               <TableHead>客户号</TableHead>
               <TableHead>客户名称</TableHead>
               <TableHead>客户类型</TableHead>
               <TableHead>主办部门</TableHead>
-              <TableHead>录入部门</TableHead>
               <TableHead>提供产品</TableHead>
               <TableHead>触达部门(按触达先后排列)</TableHead>
+              <TableHead>录入部门</TableHead>
               <TableHead>录入时间</TableHead>
             </TableRow>
           </TableHeader>
@@ -79,7 +89,6 @@ export function CustomerTableView({
                     ))}
                   </div>
                 </TableCell>
-                <TableCell>{customer.entryDepartment}</TableCell>
                 <TableCell>
                   <div className="flex flex-wrap gap-1">
                     {customer.products.map((product, i) => (
@@ -106,6 +115,7 @@ export function CustomerTableView({
                     ))}
                   </div>
                 </TableCell>
+                <TableCell>{customer.entryDepartment}</TableCell>
                 <TableCell>{customer.entryDate}</TableCell>
               </TableRow>
             ))}
@@ -114,7 +124,7 @@ export function CustomerTableView({
       </div>
 
       {/* Mobile view */}
-      <div className="sm:hidden">
+      <div className="sm:hidden space-y-2">
         {customers.map((customer) => (
           <div 
             key={customer.id}

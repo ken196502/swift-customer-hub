@@ -23,13 +23,17 @@ interface CustomerGroupViewProps {
   onSelectCustomer: (id: number) => void;
   selectedCustomers: number[];
   onToggleSelect: (id: number) => void;
+  onToggleSelectAll?: () => void;
+  allSelected: boolean;
 }
 
 export function CustomerGroupView({ 
   customers, 
   onSelectCustomer,
   selectedCustomers,
-  onToggleSelect 
+  onToggleSelect,
+  onToggleSelectAll,
+  allSelected
 }: CustomerGroupViewProps) {
   // Group customers by groupName
   const groupedCustomers: Record<string, Customer[]> = {};
@@ -85,13 +89,19 @@ export function CustomerGroupView({
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="w-12"></TableHead>
+                      <TableHead className="w-12">
+                        <Checkbox 
+                          checked={allSelected}
+                          onCheckedChange={onToggleSelectAll}
+                          className="checkbox-header"
+                        />
+                      </TableHead>
                       <TableHead>客户号</TableHead>
                       <TableHead>客户名称</TableHead>
                       <TableHead>客户类型</TableHead>
                       <TableHead>主办部门</TableHead>
-                      <TableHead>录入部门</TableHead>
                       <TableHead>提供产品</TableHead>
+                      <TableHead>录入部门</TableHead>
                       <TableHead>录入时间</TableHead>
                     </TableRow>
                   </TableHeader>
@@ -130,7 +140,6 @@ export function CustomerGroupView({
                             ))}
                           </div>
                         </TableCell>
-                        <TableCell>{customer.entryDepartment}</TableCell>
                         <TableCell>
                           <div className="flex flex-wrap gap-1">
                             {customer.products.map((product, i) => (
@@ -144,6 +153,7 @@ export function CustomerGroupView({
                             ))}
                           </div>
                         </TableCell>
+                        <TableCell>{customer.entryDepartment}</TableCell>
                         <TableCell>{customer.entryDate}</TableCell>
                       </TableRow>
                     ))}

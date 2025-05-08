@@ -51,13 +51,18 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
     );
   };
 
+  const generateCustomerNumber = () => {
+    const nextId = Math.max(...customers.map(c => c.id), 0) + 1;
+    return `TFI${new Date().getFullYear()}${String(nextId).padStart(4, '0')}`;
+  };
+
   const handleAddCustomer = (newCustomer: Partial<Customer>) => {
-    const nextId = Math.max(...customers.map(c => c.id)) + 1;
+    const nextId = Math.max(...customers.map(c => c.id), 0) + 1;
     
     const customer = {
       ...newCustomer,
       id: nextId,
-      customerNumber: newCustomer.customerNumber || `TFI${new Date().getFullYear()}${String(nextId).padStart(4, '0')}`,
+      customerNumber: generateCustomerNumber(),
       products: newCustomer.products || [],
       reaches: newCustomer.reaches || [],
       sponsorDepartments: newCustomer.sponsorDepartments || [],

@@ -26,12 +26,14 @@ export function CustomerFilters() {
   const [customerType, setCustomerType] = useState("");
   const [productType, setProductType] = useState("");
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
+  const [selectedDepartments, setSelectedDepartments] = useState<string[]>([]);
 
   const resetFilters = () => {
     setCustomerName("");
     setCustomerType("");
     setProductType("");
     setSelectedProducts([]);
+    setSelectedDepartments([]);
   };
 
   const handleProductSelect = (product: string) => {
@@ -39,6 +41,14 @@ export function CustomerFilters() {
       prev.includes(product) 
         ? prev.filter(p => p !== product) 
         : [...prev, product]
+    );
+  };
+
+  const handleDepartmentSelect = (department: string) => {
+    setSelectedDepartments(prev => 
+      prev.includes(department) 
+        ? prev.filter(d => d !== department) 
+        : [...prev, department]
     );
   };
 
@@ -77,27 +87,33 @@ export function CustomerFilters() {
             onItemSelect={handleProductSelect}
           />
         </div>
+        <div className="w-28 sm:w-32">
+          <FilterPopover 
+            label="部门"
+            options={departments}
+            selectedItems={selectedDepartments}
+            onItemSelect={handleDepartmentSelect}
+          />
+        </div>
         <div className="flex-grow">
           <SearchControls 
             onReset={resetFilters}
-            onSearch={() => console.log("Search with filters:", {customerName, customerType, productType, selectedProducts})}
-            onExport={() => console.log("Export with filters:", {customerName, customerType, productType, selectedProducts})}
+            onSearch={() => console.log("Search with filters:", {customerName, customerType, productType, selectedProducts, selectedDepartments})}
+            onExport={() => console.log("Export with filters:", {customerName, customerType, productType, selectedProducts, selectedDepartments})}
           />
         </div>
       </div>
       <div className="flex justify-between items-center">
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={() => setShowSponsorDepartmentDialog(true)} 
+          disabled={selectedCustomers.length === 0}
+        >
+          <UsersRound className="h-4 w-4 mr-2" />
+          设置主办部门
+        </Button>
         <ViewModeToggle viewMode={viewMode} onToggle={toggleViewMode} />
-        {viewMode === "group" && (
-          <Button 
-            variant="outline" 
-            size="sm" 
-            onClick={() => setShowSponsorDepartmentDialog(true)} 
-            disabled={selectedCustomers.length === 0}
-          >
-            <UsersRound className="h-4 w-4 mr-2" />
-            设置主办部门
-          </Button>
-        )}
       </div>
 
       <SponsorDepartmentDialog

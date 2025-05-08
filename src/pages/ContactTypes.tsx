@@ -2,9 +2,18 @@
 import { useCustomer } from "@/contexts/CustomerContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { PlusCircle, X } from "lucide-react";
+import { 
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { PlusCircle, Trash } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { Card } from "@/components/ui/card";
 
 export default function ContactTypes() {
   const { contactTypes, handleUpdateContactTypes } = useCustomer();
@@ -60,40 +69,49 @@ export default function ContactTypes() {
         <h1 className="text-2xl font-bold">联系类型管理</h1>
       </div>
       
-      <div className="flex gap-2">
-        <Input
-          placeholder="输入新联系类型..."
-          value={newType}
-          onChange={(e) => setNewType(e.target.value)}
-          className="max-w-md"
-        />
-        <Button onClick={handleAddType}>
-          <PlusCircle className="h-4 w-4 mr-2" />
-          添加
-        </Button>
-      </div>
-      
-      <div className="border rounded-md p-4">
-        <h2 className="text-lg font-semibold mb-4">已有联系类型</h2>
-        <div className="flex flex-wrap gap-2">
-          {types.map((type) => (
-            <div
-              key={type}
-              className="bg-muted px-3 py-1 rounded-full flex items-center gap-1"
-            >
-              <span>{type}</span>
-              {type !== "其他" && (
-                <button
-                  className="text-muted-foreground hover:text-destructive"
-                  onClick={() => handleDeleteType(type)}
-                >
-                  <X className="h-3 w-3" />
-                </button>
-              )}
-            </div>
-          ))}
+      <Card className="p-4">
+        <div className="flex items-center gap-2 mb-4">
+          <Input
+            placeholder="输入新联系类型..."
+            value={newType}
+            onChange={(e) => setNewType(e.target.value)}
+            className="max-w-md"
+          />
+          <Button onClick={handleAddType}>
+            <PlusCircle className="h-4 w-4 mr-2" />
+            添加
+          </Button>
         </div>
-      </div>
+        
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>联系类型</TableHead>
+              <TableHead>操作</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {types.map((type) => (
+              <TableRow key={type}>
+                <TableCell>{type}</TableCell>
+                <TableCell>
+                  {type !== "其他" ? (
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={() => handleDeleteType(type)}
+                    >
+                      <Trash className="h-4 w-4 text-red-500" />
+                    </Button>
+                  ) : (
+                    <span className="text-sm text-muted-foreground">系统保留</span>
+                  )}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Card>
       
       <div className="text-muted-foreground text-sm">
         <p>注意: "其他" 是系统保留的联系类型，不能被删除。</p>

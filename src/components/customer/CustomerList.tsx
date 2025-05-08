@@ -18,6 +18,22 @@ export function CustomerList({
   selectedCustomers,
   onToggleSelect
 }: CustomerListProps) {
+  const allSelected = customers.length > 0 && selectedCustomers.length === customers.length;
+
+  const handleToggleSelectAll = () => {
+    if (allSelected) {
+      // Deselect all
+      selectedCustomers.forEach(id => onToggleSelect(id));
+    } else {
+      // Select all currently unselected
+      customers.forEach(customer => {
+        if (!selectedCustomers.includes(customer.id)) {
+          onToggleSelect(customer.id);
+        }
+      });
+    }
+  };
+
   if (viewMode === "customer") {
     return (
       <CustomerTableView 
@@ -25,6 +41,8 @@ export function CustomerList({
         onSelectCustomer={onSelectCustomer} 
         selectedCustomers={selectedCustomers}
         onToggleSelect={onToggleSelect}
+        onToggleSelectAll={handleToggleSelectAll}
+        allSelected={allSelected}
       />
     );
   } else {
@@ -34,6 +52,8 @@ export function CustomerList({
         onSelectCustomer={onSelectCustomer} 
         selectedCustomers={selectedCustomers}
         onToggleSelect={onToggleSelect}
+        onToggleSelectAll={handleToggleSelectAll}
+        allSelected={allSelected}
       />
     );
   }

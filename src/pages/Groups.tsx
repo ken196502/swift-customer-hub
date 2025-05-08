@@ -2,9 +2,18 @@
 import { useCustomer } from "@/contexts/CustomerContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { PlusCircle, X } from "lucide-react";
+import { 
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { PlusCircle, Trash } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { Card } from "@/components/ui/card";
 
 export default function Groups() {
   const { groupOptions, handleUpdateGroups } = useCustomer();
@@ -51,38 +60,45 @@ export default function Groups() {
         <h1 className="text-2xl font-bold">集团管理</h1>
       </div>
       
-      <div className="flex gap-2">
-        <Input
-          placeholder="输入新集团..."
-          value={newGroup}
-          onChange={(e) => setNewGroup(e.target.value)}
-          className="max-w-md"
-        />
-        <Button onClick={handleAddGroup}>
-          <PlusCircle className="h-4 w-4 mr-2" />
-          添加
-        </Button>
-      </div>
-      
-      <div className="border rounded-md p-4">
-        <h2 className="text-lg font-semibold mb-4">已有集团</h2>
-        <div className="flex flex-wrap gap-2">
-          {groups.map((group) => (
-            <div
-              key={group}
-              className="bg-muted px-3 py-1 rounded-full flex items-center gap-1"
-            >
-              <span>{group}</span>
-              <button
-                className="text-muted-foreground hover:text-destructive"
-                onClick={() => handleDeleteGroup(group)}
-              >
-                <X className="h-3 w-3" />
-              </button>
-            </div>
-          ))}
+      <Card className="p-4">
+        <div className="flex items-center gap-2 mb-4">
+          <Input
+            placeholder="输入新集团..."
+            value={newGroup}
+            onChange={(e) => setNewGroup(e.target.value)}
+            className="max-w-md"
+          />
+          <Button onClick={handleAddGroup}>
+            <PlusCircle className="h-4 w-4 mr-2" />
+            添加
+          </Button>
         </div>
-      </div>
+        
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>集团名称</TableHead>
+              <TableHead>操作</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {groups.map((group) => (
+              <TableRow key={group}>
+                <TableCell>{group}</TableCell>
+                <TableCell>
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    onClick={() => handleDeleteGroup(group)}
+                  >
+                    <Trash className="h-4 w-4 text-red-500" />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Card>
     </div>
   );
 }

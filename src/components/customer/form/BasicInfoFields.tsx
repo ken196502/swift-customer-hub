@@ -1,212 +1,252 @@
 
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
 import { Customer } from "@/contexts/CustomerContext";
-import { useState } from "react";
-import { 
-  Dialog, 
-  DialogContent, 
-  DialogHeader, 
-  DialogTitle 
-} from "@/components/ui/dialog";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Search } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface BasicInfoFieldsProps {
   formData: Partial<Customer>;
   handleInputChange: (field: string, value: any) => void;
   groupOptions: string[];
   countries: string[];
+  disabled?: boolean;
 }
 
 export function BasicInfoFields({ 
   formData, 
   handleInputChange, 
   groupOptions,
-  countries
+  countries,
+  disabled = false 
 }: BasicInfoFieldsProps) {
-  const [showCountrySearch, setShowCountrySearch] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const filteredCountries = countries.filter(country => 
-    country.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const isPersonalCustomer = formData.type === "个人户";
 
   return (
     <div className="space-y-4">
-      
-      <div className="space-y-2">
-        <Label>客户类型</Label>
-        <Select
-          value={formData.type}
-          onValueChange={(value) => handleInputChange('type', value)}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="请选择客户类型" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="公司户">公司户</SelectItem>
-            <SelectItem value="个人户">个人户</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+      {!isPersonalCustomer && (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="shortNameCn" className="text-right">
+                中文简称 <span className="text-red-500">*</span>
+              </Label>
+              <Input
+                id="shortNameCn"
+                value={formData.shortNameCn || ""}
+                onChange={(e) => handleInputChange("shortNameCn", e.target.value)}
+                disabled={disabled}
+                required
+              />
+            </div>
+            <div>
+              <Label htmlFor="shortNameEn">英文简称</Label>
+              <Input
+                id="shortNameEn"
+                value={formData.shortNameEn || ""}
+                onChange={(e) => handleInputChange("shortNameEn", e.target.value)}
+                disabled={disabled}
+              />
+            </div>
+          </div>
 
-      <div className="space-y-2">
-        <Label>所属集团</Label>
-        <Select
-          value={formData.groupName}
-          onValueChange={(value) => handleInputChange('groupName', value)}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="请选择所属集团" />
-          </SelectTrigger>
-          <SelectContent>
-            {groupOptions.map((group) => (
-              <SelectItem key={group} value={group}>{group}</SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="fullNameCn">中文全称</Label>
+              <Input
+                id="fullNameCn"
+                value={formData.fullNameCn || ""}
+                onChange={(e) => handleInputChange("fullNameCn", e.target.value)}
+                disabled={disabled}
+              />
+            </div>
+            <div>
+              <Label htmlFor="fullNameEn">英文全称</Label>
+              <Input
+                id="fullNameEn"
+                value={formData.fullNameEn || ""}
+                onChange={(e) => handleInputChange("fullNameEn", e.target.value)}
+                disabled={disabled}
+              />
+            </div>
+          </div>
+        </>
+      )}
 
-      <div className="space-y-2">
-        <Label>英文简称</Label>
-        <Input 
-          placeholder="请输入英文简称" 
-          value={formData.shortNameEn} 
-          onChange={(e) => handleInputChange('shortNameEn', e.target.value)}
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label>中文简称 <span className="text-red-500">*</span></Label>
-        <Input 
-          placeholder="请输入中文简称" 
-          value={formData.shortNameCn} 
-          onChange={(e) => handleInputChange('shortNameCn', e.target.value)}
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label>英文全称</Label>
-        <Input 
-          placeholder="请输入英文全称" 
-          value={formData.fullNameEn} 
-          onChange={(e) => handleInputChange('fullNameEn', e.target.value)}
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label>中文全称</Label>
-        <Input 
-          placeholder="请输入中文全称" 
-          value={formData.fullNameCn} 
-          onChange={(e) => handleInputChange('fullNameCn', e.target.value)}
-        />
-      </div>
-      <div className="space-y-2">
-        <Label>是否上市</Label>
-        <Select
-          value={formData.isListed ? "true" : "false"}
-          onValueChange={(value) => handleInputChange('isListed', value === "true")}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="请选择是否上市" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="true">是</SelectItem>
-            <SelectItem value="false">否</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="space-y-2">
-        <Label>股票代码</Label>
-        <Input 
-          placeholder="请输入股票代码" 
-          value={formData.stockCode} 
-          onChange={(e) => handleInputChange('stockCode', e.target.value)}
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label>城市地区</Label>
-        <Input 
-          placeholder="请输入城市地区" 
-          value={formData.city} 
-          onChange={(e) => handleInputChange('city', e.target.value)}
-        />
-      </div>
-      
-      <div className="space-y-2">
-        <Label>客户号 <span className="text-red-500">*</span></Label>
-        <Input 
-          placeholder="请输入客户号" 
-          value={formData.customerNumber} 
-          onChange={(e) => handleInputChange('customerNumber', e.target.value)}
-        />
-      </div>
-      
-      <div className="space-y-2">
-        <Label>证件类型 <span className="text-red-500">*</span></Label>
-        <Select
-          value={formData.idType}
-          onValueChange={(value) => handleInputChange('idType', value)}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="请选择证件类型" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="身份证">身份证</SelectItem>
-            <SelectItem value="营业执照">营业执照</SelectItem>
-            <SelectItem value="护照">护照</SelectItem>
-            <SelectItem value="其他证件">其他证件</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-      
-      <div className="space-y-2">
-        <Label>证件号码 <span className="text-red-500">*</span></Label>
-        <Input 
-          placeholder="请输入证件号码" 
-          value={formData.idNumber} 
-          onChange={(e) => handleInputChange('idNumber', e.target.value)}
-        />
-      </div>
-
-      <Dialog open={showCountrySearch} onOpenChange={setShowCountrySearch}>
-        <DialogContent className="max-w-md">
-          <DialogHeader>
-            <DialogTitle>选择国家</DialogTitle>
-          </DialogHeader>
-          <div className="relative mb-4">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+      {isPersonalCustomer && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="shortNameCn" className="text-right">
+              中文名称 <span className="text-red-500">*</span>
+            </Label>
             <Input
-              className="pl-10"
-              placeholder="搜索国家..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              id="shortNameCn"
+              value={formData.shortNameCn || ""}
+              onChange={(e) => handleInputChange("shortNameCn", e.target.value)}
+              disabled={disabled}
+              required
             />
           </div>
-          <ScrollArea className="h-72">
-            <div className="space-y-1">
-              {filteredCountries.map((country) => (
-                <div
-                  key={country}
-                  className="px-2 py-1.5 rounded-md hover:bg-muted cursor-pointer"
-                  onClick={() => {
-                    handleInputChange('country', country);
-                    setShowCountrySearch(false);
-                    setSearchQuery("");
-                  }}
-                >
-                  {country}
-                </div>
+          <div>
+            <Label htmlFor="shortNameEn">英文名称</Label>
+            <Input
+              id="shortNameEn"
+              value={formData.shortNameEn || ""}
+              onChange={(e) => handleInputChange("shortNameEn", e.target.value)}
+              disabled={disabled}
+            />
+          </div>
+        </div>
+      )}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <Label htmlFor="groupName">所属集团</Label>
+          <Select
+            value={formData.groupName || ""}
+            onValueChange={(value) => handleInputChange("groupName", value)}
+            disabled={disabled}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="选择集团" />
+            </SelectTrigger>
+            <SelectContent>
+              {groupOptions.map((group) => (
+                <SelectItem key={group} value={group}>
+                  {group}
+                </SelectItem>
               ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Switch
+            id="isListed"
+            checked={formData.isListed || false}
+            onCheckedChange={(checked) => handleInputChange("isListed", checked)}
+            disabled={disabled || isPersonalCustomer}
+          />
+          <Label htmlFor="isListed" className={cn(isPersonalCustomer && "text-muted-foreground")}>是否上市</Label>
+        </div>
+      </div>
+
+      {!isPersonalCustomer && formData.isListed && (
+        <div>
+          <Label htmlFor="stockCode">股票代码</Label>
+          <Input
+            id="stockCode"
+            value={formData.stockCode || ""}
+            onChange={(e) => handleInputChange("stockCode", e.target.value)}
+            disabled={disabled}
+          />
+        </div>
+      )}
+
+      {isPersonalCustomer && (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="phone">手机号</Label>
+              <Input
+                id="phone"
+                value={formData.phone || ""}
+                onChange={(e) => handleInputChange("phone", e.target.value)}
+                disabled={disabled}
+              />
             </div>
-          </ScrollArea>
-        </DialogContent>
-      </Dialog>
+            <div>
+              <Label htmlFor="email">邮箱</Label>
+              <Input
+                id="email"
+                value={formData.email || ""}
+                onChange={(e) => handleInputChange("email", e.target.value)}
+                disabled={disabled}
+              />
+            </div>
+          </div>
+        </>
+      )}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <Label htmlFor="idType">证件类型</Label>
+          <Select
+            value={formData.idType || ""}
+            onValueChange={(value) => handleInputChange("idType", value)}
+            disabled={disabled}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="选择证件类型" />
+            </SelectTrigger>
+            <SelectContent>
+              {isPersonalCustomer ? (
+                <>
+                  <SelectItem value="身份证">身份证</SelectItem>
+                  <SelectItem value="护照">护照</SelectItem>
+                  <SelectItem value="港澳通行证">港澳通行证</SelectItem>
+                </>
+              ) : (
+                <>
+                  <SelectItem value="营业执照">营业执照</SelectItem>
+                  <SelectItem value="组织机构代码证">组织机构代码证</SelectItem>
+                </>
+              )}
+            </SelectContent>
+          </Select>
+        </div>
+        <div>
+          <Label htmlFor="idNumber">证件号码</Label>
+          <Input
+            id="idNumber"
+            value={formData.idNumber || ""}
+            onChange={(e) => handleInputChange("idNumber", e.target.value)}
+            disabled={disabled}
+          />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <Label htmlFor="country">国家</Label>
+          <Select
+            value={formData.country || "中国"}
+            onValueChange={(value) => handleInputChange("country", value)}
+            disabled={disabled}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="选择国家" />
+            </SelectTrigger>
+            <SelectContent className="max-h-[200px]">
+              {countries.map((country) => (
+                <SelectItem key={country} value={country}>
+                  {country}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div>
+          <Label htmlFor="city">城市</Label>
+          <Input
+            id="city"
+            value={formData.city || ""}
+            onChange={(e) => handleInputChange("city", e.target.value)}
+            disabled={disabled}
+          />
+        </div>
+      </div>
+
+      <div>
+        <Label htmlFor="entryDate">录入时间</Label>
+        <Input
+          id="entryDate"
+          value={formData.entryDate || ""}
+          onChange={(e) => handleInputChange("entryDate", e.target.value)}
+          disabled
+        />
+      </div>
     </div>
   );
 }

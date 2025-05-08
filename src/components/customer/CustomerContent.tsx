@@ -13,8 +13,6 @@ export function CustomerContent() {
     selectedCustomers,
     viewMode,
     showNewCustomerDialog,
-    showContactTypeManagement,
-    showGroupManagement,
     productOptions,
     contactTypes,
     groupOptions,
@@ -23,13 +21,9 @@ export function CustomerContent() {
     setSelectedCustomer,
     toggleSelectCustomer,
     setShowNewCustomerDialog,
-    setShowContactTypeManagement,
-    setShowGroupManagement,
     toggleViewMode,
     handleAddCustomer,
     handleUpdateCustomer,
-    handleUpdateContactTypes,
-    handleUpdateGroups,
   } = useCustomer();
 
   if (selectedCustomer !== null) {
@@ -54,8 +48,6 @@ export function CustomerContent() {
     <div className="container mx-auto py-6 space-y-6">
       <CustomerHeader
         onShowNewCustomerDialog={() => setShowNewCustomerDialog(true)}
-        onShowContactTypeManagement={() => setShowContactTypeManagement(true)}
-        onShowGroupManagement={() => setShowGroupManagement(true)}
         viewMode={viewMode}
         onToggleViewMode={toggleViewMode}
       />
@@ -74,18 +66,12 @@ export function CustomerContent() {
       <ManagementDialogs
         showNewCustomerDialog={showNewCustomerDialog}
         setShowNewCustomerDialog={setShowNewCustomerDialog}
-        showContactTypeManagement={showContactTypeManagement}
-        setShowContactTypeManagement={setShowContactTypeManagement}
-        showGroupManagement={showGroupManagement}
-        setShowGroupManagement={setShowGroupManagement}
         handleAddCustomer={handleAddCustomer}
         productOptions={productOptions}
         contactTypes={contactTypes}
         groupOptions={groupOptions}
         countries={countries}
         departments={departments}
-        onUpdateContactTypes={handleUpdateContactTypes}
-        onUpdateGroups={handleUpdateGroups}
       />
     </div>
   );
