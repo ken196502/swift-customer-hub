@@ -1,3 +1,4 @@
+
 import { ContactTypeManagementDialog } from "@/components/management/ContactTypeManagementDialog";
 import { GroupManagementDialog } from "@/components/management/GroupManagementDialog";
 import { NewCustomerDialog } from "@/components/NewCustomerDialog";
@@ -16,6 +17,8 @@ interface ManagementDialogsProps {
   groupOptions: string[];
   onUpdateContactTypes: (types: string[]) => void;
   onUpdateGroups: (groups: string[]) => void;
+  countries: string[];
+  departments: string[];
 }
 
 export function ManagementDialogs({
@@ -30,7 +33,9 @@ export function ManagementDialogs({
   contactTypes,
   groupOptions,
   onUpdateContactTypes,
-  onUpdateGroups
+  onUpdateGroups,
+  countries,
+  departments
 }: ManagementDialogsProps) {
   return (
     <>
@@ -40,6 +45,8 @@ export function ManagementDialogs({
         onSubmit={handleAddCustomer}
         productOptions={productOptions}
         groupOptions={groupOptions}
+        countries={countries}
+        departments={departments}
       />      
       <ContactTypeManagementDialog
         open={showContactTypeManagement}
