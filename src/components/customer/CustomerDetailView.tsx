@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { CustomerDetail } from "@/components/CustomerDetail";
 import { Customer } from "@/contexts/CustomerContext";
@@ -9,6 +10,8 @@ interface CustomerDetailViewProps {
   productOptions: string[];
   contactTypes: string[];
   groupOptions: string[];
+  departments: string[];
+  countries: string[];
 }
 
 export function CustomerDetailView({
@@ -17,7 +20,9 @@ export function CustomerDetailView({
   onEditCustomer,
   productOptions,
   contactTypes,
-  groupOptions
+  groupOptions,
+  departments,
+  countries
 }: CustomerDetailViewProps) {
   return (
     <div className="container mx-auto py-6 space-y-6">
@@ -33,6 +38,8 @@ export function CustomerDetailView({
         productOptions={productOptions}
         contactTypes={contactTypes}
         groupOptions={groupOptions}
+        departments={departments}
+        countries={countries}
       />
     </div>
   );

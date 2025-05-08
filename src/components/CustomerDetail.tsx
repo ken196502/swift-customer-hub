@@ -16,6 +16,8 @@ interface CustomerDetailProps {
   reachOptions?: string[];
   contactTypes: string[];
   groupOptions: string[];
+  countries: string[];
+  departments: string[];
 }
 
 const contactData = [
@@ -91,7 +93,9 @@ export function CustomerDetail({
   productOptions = [], 
   reachOptions = [], 
   contactTypes,
-  groupOptions = []
+  groupOptions = [],
+  countries = [],
+  departments = []
 }: CustomerDetailProps) {
   const [activeTab, setActiveTab] = useState("basic");
   const [editDialogOpen, setEditDialogOpen] = useState(false);
@@ -170,6 +174,7 @@ export function CustomerDetail({
               transactionData={transactionData} 
               onAddServiceRecord={handleAddServiceRecord}
               contactTypes={contactTypes}
+              departments={departments}
             />
           </TabsContent>
         </Tabs>
@@ -182,6 +187,8 @@ export function CustomerDetail({
         onSubmit={handleUpdateCustomer}
         productOptions={productOptions}
         groupOptions={groupOptions}
+        countries={countries}
+        departments={departments}
       />
     </Card>
   );
