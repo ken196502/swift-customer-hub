@@ -8,7 +8,7 @@ interface BasicInformationProps {
 
 export function BasicInformation({ customer }: BasicInformationProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6" style={{ width: "120%" }}>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div className="space-y-4">
         <div className="grid grid-cols-3 gap-4 items-center">
           <div className="text-sm text-gray-500">客户号：</div>

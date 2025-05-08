@@ -4,7 +4,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import { useState, useEffect } from "react";
-
+import { Download } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 interface AuditFiltersProps {
   categoryFilter?: string | null;
   onCategoryChange?: (category: string | null) => void;
@@ -13,7 +14,14 @@ interface AuditFiltersProps {
 export function AuditFilters({ categoryFilter, onCategoryChange }: AuditFiltersProps = {}) {
   const [selectedCategory, setSelectedCategory] = useState(categoryFilter || "all");
   const [selectedChangeType, setSelectedChangeType] = useState("all");
+  const { toast } = useToast();
 
+  const handleExport = () => {
+    toast({
+      title: "导出成功",
+      description: "审核数据已导出",
+    });
+  };
   useEffect(() => {
     if (categoryFilter) {
       setSelectedCategory(categoryFilter);
@@ -33,20 +41,22 @@ export function AuditFilters({ categoryFilter, onCategoryChange }: AuditFiltersP
   };
 
   return (
-    <div className="flex flex-wrap gap-3 items-center">
-      <div className="flex gap-2 w-full md:w-auto">
-        <div className="w-full md:w-auto">
-          <Input type="date" className="w-36" placeholder="开始日期" />
+    <div className="grid grid-cols-1 gap-y-4 px-4 md:flex md:flex-wrap md:gap-3 md:px-0">
+      <div className="flex w-full flex-col gap-2 md:w-auto md:flex-row">
+        <div className="w-full md:w-36">
+          <Input type="date" className="w-full" placeholder="开始日期" />
         </div>
-        <div className="w-full md:w-auto">
-          <Input type="date" className="w-36" placeholder="结束日期" />
+        <div className="w-full md:w-36">
+          <Input type="date" className="w-full" placeholder="结束日期" />
         </div>
       </div>
-      <div className="w-full md:w-auto">
-        <Input placeholder="客户名称" className="w-36" />
+      
+      <div className="w-full md:w-36">
+        <Input placeholder="客户名称" className="w-full" />
       </div>
-      <div className="w-full md:w-auto">
-        <Input placeholder="变更人" className="w-36" />
+      
+      <div className="w-full md:w-36">
+        <Input placeholder="变更人" className="w-full" />
       </div>
       <div className="w-full md:w-auto">
         <Select
@@ -88,10 +98,23 @@ export function AuditFilters({ categoryFilter, onCategoryChange }: AuditFiltersP
           </SelectContent>
         </Select>
       </div>
-      <div className="w-full md:w-auto">
-        <Button variant="default" size="sm" className="bg-blue-500 hover:bg-blue-600">
+      <div className="flex w-full flex-wrap gap-2 md:w-auto">
+        <Button 
+          variant="default" 
+          size="sm" 
+          className="w-full bg-blue-500 hover:bg-blue-600 md:w-auto"
+        >
           <Search className="h-4 w-4 mr-2" />
           查询
+        </Button>
+        <Button 
+          variant="default" 
+          size="sm" 
+          className="w-full bg-blue-500 hover:bg-blue-600 md:w-auto"
+          onClick={handleExport}
+        >
+          <Download className="h-4 w-4 mr-2" />
+          导出
         </Button>
       </div>
     </div>

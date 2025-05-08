@@ -12,14 +12,17 @@ import Permissions from './pages/Permissions';
 import { SidebarProvider } from './components/ui/sidebar';
 import { CustomerProvider } from './contexts/CustomerContext';
 
+import { SidebarTrigger } from './components/ui/sidebar';
+
 function App() {
   return (
     <Router>
       <CustomerProvider>
         <SidebarProvider>
           <div className="flex min-h-screen w-full">
+            <SidebarTrigger className="sm:hidden fixed top-4 left-4 z-50" />
             <AppSidebar />
-            <main className="flex-1" style={{ width: "120%" }}>
+            <main className="flex-1 w-full">
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/audit" element={<Audit />} />

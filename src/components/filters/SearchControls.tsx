@@ -35,7 +35,7 @@ export function SearchControls({ onReset, onSearch, onExport }: SearchControlsPr
         className="bg-orange-500 hover:bg-orange-600"
         onClick={onExport}
       >
-        <File className="h-4 w-4 mr-2" />
+      <File className="h-4 w-4 mr-2" />
         导出
       </Button>
     </div>

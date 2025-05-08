@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { AuditContent } from "@/components/audit/AuditContent";
-import { AuditFilters } from "@/components/audit/AuditFilters";
 
 // Define the audit item type
 export interface AuditItem {
@@ -181,14 +180,10 @@ export default function Audit() {
   }, [auditItems]);
 
   return (
-    <div className="container mx-auto py-6 space-y-6" style={{ width: "120%" }}>
-      <h1 className="text-2xl font-bold text-left">审核管理</h1>
-      
-      <AuditFilters 
-        categoryFilter={selectedCategory} 
-        onCategoryChange={setSelectedCategory}
-      />
-
+    <div className="mx-auto py-6 space-y-6">
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-bold">审核管理</h1>
+      </div>
       <Tabs defaultValue="pending" className="w-full">
         <TabsList className="grid w-[400px] grid-cols-2">
           <TabsTrigger value="pending">待审核</TabsTrigger>

@@ -194,7 +194,7 @@ export function NewServiceRecordDialog({
           </div>
 
           <div className="space-y-2">
-            <Label>用途</Label>
+            <Label>成本用途</Label>
             <Input 
               placeholder="请输入成本用途" 
               value={record.purpose} 

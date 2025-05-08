@@ -35,7 +35,7 @@ export function CustomerTableView({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-12">
+              <TableHead>
                 <Checkbox 
                   checked={allSelected}
                   onCheckedChange={onToggleSelectAll}
@@ -48,7 +48,7 @@ export function CustomerTableView({
               <TableHead>客户类型</TableHead>
               <TableHead>主办部门</TableHead>
               <TableHead>提供产品</TableHead>
-              <TableHead>触达部门(按触达先后排列)</TableHead>
+              <TableHead>触达记录</TableHead>
               <TableHead>录入部门</TableHead>
               <TableHead>录入时间</TableHead>
             </TableRow>
@@ -71,10 +71,10 @@ export function CustomerTableView({
                     onClick={(e) => e.stopPropagation()}
                   />
                 </TableCell>
-                <TableCell>{customer.customerNumber}</TableCell>
-                <TableCell>
-                  <div className="font-medium">{customer.shortNameCn}</div>
-                  <div className="text-sm text-muted-foreground">{customer.groupName}</div>
+                <TableCell className="text-xs">{customer.customerNumber}</TableCell>
+                <TableCell className="text-xs">
+                  <div className="font-sm">{customer.shortNameCn}</div>
+                  <div className="text-xs text-muted-foreground">{customer.groupName}</div>
                 </TableCell>
                 <TableCell>
                   <Badge
@@ -84,8 +84,8 @@ export function CustomerTableView({
                     {customer.progress || "意向"}
                   </Badge>
                 </TableCell>
-                <TableCell>{customer.type}</TableCell>
-                <TableCell>
+                <TableCell className="text-xs">{customer.type}</TableCell>
+                <TableCell className="text-xs">
                   <div className="flex flex-wrap gap-1">
                     {customer.sponsorDepartments?.map((dept, i) => (
                       <Badge
@@ -124,8 +124,8 @@ export function CustomerTableView({
                     ))}
                   </div>
                 </TableCell>
-                <TableCell>{customer.entryDepartment}</TableCell>
-                <TableCell>{customer.entryDate}</TableCell>
+                <TableCell className="text-xs">{customer.entryDepartment}</TableCell>
+                <TableCell className="text-xs">{customer.entryDate}</TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -45,9 +45,9 @@ export function AppSidebar() {
   ];
 
   return (
-    <Sidebar className="w-[11.52rem]">
+    <Sidebar>
       <SidebarHeader>
-        <div className="px-4 py-2">
+        <div className="px-4 py-2 flex items-center justify-between">
           <h3 className="text-lg font-semibold">客户关系管理</h3>
         </div>
       </SidebarHeader>

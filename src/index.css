@@ -101,8 +101,8 @@
   }
 }
 
-/* Add wider container width */
-.container {
+/* Add wider width */
+.{
   max-width: 120%;
   width: 120%;
 }

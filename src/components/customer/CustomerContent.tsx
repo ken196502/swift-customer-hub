@@ -45,7 +45,7 @@ export function CustomerContent() {
   }
 
   return (
-    <div className="container mx-auto py-6 space-y-6">
+    <div className="mx-auto py-6 space-y-6">
       <CustomerHeader
         onShowNewCustomerDialog={() => setShowNewCustomerDialog(true)}
         viewMode={viewMode}

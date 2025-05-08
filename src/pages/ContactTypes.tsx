@@ -64,7 +64,7 @@ export default function ContactTypes() {
   };
 
   return (
-    <div className="container mx-auto py-6 space-y-6 max-w-3xl">
+    <div className="mx-auto py-6 space-y-6 max-w-3xl">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">联系类型管理</h1>
       </div>

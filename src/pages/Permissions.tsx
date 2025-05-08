@@ -211,23 +211,25 @@ export default function Permissions() {
   };
 
   return (
-    <div className="container mx-auto py-6 space-y-6" style={{ width: "120%" }}>
+    <div className="mx-auto py-6 space-y-6">
+      <div className="flex justify-between items-center">
       <h1 className="text-2xl font-bold text-left">共享权限管理</h1>
-      
+      </div>
       {!showPermissionDetails ? (
         <>
-          <div className="flex flex-wrap gap-3 items-center">
-            <div className="w-full md:w-auto">
+          <div className="grid grid-cols-1 gap-y-4 px-4 md:flex md:flex-wrap md:gap-3 md:px-0">
+            <div className="w-full md:w-36">
               <Input 
                 placeholder="系统用户名称" 
-                className="w-36" 
+                className="w-full" 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <div className="w-full md:w-auto">
+            
+            <div className="w-full md:w-36">
               <Select value={departmentFilter} onValueChange={setDepartmentFilter}>
-                <SelectTrigger className="w-36">
+                <SelectTrigger className="w-full">
                   <SelectValue placeholder="所属部门" />
                 </SelectTrigger>
                 <SelectContent>
@@ -238,10 +240,12 @@ export default function Permissions() {
                 </SelectContent>
               </Select>
             </div>
-            <div className="w-full md:w-auto">
+
+            <div className="flex flex-wrap gap-2 w-full md:w-auto">
               <Button 
                 variant="outline" 
                 size="sm" 
+                className="w-full md:w-auto"
                 onClick={() => {
                   setSearchTerm('');
                   setDepartmentFilter('all');
@@ -249,12 +253,10 @@ export default function Permissions() {
               >
                 重置
               </Button>
-            </div>
-            <div className="w-full md:w-auto">
               <Button 
                 variant="default" 
                 size="sm" 
-                className="bg-blue-500 hover:bg-blue-600"
+                className="w-full bg-blue-500 hover:bg-blue-600 md:w-auto"
               >
                 <Search className="h-4 w-4 mr-2" />
                 查询

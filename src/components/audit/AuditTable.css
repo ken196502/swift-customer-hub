@@ -1,0 +1,34 @@
+.audit-table {
+  width: 100%;
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  .audit-table th,
+  .audit-table td {
+    display: block;
+    width: 100%;
+  }
+  
+  .audit-table th {
+    text-align: left;
+    padding: 0.5rem 0;
+  }
+  
+  .audit-table td {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .audit-table tbody tr {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 0;
+    border-bottom: 2px solid var(--border-color);
+  }
+  
+  .audit-table tbody tr:last-child {
+    border-bottom: none;
+  }
+}
