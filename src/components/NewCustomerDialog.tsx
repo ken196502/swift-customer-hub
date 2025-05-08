@@ -40,7 +40,7 @@ export function NewCustomerDialog({
     isListed: false,
     stockCode: "",
     city: "",
-    country: "中国",
+    country: "中国内地",
     idType: "营业执照",
     idNumber: "",
     shareholders: "",

@@ -213,7 +213,7 @@ export default function Permissions() {
   return (
     <div className="mx-auto py-6 space-y-6">
       <div className="flex justify-between items-center">
-      <h1 className="text-2xl font-bold text-left">共享权限管理</h1>
+      <h1 className="text-2xl font-bold text-left">信息共享管理</h1>
       </div>
       {!showPermissionDetails ? (
         <>

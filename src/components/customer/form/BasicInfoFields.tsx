@@ -38,7 +38,6 @@ export function BasicInfoFields({
       <CommonInfoFields 
         formData={formData} 
         handleInputChange={handleInputChange}
-        countries={countries}
         disabled={disabled}
         isPersonalCustomer={isPersonalCustomer}
       />

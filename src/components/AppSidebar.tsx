@@ -38,7 +38,7 @@ export function AppSidebar() {
       icon: Building,
     },
     {
-      title: "共享权限管理", 
+      title: "信息共享管理", 
       url: "/permissions",
       icon: Shield,
     },

@@ -1,14 +1,16 @@
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";  // Use existing Select
 import { Customer } from "@/contexts/CustomerContext";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import flags_cn from "@/../public/flags_cn.json";
+import { Command } from "@/components/ui/command";  // Only keep valid Command import
+import { getCountryEmoji } from "@/utils/countryEmojis";  // Import emoji mapping
 
 interface CommonInfoFieldsProps {
   formData: Partial<Customer>;
   handleInputChange: (field: string, value: any) => void;
-  countries: string[];
   disabled?: boolean;
   isPersonalCustomer?: boolean;
 }
@@ -16,7 +18,6 @@ interface CommonInfoFieldsProps {
 export function CommonInfoFields({ 
   formData, 
   handleInputChange, 
-  countries,
   disabled = false,
   isPersonalCustomer = false
 }: CommonInfoFieldsProps) {
@@ -110,19 +111,21 @@ export function CommonInfoFields({
           />
         </div>
         <div>
-          <Label htmlFor="country">国家</Label>
-          <Select
-            value={formData.country || "中国"}
+          <Label htmlFor="country">国家/地区</Label>
+          <Select  // Replace Combobox with Select
+            value={formData.country || ""}
             onValueChange={(value) => handleInputChange("country", value)}
-            disabled={disabled}
           >
-            <SelectTrigger>
-              <SelectValue placeholder="选择国家" />
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="搜索国家/地区..." />
             </SelectTrigger>
-            <SelectContent className="max-h-[200px]">
-              {countries.map((country) => (
-                <SelectItem key={country} value={country}>
-                  {country}
+            <SelectContent className="max-h-[200px] overflow-auto">
+              {flags_cn.map((country) => (
+                <SelectItem 
+                  key={country.value} 
+                  value={country.value}
+                >
+                  {getCountryEmoji(country.value)} {country.label}
                 </SelectItem>
               ))}
             </SelectContent>

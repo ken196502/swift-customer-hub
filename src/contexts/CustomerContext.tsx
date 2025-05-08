@@ -14,7 +14,7 @@ const departmentList = ["零售经纪", "机构经纪", "跨资产", "DCM", "ECM
 
 // List of countries
 const countryList = [
-  "中国", "美国", "英国", "日本", "德国", "法国", "意大利", "加拿大", "澳大利亚", "新西兰",
+  "中国内地", "美国", "英国", "日本", "德国", "法国", "意大利", "加拿大", "澳大利亚", "新西兰",
   "俄罗斯", "印度", "巴西", "南非", "墨西哥", "阿根廷", "西班牙", "葡萄牙", "荷兰", "比利时",
   "瑞士", "瑞典", "挪威", "芬兰", "丹麦", "奥地利", "希腊", "土耳其", "埃及", "沙特阿拉伯",
   "阿联酋", "卡塔尔", "新加坡", "马来西亚", "泰国", "印度尼西亚", "菲律宾", "韩国", "朝鲜", "越南"
@@ -28,7 +28,7 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
       ...customer,
       sponsorDepartments: [departmentList[Math.floor(Math.random() * departmentList.length)]],
       entryDepartment: departmentList[Math.floor(Math.random() * departmentList.length)],
-      country: "中国"
+      country: "中国内地"
     }))
   );
   const [selectedCustomer, setSelectedCustomer] = useState<number | null>(null);
