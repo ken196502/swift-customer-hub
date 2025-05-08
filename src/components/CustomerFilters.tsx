@@ -54,19 +54,6 @@ export function CustomerFilters() {
           </Select>
         </div>
         <div className="w-28 sm:w-32">
-          <Select value={productType} onValueChange={setProductType}>
-            <SelectTrigger>
-              <SelectValue placeholder="产品类型" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="new">新客签约</SelectItem>
-              <SelectItem value="renewal">续约签约</SelectItem>
-              <SelectItem value="sales">销售</SelectItem>
-              <SelectItem value="ipo">IPO</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="w-28 sm:w-32">
           <FilterPopover 
             label="提供产品"
             options={productOptions}
