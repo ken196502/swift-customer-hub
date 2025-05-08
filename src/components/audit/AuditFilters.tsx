@@ -3,8 +3,35 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
+import { useState, useEffect } from "react";
 
-export function AuditFilters() {
+interface AuditFiltersProps {
+  categoryFilter?: string | null;
+  onCategoryChange?: (category: string | null) => void;
+}
+
+export function AuditFilters({ categoryFilter, onCategoryChange }: AuditFiltersProps = {}) {
+  const [selectedCategory, setSelectedCategory] = useState(categoryFilter || "all");
+  const [selectedChangeType, setSelectedChangeType] = useState("all");
+
+  useEffect(() => {
+    if (categoryFilter) {
+      setSelectedCategory(categoryFilter);
+    }
+  }, [categoryFilter]);
+
+  const handleCategoryChange = (value: string) => {
+    setSelectedCategory(value);
+    if (value === "permissions") {
+      setSelectedChangeType("权限变更");
+    } else {
+      setSelectedChangeType("all");
+    }
+    if (onCategoryChange) {
+      onCategoryChange(value === "all" ? null : value);
+    }
+  };
+
   return (
     <div className="flex flex-wrap gap-3 items-center">
       <div className="flex gap-2 w-full md:w-auto">
@@ -22,7 +49,10 @@ export function AuditFilters() {
         <Input placeholder="变更人" className="w-36" />
       </div>
       <div className="w-full md:w-auto">
-        <Select>
+        <Select
+          value={selectedCategory}
+          onValueChange={handleCategoryChange}
+        >
           <SelectTrigger className="w-32">
             <SelectValue placeholder="类型" />
           </SelectTrigger>
@@ -35,16 +65,26 @@ export function AuditFilters() {
         </Select>
       </div>
       <div className="w-full md:w-auto">
-        <Select>
+        <Select
+          value={selectedChangeType}
+          onValueChange={setSelectedChangeType}
+          disabled={selectedCategory === "permissions"}
+        >
           <SelectTrigger className="w-32">
             <SelectValue placeholder="变动类型" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">全部</SelectItem>
-            <SelectItem value="新增">新增</SelectItem>
-            <SelectItem value="修改">修改</SelectItem>
-            <SelectItem value="删除">删除</SelectItem>
-            <SelectItem value="权限变更">权限变更</SelectItem>
+            {selectedCategory === "permissions" ? (
+              <SelectItem value="权限变更">权限变更</SelectItem>
+            ) : (
+              <>
+                <SelectItem value="all">全部</SelectItem>
+                <SelectItem value="新增">新增</SelectItem>
+                <SelectItem value="修改">修改</SelectItem>
+                <SelectItem value="删除">删除</SelectItem>
+                <SelectItem value="权限变更">权限变更</SelectItem>
+              </>
+            )}
           </SelectContent>
         </Select>
       </div>

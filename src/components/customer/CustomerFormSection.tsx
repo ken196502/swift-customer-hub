@@ -23,8 +23,7 @@ export function CustomerFormSection({
       <div>
         <BasicInfoFields 
           formData={formData} 
-          handleInputChange={handleInputChange} 
-          groupOptions={groupOptions} 
+          handleInputChange={handleInputChange}  
           countries={countries}
         />
       </div>
@@ -33,6 +32,7 @@ export function CustomerFormSection({
           <DetailedInfoFields 
             formData={formData} 
             handleInputChange={handleInputChange}
+            groupOptions={groupOptions}
           />
         </div>
       )}

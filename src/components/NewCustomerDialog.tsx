@@ -56,6 +56,7 @@ export function NewCustomerDialog({
     sponsorDepartments: [],
     entryDepartment: departments[0],
     progress: "意向",
+    phone: "",
   });
 
   const handleInputChange = (field: string, value: any) => {
@@ -105,6 +106,33 @@ export function NewCustomerDialog({
             填写客户信息，带*为必填项
           </DialogDescription>
         </DialogHeader>
+        
+        <div className="flex gap-4 mb-6">
+          <Button
+            type="button"
+            variant={formData.type === "公司户" ? "default" : "outline"}
+            onClick={() => handleInputChange("type", "公司户")}
+            className="flex-1"
+          >
+            公司户
+          </Button>
+          <Button
+            type="button"
+            variant={formData.type === "机构户" ? "default" : "outline"}
+            onClick={() => handleInputChange("type", "机构户")}
+            className="flex-1"
+          >
+            机构户
+          </Button>
+          <Button
+            type="button"
+            variant={formData.type === "个人户" ? "default" : "outline"}
+            onClick={() => handleInputChange("type", "个人户")}
+            className="flex-1"
+          >
+            个人户
+          </Button>
+        </div>
         
         <CustomerFormSection 
           formData={formData} 

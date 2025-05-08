@@ -38,6 +38,7 @@ export function ManagementDialogs({
     isListed: false,
     sponsorDepartments: [],
     progress: "意向",
+    activeStatus: "活跃",
   });
 
   const handleCustomerInputChange = (field: string, value: any) => {
@@ -72,6 +73,7 @@ export function ManagementDialogs({
       isListed: false,
       sponsorDepartments: [],
       progress: "意向",
+      activeStatus: "活跃",
     });
     setNewCustomerType("公司户");
   };

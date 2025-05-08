@@ -19,7 +19,7 @@ function App() {
         <SidebarProvider>
           <div className="flex min-h-screen w-full">
             <AppSidebar />
-            <main className="flex-1">
+            <main className="flex-1" style={{ width: "120%" }}>
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/audit" element={<Audit />} />

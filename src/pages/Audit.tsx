@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { AuditContent } from "@/components/audit/AuditContent";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { AuditFilters } from "@/components/audit/AuditFilters";
 
 // Define the audit item type
 export interface AuditItem {
@@ -181,27 +181,13 @@ export default function Audit() {
   }, [auditItems]);
 
   return (
-    <div className="container mx-auto py-6 space-y-6">
-      <h1 className="text-2xl font-bold">审核管理</h1>
+    <div className="container mx-auto py-6 space-y-6" style={{ width: "120%" }}>
+      <h1 className="text-2xl font-bold text-left">审核管理</h1>
       
-      <div className="flex items-center justify-end">
-        <div className="w-60">
-          <Select 
-            value={selectedCategory || "all"} 
-            onValueChange={(value) => setSelectedCategory(value === "all" ? null : value)}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="全部类型" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">全部类型</SelectItem>
-              <SelectItem value="客户信息">客户信息</SelectItem>
-              <SelectItem value="触达记录">触达记录</SelectItem>
-              <SelectItem value="共享权限">共享权限</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
+      <AuditFilters 
+        categoryFilter={selectedCategory} 
+        onCategoryChange={setSelectedCategory}
+      />
 
       <Tabs defaultValue="pending" className="w-full">
         <TabsList className="grid w-[400px] grid-cols-2">

@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Customer } from "@/contexts/CustomerContext";
 
@@ -7,7 +8,7 @@ interface BasicInformationProps {
 
 export function BasicInformation({ customer }: BasicInformationProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6" style={{ width: "120%" }}>
       <div className="space-y-4">
         <div className="grid grid-cols-3 gap-4 items-center">
           <div className="text-sm text-gray-500">客户号：</div>
@@ -45,22 +46,27 @@ export function BasicInformation({ customer }: BasicInformationProps) {
         </div>
 
         <div className="grid grid-cols-3 gap-4 items-center">
-          <div className="text-sm text-gray-500">是否上市：</div>
-          <div className="col-span-2">{customer.isListed ? "是" : "否"}</div>
-        </div>
-
-        <div className="grid grid-cols-3 gap-4 items-center">
-          <div className="text-sm text-gray-500">股票代码：</div>
-          <div className="col-span-2">{customer.stockCode}</div>
+          <div className="text-sm text-gray-500">活跃状态：</div>
+          <div className="col-span-2">{customer.activeStatus}</div>
         </div>
 
         <div className="grid grid-cols-3 gap-4 items-center">
           <div className="text-sm text-gray-500">城市地区：</div>
           <div className="col-span-2">{customer.city}</div>
         </div>
+
+        <div className="grid grid-cols-3 gap-4 items-center">
+          <div className="text-sm text-gray-500">成立日期：</div>
+          <div className="col-span-2">{customer.establishDate}</div>
+        </div>
       </div>
 
       <div className="space-y-4">
+        <div className="grid grid-cols-3 gap-4 items-center">
+          <div className="text-sm text-gray-500">是否上市：</div>
+          <div className="col-span-2">{customer.isListed ? "是" : "否"}</div>
+        </div>
+        
         <div className="grid grid-cols-3 gap-4 items-center">
           <div className="text-sm text-gray-500">证件类型：</div>
           <div className="col-span-2">{customer.idType}</div>
@@ -87,8 +93,8 @@ export function BasicInformation({ customer }: BasicInformationProps) {
         </div>
 
         <div className="grid grid-cols-3 gap-4 items-center">
-          <div className="text-sm text-gray-500">成立日期：</div>
-          <div className="col-span-2">{customer.establishDate}</div>
+          <div className="text-sm text-gray-500">股票代码：</div>
+          <div className="col-span-2">{customer.stockCode}</div>
         </div>
 
         <div className="grid grid-cols-3 gap-4 items-center">
@@ -109,11 +115,6 @@ export function BasicInformation({ customer }: BasicInformationProps) {
         <div className="grid grid-cols-3 gap-4 items-center">
           <div className="text-sm text-gray-500">录入时间：</div>
           <div className="col-span-2">{customer.entryDate}</div>
-        </div>
-
-        <div className="grid grid-cols-3 gap-4 items-center">
-          <div className="text-sm text-gray-500">活跃状态：</div>
-          <div className="col-span-2">{customer.activeStatus}</div>
         </div>
       </div>
     </div>

@@ -9,13 +9,37 @@ import { cn } from "@/lib/utils";
 interface DetailedInfoFieldsProps {
   formData: Partial<Customer>;
   handleInputChange: (field: string, value: any) => void;
+  groupOptions: string[];
 }
 
-export function DetailedInfoFields({ formData, handleInputChange }: DetailedInfoFieldsProps) {
+export function DetailedInfoFields({ 
+  formData, 
+  handleInputChange,
+  groupOptions 
+}: DetailedInfoFieldsProps) {
   const isPersonalCustomer = formData.type === "个人户";
 
   return (
     <div className="space-y-4">
+      <div>
+        <Label htmlFor="groupName">所属集团</Label>
+        <Select
+          value={formData.groupName || ""}
+          onValueChange={(value) => handleInputChange("groupName", value)}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="选择集团" />
+          </SelectTrigger>
+          <SelectContent>
+            {groupOptions.map((group) => (
+              <SelectItem key={group} value={group}>
+                {group}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+      
       <div className="flex items-center space-x-2">
         <Switch
           id="isListed"
@@ -95,23 +119,6 @@ export function DetailedInfoFields({ formData, handleInputChange }: DetailedInfo
             <SelectItem value="低">低</SelectItem>
             <SelectItem value="中">中</SelectItem>
             <SelectItem value="高">高</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="space-y-2">
-        <Label>活跃状态</Label>
-        <Select
-          value={formData.activeStatus}
-          onValueChange={(value) => handleInputChange('activeStatus', value)}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="请选择活跃状态" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="活跃">活跃</SelectItem>
-            <SelectItem value="不活跃">不活跃</SelectItem>
-            <SelectItem value="潜在">潜在</SelectItem>
           </SelectContent>
         </Select>
       </div>
