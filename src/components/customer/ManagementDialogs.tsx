@@ -2,8 +2,9 @@
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Customer } from "@/contexts/CustomerContext";
+import { Customer } from "@/contexts/customer/customerTypes";
 import { CustomerFormSection } from "./CustomerFormSection";
+import { CustomerTypeSelector } from "./form/CustomerTypeSelector";
 
 interface ManagementDialogsProps {
   showNewCustomerDialog: boolean;
@@ -39,6 +40,7 @@ export function ManagementDialogs({
     sponsorDepartments: [],
     progress: "意向",
     activeStatus: "活跃",
+    riskLevel: "低",
   });
 
   const handleCustomerInputChange = (field: string, value: any) => {
@@ -74,6 +76,7 @@ export function ManagementDialogs({
       sponsorDepartments: [],
       progress: "意向",
       activeStatus: "活跃",
+      riskLevel: "低",
     });
     setNewCustomerType("公司户");
   };
@@ -90,32 +93,13 @@ export function ManagementDialogs({
           <DialogHeader>
             <DialogTitle>新建客户</DialogTitle>
           </DialogHeader>
-          <div className="flex gap-4 mb-6">
-            <Button
-              type="button"
-              variant={newCustomerType === "公司户" ? "default" : "outline"}
-              onClick={() => handleCustomerInputChange("type", "公司户")}
-              className="flex-1"
-            >
-              公司户
-            </Button>
-            <Button
-              type="button"
-              variant={newCustomerType === "机构户" ? "default" : "outline"}
-              onClick={() => handleCustomerInputChange("type", "机构户")}
-              className="flex-1"
-            >
-              机构户
-            </Button>
-            <Button
-              type="button"
-              variant={newCustomerType === "个人户" ? "default" : "outline"}
-              onClick={() => handleCustomerInputChange("type", "个人户")}
-              className="flex-1"
-            >
-              个人户
-            </Button>
-          </div>
+          
+          {/* Use the CustomerTypeSelector component instead of duplicating */}
+          <CustomerTypeSelector 
+            formData={newCustomerData} 
+            handleInputChange={handleCustomerInputChange} 
+          />
+          
           <CustomerFormSection
             formData={newCustomerData}
             handleInputChange={handleCustomerInputChange}

@@ -105,23 +105,6 @@ export function DetailedInfoFields({
           onChange={(e) => handleInputChange('legalRepresentative', e.target.value)}
         />
       </div>
-
-      <div className="space-y-2">
-        <Label>风险等级</Label>
-        <Select
-          value={formData.riskLevel}
-          onValueChange={(value) => handleInputChange('riskLevel', value)}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="请选择风险等级" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="低">低</SelectItem>
-            <SelectItem value="中">中</SelectItem>
-            <SelectItem value="高">高</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
     </div>
   );
 }

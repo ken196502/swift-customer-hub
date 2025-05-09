@@ -10,11 +10,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { PlusCircle, Trash } from "lucide-react";
+import { History, PlusCircle, Trash } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Card } from "@/components/ui/card";
-import { useManagementAudit } from "@/hooks/use-management-audit";
+import { useManagementAudit, ManagementChangeRecord } from "@/hooks/use-management-audit";
+import { ManagementChangeRecordsDialog } from "@/components/management/ManagementChangeRecordsDialog";
 
 export default function ContactTypes() {
   const { contactTypes, handleUpdateContactTypes } = useCustomer();
@@ -22,6 +23,10 @@ export default function ContactTypes() {
   const [newType, setNewType] = useState("");
   const { toast } = useToast();
   const { recordManagementChange } = useManagementAudit();
+  
+  // For change records
+  const [showChangeRecords, setShowChangeRecords] = useState(false);
+  const [changeRecords, setChangeRecords] = useState<ManagementChangeRecord[]>([]);
 
   // Setup audit approval listener
   useEffect(() => {
@@ -44,6 +49,38 @@ export default function ContactTypes() {
       window.removeEventListener("audit:approved", handleAuditApproved as EventListener);
     };
   }, [contactTypes]);
+  
+  // Load change records (demo data)
+  useEffect(() => {
+    const demoRecords = [
+      {
+        id: 1,
+        date: '2025-04-28 10:22:45',
+        type: "联系类型" as const,
+        before: ['会议', '电话', '邮件', '其他'],
+        after: ['会议', '电话', '邮件', '短信', '其他'],
+        user: '张三'
+      },
+      {
+        id: 2,
+        date: '2025-05-02 14:35:12',
+        type: "联系类型" as const,
+        before: ['会议', '电话', '邮件', '短信', '其他'],
+        after: ['会议', '电话', '邮件', '短信', '视频会议', '其他'],
+        user: '李四'
+      },
+      {
+        id: 3,
+        date: '2025-05-05 09:17:33',
+        type: "联系类型" as const,
+        before: ['会议', '电话', '邮件', '短信', '视频会议', '其他'],
+        after: ['会议', '电话', '邮件', '视频会议', '其他'],
+        user: '王五'
+      }
+    ];
+    
+    setChangeRecords(demoRecords);
+  }, []);
 
   const handleAddType = () => {
     if (!newType.trim()) return;
@@ -93,6 +130,10 @@ export default function ContactTypes() {
     <div className="mx-auto py-6 space-y-6 max-w-3xl">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">联系类型管理</h1>
+        <Button variant="outline" onClick={() => setShowChangeRecords(true)}>
+          <History className="h-4 w-4 mr-2" />
+          变动记录
+        </Button>
       </div>
       
       <Card className="p-4">
@@ -142,6 +183,13 @@ export default function ContactTypes() {
       <div className="text-muted-foreground text-sm">
         <p>注意: "其他" 是系统保留的联系类型，不能被删除。</p>
       </div>
+      
+      <ManagementChangeRecordsDialog
+        open={showChangeRecords}
+        onOpenChange={setShowChangeRecords}
+        title="联系类型"
+        changeRecords={changeRecords}
+      />
     </div>
   );
 }

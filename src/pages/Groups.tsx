@@ -10,11 +10,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { PlusCircle, Trash } from "lucide-react";
+import { History, PlusCircle, Trash } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Card } from "@/components/ui/card";
-import { useManagementAudit } from "@/hooks/use-management-audit";
+import { useManagementAudit, ManagementChangeRecord } from "@/hooks/use-management-audit";
+import { ManagementChangeRecordsDialog } from "@/components/management/ManagementChangeRecordsDialog";
 
 export default function Groups() {
   const { groupOptions, handleUpdateGroups } = useCustomer();
@@ -22,6 +23,10 @@ export default function Groups() {
   const [newGroup, setNewGroup] = useState("");
   const { toast } = useToast();
   const { recordManagementChange } = useManagementAudit();
+  
+  // For change records
+  const [showChangeRecords, setShowChangeRecords] = useState(false);
+  const [changeRecords, setChangeRecords] = useState<ManagementChangeRecord[]>([]);
 
   // Setup audit approval listener
   useEffect(() => {
@@ -44,6 +49,38 @@ export default function Groups() {
       window.removeEventListener("audit:approved", handleAuditApproved as EventListener);
     };
   }, [groupOptions]);
+  
+  // Load change records (demo data)
+  useEffect(() => {
+    const demoRecords = [
+      {
+        id: 1,
+        date: '2025-05-01 14:30:25',
+        type: "集团" as const,
+        before: ['华为集团', '阿里巴巴', '腾讯集团', '百度集团'],
+        after: ['华为集团', '阿里巴巴', '腾讯集团', '百度集团', '小米集团'],
+        user: '张三'
+      },
+      {
+        id: 2,
+        date: '2025-05-03 09:15:36',
+        type: "集团" as const,
+        before: ['华为集团', '阿里巴巴', '腾讯集团', '百度集团', '小米集团'],
+        after: ['华为集团', '阿里巴巴', '腾讯集团', '百度集团', '小米集团', '京东集团'],
+        user: '李四'
+      },
+      {
+        id: 3,
+        date: '2025-05-07 16:42:51',
+        type: "集团" as const,
+        before: ['华为集团', '阿里巴巴', '腾讯集团', '百度集团', '小米集团', '京东集团'],
+        after: ['华为集团', '腾讯集团', '百度集团', '小米集团', '京东集团'],
+        user: '王五'
+      }
+    ];
+    
+    setChangeRecords(demoRecords);
+  }, []);
 
   const handleAddGroup = () => {
     if (!newGroup.trim()) return;
@@ -84,6 +121,10 @@ export default function Groups() {
     <div className="mx-auto py-6 space-y-6 max-w-3xl">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">集团管理</h1>
+        <Button variant="outline" onClick={() => setShowChangeRecords(true)}>
+          <History className="h-4 w-4 mr-2" />
+          变动记录
+        </Button>
       </div>
       <Card className="p-4">
         <div className="flex items-center gap-2 mb-4">
@@ -124,6 +165,13 @@ export default function Groups() {
           </TableBody>
         </Table>
       </Card>
+      
+      <ManagementChangeRecordsDialog
+        open={showChangeRecords}
+        onOpenChange={setShowChangeRecords}
+        title="集团"
+        changeRecords={changeRecords}
+      />
     </div>
   );
 }
