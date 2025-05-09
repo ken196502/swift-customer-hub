@@ -5,6 +5,7 @@ import { CustomerHeader } from "@/components/customer/CustomerHeader";
 import { CustomerDetailView } from "@/components/customer/CustomerDetailView";
 import { ManagementDialogs } from "@/components/customer/ManagementDialogs";
 import { useCustomer } from "@/contexts/CustomerContext";
+import { Customer } from "@/contexts/customer/customerTypes";
 import { useCustomerAudit } from "@/hooks/use-customer-audit";
 import { useEffect } from "react";
 
