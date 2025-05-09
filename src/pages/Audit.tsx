@@ -137,10 +137,31 @@ export default function Audit() {
 
   const handleApprove = (ids: number[], reason?: string) => {
     setAuditItems(
-      auditItems.map(item => 
-        ids.includes(item.id) ? { ...item, status: "approved", note: reason || item.note } : item
-      )
+      auditItems.map(item => {
+        if (ids.includes(item.id)) {
+          // Dispatch an event to notify other components that this item was approved
+          if (item.category === "共享权限") {
+            window.dispatchEvent(
+              new CustomEvent("audit:approved", {
+                detail: {
+                  type: "viewAccess",
+                  ids: [1, 4], // For demo purposes, hardcoded IDs of masked transactions
+                  itemId: item.id
+                },
+              })
+            );
+          }
+          
+          return { ...item, status: "approved", note: reason || item.note };
+        }
+        return item;
+      })
     );
+    
+    toast({
+      title: "审核已通过",
+      description: "所选记录已审核通过",
+    });
   };
 
   const handleReject = (ids: number[], reason?: string) => {
@@ -149,6 +170,20 @@ export default function Audit() {
         ids.includes(item.id) ? { ...item, status: "rejected", note: reason || item.note } : item
       )
     );
+    
+    toast({
+      title: "审核已拒绝",
+      description: "所选记录已被拒绝",
+    });
+  };
+
+  // Function to handle new audit item creation
+  const handleCreateAuditItem = (newItem: AuditItem) => {
+    setAuditItems(prev => [newItem, ...prev]);
+    toast({
+      title: "新审核请求",
+      description: `${newItem.customer} 的${newItem.category}${newItem.type}请求已添加到审核列表`,
+    });
   };
 
   // Filter items based on selected category
@@ -169,33 +204,49 @@ export default function Audit() {
       const { ids, reason } = e.detail;
       handleReject(ids, reason);
     };
+    
+    const handleCreateEvent = (e: CustomEvent) => {
+      handleCreateAuditItem(e.detail);
+    };
 
     window.addEventListener('audit:approve', handleApproveEvent as EventListener);
     window.addEventListener('audit:reject', handleRejectEvent as EventListener);
+    window.addEventListener('audit:create', handleCreateEvent as EventListener);
 
     return () => {
       window.removeEventListener('audit:approve', handleApproveEvent as EventListener);
       window.removeEventListener('audit:reject', handleRejectEvent as EventListener);
+      window.removeEventListener('audit:create', handleCreateEvent as EventListener);
     };
   }, [auditItems]);
 
   return (
     <div className="mx-auto py-6 space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-start items-center">
         <h1 className="text-2xl font-bold">审核管理</h1>
       </div>
       <Tabs defaultValue="pending" className="w-full">
         <TabsList className="grid w-[400px] grid-cols-2">
-          <TabsTrigger value="pending">待审核</TabsTrigger>
-          <TabsTrigger value="processed">已审核</TabsTrigger>
+          <TabsTrigger value="pending">待审核 ({pendingItems.length})</TabsTrigger>
+          <TabsTrigger value="processed">已审核 ({processedItems.length})</TabsTrigger>
         </TabsList>
 
         <TabsContent value="pending">
-          <AuditContent items={pendingItems} isPending={true} />
+          <AuditContent 
+            items={pendingItems} 
+            isPending={true} 
+            onCategoryChange={setSelectedCategory}
+            selectedCategory={selectedCategory}
+          />
         </TabsContent>
 
         <TabsContent value="processed">
-          <AuditContent items={processedItems} isPending={false} />
+          <AuditContent 
+            items={processedItems} 
+            isPending={false}
+            onCategoryChange={setSelectedCategory}
+            selectedCategory={selectedCategory}
+          />
         </TabsContent>
       </Tabs>
     </div>

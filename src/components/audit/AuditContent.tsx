@@ -9,10 +9,18 @@ import { useToast } from "@/hooks/use-toast";
 interface AuditContentProps {
   items: AuditItem[];
   isPending?: boolean;
+  onCategoryChange?: (category: string | null) => void;
+  selectedCategory?: string | null;
 }
 
-export function AuditContent({ items, isPending = false }: AuditContentProps) {
+export function AuditContent({ 
+  items, 
+  isPending = false,
+  onCategoryChange,
+  selectedCategory 
+}: AuditContentProps) {
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const { toast } = useToast();
 
   const handleItemSelect = (id: number, isSelected: boolean) => {
     if (isSelected) {
@@ -36,6 +44,10 @@ export function AuditContent({ items, isPending = false }: AuditContentProps) {
       detail: { ids, reason } 
     }));
     setSelectedIds([]);
+    toast({
+      title: "审批完成",
+      description: "已批准所选审核项"
+    });
   };
 
   const handleReject = (ids: number[], reason?: string) => {
@@ -44,11 +56,18 @@ export function AuditContent({ items, isPending = false }: AuditContentProps) {
       detail: { ids, reason } 
     }));
     setSelectedIds([]);
+    toast({
+      title: "已拒绝",
+      description: "已拒绝所选审核项"
+    });
   };
 
   return (
     <div className="space-y-4">      
-      <AuditFilters />
+      <AuditFilters 
+        onCategoryChange={onCategoryChange}
+        selectedCategory={selectedCategory}
+      />
       
       {isPending && (
         <AuditBatchActions 

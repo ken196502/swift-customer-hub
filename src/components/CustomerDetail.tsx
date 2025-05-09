@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -8,6 +8,7 @@ import { Customer } from "@/contexts/CustomerContext";
 import { BasicInformation } from "./customer/BasicInformation";
 import { InteractionRecords } from "./customer/InteractionRecords";
 import { NewCustomerDialog } from "./NewCustomerDialog";
+import { useToast } from "@/hooks/use-toast";
 
 interface CustomerDetailProps {
   customer: Customer;
@@ -100,8 +101,32 @@ export function CustomerDetail({
   const [activeTab, setActiveTab] = useState("basic");
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [transactionData, setTransactionData] = useState<TransactionData[]>(initialTransactions);
+  const { toast } = useToast();
 
   const handleUpdateCustomer = (updatedCustomer: Partial<Customer>) => {
+    // Instead of direct update, create an audit record
+    window.dispatchEvent(
+      new CustomEvent("audit:create", {
+        detail: {
+          id: Math.floor(Math.random() * 10000),
+          submitTime: new Date().toLocaleString(),
+          customer: customer.fullNameCn,
+          type: "修改",
+          category: "客户信息",
+          before: `客户名称: ${customer.fullNameCn}\n联系人: ${customer.contactPerson || ''}\n电话: ${customer.phone || ''}`,
+          after: `客户名称: ${updatedCustomer.fullNameCn || customer.fullNameCn}\n联系人: ${updatedCustomer.contactPerson || customer.contactPerson || ''}\n电话: ${updatedCustomer.phone || customer.phone || ''}`,
+          note: "",
+          submitter: "当前用户",
+          status: "pending"
+        },
+      })
+    );
+    
+    toast({
+      title: "提交审核",
+      description: "已提交修改客户信息审核请求，审核通过后修改将生效",
+    });
+    
     if (onEditCustomer) {
       onEditCustomer(updatedCustomer);
     }
@@ -175,6 +200,8 @@ export function CustomerDetail({
               onAddServiceRecord={handleAddServiceRecord}
               contactTypes={contactTypes}
               departments={departments}
+              customerId={customer.id}
+              customerName={customer.fullNameCn}
             />
           </TabsContent>
         </Tabs>
