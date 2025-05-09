@@ -106,11 +106,7 @@ export function CustomerDetail({
               <TabsTrigger value="interaction">触达记录</TabsTrigger>
             </TabsList>
             {activeTab === "basic" && (
-              <div className="flex gap-2">
-                <Button variant="outline" size="sm" onClick={() => setEditDialogOpen(true)}>
-                  <Edit className="h-4 w-4 mr-2" />
-                  编辑
-                </Button>
+              <div className="flex gap-1">
                 <Dialog open={mergeDialogOpen} onOpenChange={setMergeDialogOpen}>
                   <DialogTrigger asChild>
                     <Button variant="outline" size="sm">
@@ -156,6 +152,10 @@ export function CustomerDetail({
                     </div>
                   </DialogContent>
                 </Dialog>
+                <Button variant="outline" size="sm" onClick={() => setEditDialogOpen(true)}>
+                  <Edit className="h-4 w-4" />
+                  编辑
+                </Button>
               </div>
             )}
           </div>

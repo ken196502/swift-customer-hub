@@ -132,8 +132,8 @@ export function BasicInfoCard({ customer }: BasicInfoCardProps) {
           
           <div className="grid grid-cols-3 py-2 px-4">
             <dt className="col-span-1 text-sm font-medium text-muted-foreground">国家/地区</dt>
-            <dd className="col-span-2 text-sm">
-              <div className="flex items-center">
+            <dd className="col-span-2 text-sm text-center">
+              <div className="flex items-center justify-center">
                 {customer.country && (
                   <span className="mr-2 text-base">{getCountryEmoji(customer.country)}</span>
                 )}
