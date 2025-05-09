@@ -5,6 +5,8 @@ import { CustomerHeader } from "@/components/customer/CustomerHeader";
 import { CustomerDetailView } from "@/components/customer/CustomerDetailView";
 import { ManagementDialogs } from "@/components/customer/ManagementDialogs";
 import { useCustomer } from "@/contexts/CustomerContext";
+import { useCustomerAudit } from "@/hooks/use-customer-audit";
+import { useEffect } from "react";
 
 export function CustomerContent() {
   const {
@@ -25,6 +27,24 @@ export function CustomerContent() {
     handleAddCustomer,
     handleUpdateCustomer,
   } = useCustomer();
+
+  const { submitCustomerChanges, setupAuditApprovedListener } = useCustomerAudit({
+    onApproved: (newCustomer) => {
+      handleAddCustomer(newCustomer);
+    }
+  });
+
+  // Set up the listener for audit approvals
+  useEffect(() => {
+    const cleanupListener = setupAuditApprovedListener();
+    return cleanupListener;
+  }, []);
+
+  // Handle new customer creation through the audit system
+  const handleSubmitNewCustomer = (newCustomer: Partial<Customer>) => {
+    submitCustomerChanges(null, newCustomer, true);
+    setShowNewCustomerDialog(false);
+  };
 
   if (selectedCustomer !== null) {
     const customer = customers.find((c) => c.id === selectedCustomer);
@@ -66,7 +86,7 @@ export function CustomerContent() {
       <ManagementDialogs
         showNewCustomerDialog={showNewCustomerDialog}
         setShowNewCustomerDialog={setShowNewCustomerDialog}
-        handleAddCustomer={handleAddCustomer}
+        handleAddCustomer={handleSubmitNewCustomer}
         productOptions={productOptions}
         contactTypes={contactTypes}
         groupOptions={groupOptions}

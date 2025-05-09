@@ -3,6 +3,7 @@ import { Customer } from "@/contexts/CustomerContext";
 import { CompanyInfoFields } from "./CompanyInfoFields";
 import { PersonalInfoFields } from "./PersonalInfoFields";
 import { CommonInfoFields } from "./CommonInfoFields";
+import { CustomerTypeSelector } from "./CustomerTypeSelector";
 
 interface BasicInfoFieldsProps {
   formData: Partial<Customer>;
@@ -21,6 +22,12 @@ export function BasicInfoFields({
 
   return (
     <div className="space-y-6">
+      <CustomerTypeSelector
+        formData={formData}
+        handleInputChange={handleInputChange}
+        disabled={disabled}
+      />
+      
       {isPersonalCustomer ? (
         <PersonalInfoFields 
           formData={formData} 

@@ -1,3 +1,4 @@
+
 export interface Customer {
   id: number;
   customerNumber: string;
@@ -27,10 +28,10 @@ export interface Customer {
   reaches: string[];
   sponsorDepartments?: string[];
   entryDepartment?: string;
-  progress?: "意向" | "已开户";
+  progress?: "意向" | "已开户" | "待定";
   phone?: string;
   email?: string;
-  contact?: string;  // Added the contact property
+  contact?: string;  // Contact person's name
 }
 
 export interface CustomerContextType {

@@ -9,6 +9,8 @@ import { InteractionRecords } from "./customer/InteractionRecords";
 import { NewCustomerDialog } from "./NewCustomerDialog";
 import { CustomerDetailHeader } from "./customer/CustomerDetailHeader";
 import { useCustomerDetail } from "@/hooks/use-customer-detail";
+import { useCustomerAudit } from "@/hooks/use-customer-audit";
+import { useEffect } from "react";
 
 export interface TransactionData {
   id: number;
@@ -56,9 +58,28 @@ export function CustomerDetail({
     editDialogOpen,
     setEditDialogOpen,
     transactionData,
-    handleUpdateCustomer,
     handleAddServiceRecord
-  } = useCustomerDetail(customer, onEditCustomer);
+  } = useCustomerDetail(customer, null); // Set onEditCustomer to null since we'll use audit now
+
+  const { submitCustomerChanges, setupAuditApprovedListener } = useCustomerAudit({
+    onApproved: (updatedCustomer) => {
+      if (onEditCustomer) {
+        onEditCustomer(updatedCustomer);
+      }
+    }
+  });
+
+  // Set up the listener for audit approvals
+  useEffect(() => {
+    const cleanupListener = setupAuditApprovedListener();
+    return cleanupListener;
+  }, []);
+
+  // Handle customer updates through the audit system
+  const handleUpdateCustomer = (updatedData: Partial<Customer>) => {
+    submitCustomerChanges(customer, updatedData, false);
+    setEditDialogOpen(false);
+  };
 
   return (
     <Card>

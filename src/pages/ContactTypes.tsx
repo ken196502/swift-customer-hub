@@ -11,15 +11,39 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { PlusCircle, Trash } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Card } from "@/components/ui/card";
+import { useManagementAudit } from "@/hooks/use-management-audit";
 
 export default function ContactTypes() {
   const { contactTypes, handleUpdateContactTypes } = useCustomer();
   const [types, setTypes] = useState(contactTypes);
   const [newType, setNewType] = useState("");
   const { toast } = useToast();
+  const { recordManagementChange } = useManagementAudit();
+
+  // Setup audit approval listener
+  useEffect(() => {
+    const handleAuditApproved = (event: CustomEvent) => {
+      const { category, type } = event.detail;
+      if (category === "联系类型管理" && type === "修改") {
+        // This would typically update based on specific details in the event
+        // For demo purposes, we'll update types from contactTypes
+        setTypes([...contactTypes]);
+        
+        toast({
+          title: "联系类型变更已生效",
+          description: "审核通过，联系类型列表已更新",
+        });
+      }
+    };
+
+    window.addEventListener("audit:approved", handleAuditApproved as EventListener);
+    return () => {
+      window.removeEventListener("audit:approved", handleAuditApproved as EventListener);
+    };
+  }, [contactTypes]);
 
   const handleAddType = () => {
     if (!newType.trim()) return;
@@ -33,14 +57,15 @@ export default function ContactTypes() {
     }
 
     const updatedTypes = [...types, newType.trim()];
+    
+    // Record the change for audit
+    recordManagementChange("联系类型", types, updatedTypes);
+    
+    // Update local state (will be overwritten when audit is approved)
     setTypes(updatedTypes);
     setNewType("");
-    handleUpdateContactTypes(updatedTypes);
     
-    toast({
-      title: "操作成功",
-      description: "联系类型已添加",
-    });
+    // The actual update happens after audit approval
   };
 
   const handleDeleteType = (type: string) => {
@@ -54,13 +79,14 @@ export default function ContactTypes() {
     }
     
     const updatedTypes = types.filter(t => t !== type);
-    setTypes(updatedTypes);
-    handleUpdateContactTypes(updatedTypes);
     
-    toast({
-      title: "操作成功",
-      description: "联系类型已删除",
-    });
+    // Record the change for audit
+    recordManagementChange("联系类型", types, updatedTypes);
+    
+    // Update local state (will be overwritten when audit is approved)
+    setTypes(updatedTypes);
+    
+    // The actual update happens after audit approval
   };
 
   return (
