@@ -54,8 +54,8 @@ export function useCustomerAudit(options?: CustomerAuditOptions) {
     );
 
     toast({
-      title: "审核提交成功",
-      description: "客户信息变更已提交审核，通过后将生效",
+      title: "提交成功",
+      description: "客户信息已提交审核，审核通过后将生效",
     });
 
     return auditData.id;

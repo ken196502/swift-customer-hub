@@ -42,6 +42,16 @@ export function PersonalInfoFields({
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
+          <Label htmlFor="establishDate">出生日期</Label>
+          <Input
+            id="establishDate"
+            type="date"
+            value={formData.establishDate || ""}
+            onChange={(e) => handleInputChange("establishDate", e.target.value)}
+            disabled={disabled}
+          />
+        </div>
+        <div>
           <Label htmlFor="phone">手机号</Label>
           <Input
             id="phone"

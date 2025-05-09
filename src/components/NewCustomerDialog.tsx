@@ -90,8 +90,8 @@ export function NewCustomerDialog({
     }
     
     toast({
-      title: "操作成功",
-      description: initialData ? "客户信息已更新" : "新客户已添加",
+      title: "提交成功",
+      description: initialData ? "客户信息已提交审核，审核通过后将生效" : "新客户已提交审核，审核通过后将生效",
     });
     
     onOpenChange(false);

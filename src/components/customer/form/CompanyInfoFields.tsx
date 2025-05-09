@@ -60,6 +60,29 @@ export function CompanyInfoFields({
           />
         </div>
       </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <Label htmlFor="establishDate">成立日期</Label>
+          <Input
+            id="establishDate"
+            type="date"
+            value={formData.establishDate || ""}
+            onChange={(e) => handleInputChange("establishDate", e.target.value)}
+            disabled={disabled}
+          />
+        </div>
+        <div>
+          <Label htmlFor="email">邮箱</Label>
+          <Input
+            id="email"
+            type="email"
+            value={formData.email || ""}
+            onChange={(e) => handleInputChange("email", e.target.value)}
+            disabled={disabled}
+          />
+        </div>
+      </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
