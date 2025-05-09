@@ -15,13 +15,11 @@ export function CustomerGroupHeader({
 }: CustomerGroupHeaderProps) {
   return (
     <div className="flex justify-between items-center w-full">
-      <div className="flex items-center">
-        <span className="font-medium">{groupName}</span>
-        <Badge className="ml-2 bg-blue-100 text-blue-800 hover:bg-blue-100">
-          {groupCustomers.length} 个客户
-        </Badge>
+      <div className="whitespace-nowrap">
+        <p className="text-sm">{groupName}</p>
+        <p className="text-xs text-muted-foreground"> {groupCustomers.length} 个客户</p>
       </div>
-      <div className="flex flex-wrap gap-1">
+      <div className="flex flex-wrap gap-1 w-1/2 md:w-full justify-end">
         {getGroupProducts(groupCustomers).map((product) => (
           <Badge
             key={product}

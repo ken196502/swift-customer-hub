@@ -107,8 +107,6 @@ export function BasicInfoCard({ customer }: BasicInfoCardProps) {
               </div>
               
               <div className="grid grid-cols-3 py-2 px-4">
-                <dt className="col-span-1 text-sm font-medium text-muted-foreground">英文简称</dt>
-                <dd className="col-span-2 text-sm">{customer.shortNameEn || "-"}</dd>
                 <dt className="col-span-1 text-sm font-medium text-muted-foreground">中文全称</dt>
                 <dd className="col-span-2 text-sm">{customer.fullNameCn || "-"}</dd>
               </div>

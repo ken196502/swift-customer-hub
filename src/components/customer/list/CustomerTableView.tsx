@@ -140,40 +140,40 @@ export function CustomerTableView({
             className="p-4 border-b cursor-pointer hover:bg-gray-50 space-y-2"
             onClick={() => onSelectCustomer(customer.id)}
           >
-            <div className="flex items-center space-x-2">
-              <Checkbox 
-                checked={selectedCustomers.includes(customer.id)}
-                onCheckedChange={() => onToggleSelect(customer.id)}
-                onClick={(e) => e.stopPropagation()}
-              />
-              <div>
-                <div className="font-medium">{customer.shortNameCn}</div>
-                <div className="text-sm text-muted-foreground">{customer.groupName}</div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Checkbox 
+                  checked={selectedCustomers.includes(customer.id)}
+                  onCheckedChange={() => onToggleSelect(customer.id)}
+                  onClick={(e) => e.stopPropagation()}
+                />
+                <div>
+                  <div className="font-medium">{customer.shortNameCn}</div>
+                  <div className="text-sm text-muted-foreground">{customer.groupName}</div>
+                </div>
               </div>
-              <div className="ml-auto">
-                <Badge
-                  variant={customer.progress === "已开户" ? "default" : "outline"}
-                  className={customer.progress === "已开户" ? "bg-green-100 text-green-800 hover:bg-green-100" : "bg-yellow-100 text-yellow-800 hover:bg-yellow-100"}
-                >
-                  {customer.progress || "意向"}
-                </Badge>
-              </div>
+              <Badge
+                variant={customer.progress === "已开户" ? "default" : "outline"}
+                className={customer.progress === "已开户" ? "bg-green-100 text-green-800 hover:bg-green-100" : "bg-yellow-100 text-yellow-800 hover:bg-yellow-100"}
+              >
+                {customer.progress || "意向"}
+              </Badge>
             </div>
             
-            <div className="text-sm">
-              <div className="flex justify-between">
+            <div className="text-sm space-y-4">
+              <div className="flex justify-between items-center pt-1">
                 <span className="text-muted-foreground">客户号:</span>
                 <span>{customer.customerNumber}</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center pt-1">
                 <span className="text-muted-foreground">客户类型:</span>
                 <span>{customer.type}</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center pt-1">
                 <span className="text-muted-foreground">录入部门:</span>
                 <span>{customer.entryDepartment}</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center pt-1">
                 <span className="text-muted-foreground">主办部门:</span>
                 <div className="flex flex-wrap gap-1 justify-end">
                   {customer.sponsorDepartments?.map((dept, i) => (
@@ -187,7 +187,7 @@ export function CustomerTableView({
                   ))}
                 </div>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center pt-1">
                 <span className="text-muted-foreground">提供产品:</span>
                 <div className="flex flex-wrap gap-1 justify-end">
                   {customer.products.map((product, i) => (
@@ -201,7 +201,7 @@ export function CustomerTableView({
                   ))}
                 </div>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center pt-1">
                 <span className="text-muted-foreground">录入时间:</span>
                 <span>{customer.entryDate}</span>
               </div>
