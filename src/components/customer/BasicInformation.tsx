@@ -2,7 +2,7 @@
 import { Customer } from "@/contexts/CustomerContext";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { getCountryEmoji } from "@/utils/countryEmoji";
+import { getCountryEmoji } from "@/utils/countryEmojis";
 
 interface BasicInformationProps {
   customer: Customer;
@@ -206,9 +206,9 @@ export function BasicInformation({ customer }: BasicInformationProps) {
               <dd className="col-span-2 text-sm">
                 <span className={cn(
                   "px-2 py-0.5 text-xs rounded-full font-medium",
-                  customer.progress === "已签约" ? "bg-green-100 text-green-800" :
-                  customer.progress === "洽谈中" ? "bg-blue-100 text-blue-800" :
+                  customer.progress === "已开户" ? "bg-green-100 text-green-800" :
                   customer.progress === "意向" ? "bg-yellow-100 text-yellow-800" :
+                  customer.progress === "待定" ? "bg-blue-100 text-blue-800" :
                   "bg-gray-100 text-gray-800"
                 )}>
                   {customer.progress || "-"}
