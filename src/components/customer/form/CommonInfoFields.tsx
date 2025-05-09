@@ -56,6 +56,44 @@ export function CommonInfoFields({
           </SelectContent>
         </Select>
       </div>
+      
+      {/* Added active status dropdown */}
+      <div className="space-y-2">
+        <Label>活跃状态</Label>
+        <Select
+          value={formData.activeStatus}
+          onValueChange={(value) => handleInputChange('activeStatus', value)}
+          disabled={disabled}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="请选择活跃状态" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="活跃">活跃</SelectItem>
+            <SelectItem value="一般">一般</SelectItem>
+            <SelectItem value="不活跃">不活跃</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      
+      {/* Added development progress dropdown */}
+      <div className="space-y-2">
+        <Label>开发进度</Label>
+        <Select
+          value={formData.progress}
+          onValueChange={(value) => handleInputChange('progress', value)}
+          disabled={disabled}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="请选择开发进度" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="意向">意向</SelectItem>
+            <SelectItem value="已开户">已开户</SelectItem>
+            <SelectItem value="待定">待定</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
 
       {!isPersonalCustomer && (
         <div className="space-y-2">

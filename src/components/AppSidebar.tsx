@@ -28,6 +28,11 @@ export function AppSidebar() {
       icon: FileText,
     },
     {
+      title: "信息共享管理", 
+      url: "/permissions",
+      icon: Shield,
+    },
+    {
       title: "联系类型管理",
       url: "/contact-types",
       icon: MessageSquare,
@@ -36,11 +41,6 @@ export function AppSidebar() {
       title: "集团管理",
       url: "/groups",
       icon: Building,
-    },
-    {
-      title: "信息共享管理", 
-      url: "/permissions",
-      icon: Shield,
     },
   ];
 
