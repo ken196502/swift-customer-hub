@@ -90,7 +90,6 @@ export function CommonInfoFields({
           <SelectContent>
             <SelectItem value="意向">意向</SelectItem>
             <SelectItem value="已开户">已开户</SelectItem>
-            <SelectItem value="待定">待定</SelectItem>
           </SelectContent>
         </Select>
       </div>

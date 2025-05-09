@@ -10,7 +10,16 @@ import { NewCustomerDialog } from "./NewCustomerDialog";
 import { CustomerDetailHeader } from "./customer/CustomerDetailHeader";
 import { useCustomerDetail } from "@/hooks/use-customer-detail";
 import { useCustomerAudit } from "@/hooks/use-customer-audit";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export interface TransactionData {
   id: number;
@@ -52,6 +61,9 @@ export function CustomerDetail({
   countries = [],
   departments = []
 }: CustomerDetailProps) {
+  const [mergeDialogOpen, setMergeDialogOpen] = useState(false);
+  const [duplicateCustomerNumber, setDuplicateCustomerNumber] = useState("");
+  const [mergeLoading, setMergeLoading] = useState(false);
   const {
     activeTab,
     setActiveTab,
@@ -94,10 +106,57 @@ export function CustomerDetail({
               <TabsTrigger value="interaction">触达记录</TabsTrigger>
             </TabsList>
             {activeTab === "basic" && (
-              <Button variant="outline" size="sm" onClick={() => setEditDialogOpen(true)}>
-                <Edit className="h-4 w-4 mr-2" />
-                编辑
-              </Button>
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm" onClick={() => setEditDialogOpen(true)}>
+                  <Edit className="h-4 w-4 mr-2" />
+                  编辑
+                </Button>
+                <Dialog open={mergeDialogOpen} onOpenChange={setMergeDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button variant="outline" size="sm">
+                      合并重复客户
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>合并重复客户</DialogTitle>
+                    </DialogHeader>
+                    <div className="grid gap-4 py-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="duplicateCustomerNumber">重复客户号</Label>
+                        <Input
+                          id="duplicateCustomerNumber"
+                          value={duplicateCustomerNumber}
+                          onChange={(e) => setDuplicateCustomerNumber(e.target.value)}
+                          placeholder="请输入已存在客户号"
+                        />
+                      </div>
+                      <Button
+                        onClick={async () => {
+                          if (!duplicateCustomerNumber.trim()) {
+                            alert("请输入已存在客户号");
+                            return;
+                          }
+                          
+                          try {
+                            setMergeLoading(true);
+                            alert("已提交一条审核记录");
+                            setMergeDialogOpen(false);
+                            setDuplicateCustomerNumber("");
+                          } catch (error) {
+                            alert("提交失败，请重试");
+                          } finally {
+                            setMergeLoading(false);
+                          }
+                        }}
+                        disabled={mergeLoading}
+                      >
+                        {mergeLoading ? "提交中..." : "确定"}
+                      </Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </div>
             )}
           </div>
 

@@ -28,7 +28,7 @@ export interface Customer {
   reaches: string[];
   sponsorDepartments?: string[];
   entryDepartment?: string;
-  progress?: "意向" | "已开户" | "待定";
+  progress?: "意向" | "已开户";
   phone?: string;
   email?: string;
   contact?: string;  // Contact person's name
