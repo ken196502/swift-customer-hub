@@ -55,6 +55,26 @@ export function CustomerGroupMobile({
                 <DepartmentBadges departments={customer.sponsorDepartments} />
               </div>
             </div>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">提供产品:</span>
+              <div className="flex flex-wrap gap-1 justify-end">
+                {customer.products?.map((product, i) => (
+                  <span key={i} className="inline-block px-2 py-0.5 bg-gray-100 text-gray-700 rounded text-xs mr-1 mb-1">{product}</span>
+                ))}
+              </div>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">触达部门:</span>
+              <div className="flex flex-wrap gap-1 justify-end">
+                {customer.reaches?.map((reach, i) => (
+                  <span key={i} className="inline-block px-2 py-0.5 bg-gray-100 text-gray-700 rounded text-xs mr-1 mb-1">{reach}</span>
+                ))}
+              </div>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">录入时间:</span>
+              <span>{customer.entryDate}</span>
+            </div>
           </div>
         </div>
       ))}

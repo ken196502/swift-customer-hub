@@ -2,6 +2,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { CountrySelect } from "@/components/ui/country-select";
 import { Customer } from "@/contexts/CustomerContext";
 import { countries } from "@/utils/countries";
 
@@ -22,22 +23,11 @@ export function CommonInfoFields({
     <div className="space-y-4">
       <div>
         <Label htmlFor="country">国家/地区</Label>
-        <Select
+        <CountrySelect
           value={formData.country}
-          onValueChange={(value) => handleInputChange("country", value)}
+          onChange={(value) => handleInputChange("country", value)}
           disabled={disabled}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="请选择国家/地区" />
-          </SelectTrigger>
-          <SelectContent>
-            {countries.map((country) => (
-              <SelectItem key={country.value} value={country.value}>
-                {country.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        />
       </div>
 
       <div>

@@ -100,14 +100,10 @@ export function NewCustomerDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-5xl max-h-[80vh] overflow-y-auto">
-        <DialogHeader className="sticky top-0 bg-white z-10 pb-4 border-b">
+        <DialogHeader className="top-0 bg-white z-10 pb-4 border-b">
           <DialogTitle>{initialData ? "编辑客户" : "新建客户"}</DialogTitle>
-          <DialogDescription>
-            填写客户信息，带*为必填项
-          </DialogDescription>
         </DialogHeader>
         
-
         <CustomerFormSection 
           formData={formData} 
           handleInputChange={handleInputChange} 

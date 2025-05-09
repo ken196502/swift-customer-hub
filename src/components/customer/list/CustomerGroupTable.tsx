@@ -46,6 +46,7 @@ export function CustomerGroupTable({
             <TableHead>客户类型</TableHead>
             <TableHead>主办部门</TableHead>
             <TableHead>提供产品</TableHead>
+            <TableHead>触达部门</TableHead>
             <TableHead>录入部门</TableHead>
             <TableHead>录入时间</TableHead>
           </TableRow>
@@ -80,6 +81,13 @@ export function CustomerGroupTable({
               </TableCell>
               <TableCell>
                 <ProductBadges products={customer.products} />
+              </TableCell>
+              <TableCell>
+                <div className="flex flex-wrap gap-1">
+                  {customer.reaches?.map((reach, i) => (
+                    <span key={i} className="inline-block px-2 py-0.5 bg-gray-100 text-gray-700 rounded text-xs mr-1 mb-1">{reach}</span>
+                  ))}
+                </div>
               </TableCell>
               <TableCell>{customer.entryDepartment}</TableCell>
               <TableCell>{customer.entryDate}</TableCell>

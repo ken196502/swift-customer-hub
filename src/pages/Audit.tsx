@@ -8,6 +8,8 @@ import { AuditContent } from "@/components/audit/AuditContent";
 export interface AuditItem {
   id: number;
   submitTime: string;
+  approvalTime?: string;
+  approver?: string;
   customer: string;
   type: "新增" | "修改" | "删除" | "权限变更";
   category: "客户信息" | "触达记录" | "共享权限";
@@ -47,6 +49,8 @@ const mockAuditItems: AuditItem[] = [
   {
     id: 3,
     submitTime: "2025-04-24 16:45",
+    approvalTime: "2025-04-24 17:00",
+    approver: "张三",
     customer: "阿里",
     type: "删除",
     category: "客户信息",
@@ -71,6 +75,8 @@ const mockAuditItems: AuditItem[] = [
   {
     id: 5,
     submitTime: "2025-04-22 14:00",
+    approvalTime: "2025-04-22 14:30",
+    approver: "李四",
     customer: "百度",
     type: "新增",
     category: "客户信息",

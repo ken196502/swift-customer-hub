@@ -67,12 +67,26 @@ onCheckedChange={(checked) => {
                 </TableHead>
               )}
               <TableHead>类型</TableHead>
+              {isSelectable && (
+                <TableHead className="w-12 audit-table">
+                  提交时间
+                </TableHead>
+              )}
               <TableHead>客户</TableHead>
               <TableHead>变动类型</TableHead>
               <TableHead>变更前</TableHead>
               <TableHead>变更后</TableHead>
               <TableHead>备注</TableHead>
               <TableHead>变更人</TableHead>
+              {showStatus && (
+                <TableHead>状态</TableHead>
+              )}
+              {showStatus && items.some(item => item.status === "approved") && (
+                <TableHead>审核时间</TableHead>
+              )}
+              {showStatus && items.some(item => item.status === "approved") && (
+                <TableHead>审核人</TableHead>
+              )}
               {actionColumn && <TableHead className="text-right">操作</TableHead>}
             </TableRow>
           </TableHeader>
@@ -94,6 +108,11 @@ onCheckedChange={(checked) => {
               <TableCell>
                 <Badge variant="outline">{item.category}</Badge>
               </TableCell>
+              {isSelectable && (
+                <TableCell>
+                  {item.submitTime}
+                </TableCell>
+              )}
               <TableCell>{item.customer}</TableCell>
               <TableCell>
                 <Badge className={getBadgeColor(item.type)}>{item.type}</Badge>
@@ -106,6 +125,17 @@ onCheckedChange={(checked) => {
               </TableCell>
               <TableCell>{item.note}</TableCell>
               <TableCell>{item.submitter}</TableCell>
+              {showStatus && (
+                <TableCell>
+                  {getStatusBadge(item.status)}
+                </TableCell>
+              )}
+              {item.status === "approved" && (
+                <TableCell>{item.approvalTime}</TableCell>
+              )}
+              {item.status === "approved" && (
+                <TableCell>{item.approver}</TableCell>
+              )}
                 {actionColumn && (
                   <TableCell className="text-right">
                     {actionColumn(item.id)}
@@ -115,7 +145,7 @@ onCheckedChange={(checked) => {
             ))}
             {items.length === 0 && (
               <TableRow>
-                <TableCell colSpan={showStatus ? (isSelectable ? 10 : 9) : (isSelectable ? 9 : 8)} className="h-24 text-center">
+                <TableCell colSpan={showStatus ? (isSelectable ? 14 : 13) : (isSelectable ? 13 : 12)} className="h-24 text-center">
                   暂无数据
                 </TableCell>
               </TableRow>
@@ -156,6 +186,18 @@ onCheckedChange={(checked) => {
                   <div>变更前: {item.before || "—"}</div>
                   <div>变更后: {item.after || "—"}</div>
                   <div>变更人: {item.submitter}</div>
+                  {isSelectable && (
+                    <div>提交时间: {item.submitTime}</div>
+                  )}
+                  {showStatus && (
+                    <div>状态: {getStatusBadge(item.status)}</div>
+                  )}
+                {item.status === "approved" && (
+                    <div>审核时间: {item.approvalTime}</div>
+                  )}
+                {item.status === "approved" && (
+                    <div>审核人: {item.approver}</div>
+                  )}
                 </div>
               </div>
               

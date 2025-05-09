@@ -48,7 +48,7 @@ export function CustomerTableView({
               <TableHead>客户类型</TableHead>
               <TableHead>主办部门</TableHead>
               <TableHead>提供产品</TableHead>
-              <TableHead>触达记录</TableHead>
+              <TableHead>触达部门</TableHead>
               <TableHead>录入部门</TableHead>
               <TableHead>录入时间</TableHead>
             </TableRow>
