@@ -150,6 +150,17 @@ export default function Audit() {
                 },
               })
             );
+          } else if (item.category === "客户信息" || item.category === "触达记录") {
+            // For customer info or interaction records, notify that changes are approved
+            window.dispatchEvent(
+              new CustomEvent("audit:approved", {
+                detail: {
+                  type: item.category,
+                  itemId: item.id,
+                  customer: item.customer
+                },
+              })
+            );
           }
           
           return { ...item, status: "approved", note: reason || item.note };

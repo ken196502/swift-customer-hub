@@ -1,13 +1,25 @@
-import { useState, useEffect } from "react";
+
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Edit } from "lucide-react";
 import { Customer } from "@/contexts/CustomerContext";
 import { BasicInformation } from "./customer/BasicInformation";
 import { InteractionRecords } from "./customer/InteractionRecords";
 import { NewCustomerDialog } from "./NewCustomerDialog";
-import { useToast } from "@/hooks/use-toast";
+import { CustomerDetailHeader } from "./customer/CustomerDetailHeader";
+import { useCustomerDetail } from "@/hooks/use-customer-detail";
+
+export interface TransactionData {
+  id: number;
+  date: string;
+  amount: number;
+  type: string;
+  purpose: string;
+  department: string;
+  person: string;
+  description?: string;
+}
 
 interface CustomerDetailProps {
   customer: Customer;
@@ -28,65 +40,6 @@ const contactData = [
   { name: "招待客户", value: 1, percentage: 8, color: "#f59e0b" },
 ];
 
-export interface TransactionData {
-  id: number;
-  date: string;
-  amount: number;
-  type: string;
-  purpose: string;
-  department: string;
-  person: string;
-  description?: string;
-}
-
-const initialTransactions: TransactionData[] = [
-  {
-    id: 1,
-    date: "2025-03-26",
-    amount: -34000.0,
-    type: "出差费用",
-    purpose: "出差实访客户",
-    department: "零售经纪",
-    person: "张三",
-  },
-  {
-    id: 2,
-    date: "2025-03-22",
-    amount: 0.0,
-    type: "电话沟通",
-    purpose: "运营和销售沟通",
-    department: "机构经纪",
-    person: "李四",
-  },
-  {
-    id: 3,
-    date: "2025-03-21",
-    amount: 0.0,
-    type: "跨资产",
-    purpose: "运营和销售服务反馈",
-    department: "销售部",
-    person: "李四",
-  },
-  {
-    id: 4,
-    date: "2025-03-20",
-    amount: -1234.56,
-    type: "招待客户",
-    purpose: "招待客户",
-    department: "DCM",
-    person: "张三，王五",
-  },
-  {
-    id: 5,
-    date: "2025-03-19",
-    amount: 0.0,
-    type: "线上会议",
-    purpose: "线上1on1",
-    department: "ECM",
-    person: "赵六",
-  },
-];
-
 export function CustomerDetail({ 
   customer, 
   onEditCustomer, 
@@ -97,81 +50,20 @@ export function CustomerDetail({
   countries = [],
   departments = []
 }: CustomerDetailProps) {
-  const [activeTab, setActiveTab] = useState("basic");
-  const [editDialogOpen, setEditDialogOpen] = useState(false);
-  const [transactionData, setTransactionData] = useState<TransactionData[]>(initialTransactions);
-  const { toast } = useToast();
-
-  const handleUpdateCustomer = (updatedCustomer: Partial<Customer>) => {
-    // Instead of direct update, create an audit record
-    window.dispatchEvent(
-      new CustomEvent("audit:create", {
-        detail: {
-          id: Math.floor(Math.random() * 10000),
-          submitTime: new Date().toLocaleString(),
-          customer: customer.fullNameCn,
-          type: "修改",
-          category: "客户信息",
-          before: `客户名称: ${customer.fullNameCn}\n联系人: ${customer.contact || ''}\n电话: ${customer.phone || ''}`,
-          after: `客户名称: ${updatedCustomer.fullNameCn || customer.fullNameCn}\n联系人: ${updatedCustomer.contact || customer.contact || ''}\n电话: ${updatedCustomer.phone || customer.phone || ''}`,
-          note: "",
-          submitter: "当前用户",
-          status: "pending"
-        },
-      })
-    );
-    
-    toast({
-      title: "提交审核",
-      description: "已提交修改客户信息审核请求，审核通过后修改将生效",
-    });
-    
-    if (onEditCustomer) {
-      onEditCustomer(updatedCustomer);
-    }
-    setEditDialogOpen(false);
-  };
-
-  const handleAddServiceRecord = (record: any) => {
-    // Create a new transaction record
-    const newTransaction: TransactionData = {
-      id: transactionData.length + 1,
-      date: record.date,
-      amount: parseFloat(record.amount) || 0,
-      type: record.type,
-      purpose: record.purpose || "",
-      department: record.department || "",
-      person: record.person || "",
-      description: record.notes || ""
-    };
-
-    // Add the new transaction to the list
-    setTransactionData([newTransaction, ...transactionData]);
-  };
+  const {
+    activeTab,
+    setActiveTab,
+    editDialogOpen,
+    setEditDialogOpen,
+    transactionData,
+    handleUpdateCustomer,
+    handleAddServiceRecord
+  } = useCustomerDetail(customer, onEditCustomer);
 
   return (
     <Card>
-      <CardHeader className="space-y-2">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-xl">{customer.fullNameCn}</CardTitle>
-        </div>
-        <div className="flex items-center text-sm text-gray-500 space-x-8">
-          <div className="flex items-center space-x-2">
-            <span>所属集团:</span>
-            <span className="text-gray-700">{customer.groupName}</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <span>录入时间:</span>
-            <span className="text-gray-700">{customer.entryDate}</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <span>活跃状态:</span>
-            <div className="flex items-center space-x-1">
-              <div className="h-3 w-3 rounded-full bg-green-500"></div>
-              <span className="text-gray-700">{customer.activeStatus}</span>
-            </div>
-          </div>
-        </div>
+      <CardHeader>
+        <CustomerDetailHeader customer={customer} />
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="basic" value={activeTab} onValueChange={setActiveTab}>
