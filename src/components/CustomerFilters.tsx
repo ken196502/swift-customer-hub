@@ -111,7 +111,7 @@ export function CustomerFilters() {
           disabled={selectedCustomers.length === 0}
         >
           <UsersRound className="h-4 w-4 mr-2" />
-          设置录入部门
+          设置主办部门
         </Button>
         <ViewModeToggle viewMode={viewMode} onToggle={toggleViewMode} />
       </div>
