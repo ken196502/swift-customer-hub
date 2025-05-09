@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { PlusCircle, Lock } from "lucide-react";
@@ -113,7 +112,7 @@ export function InteractionRecords({
     return () => {
       window.removeEventListener("audit:approved", handleAuditApproval as EventListener);
     };
-  }, []);
+  });
 
   return (
     <div className="space-y-6">

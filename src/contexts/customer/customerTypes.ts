@@ -1,4 +1,3 @@
-
 export interface Customer {
   id: number;
   customerNumber: string;
@@ -31,6 +30,7 @@ export interface Customer {
   progress?: "意向" | "已开户";
   phone?: string;
   email?: string;
+  contact?: string;  // Added the contact property
 }
 
 export interface CustomerContextType {
