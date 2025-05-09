@@ -94,12 +94,7 @@ export function ManagementDialogs({
             <DialogTitle>新建客户</DialogTitle>
           </DialogHeader>
           
-          {/* Use the CustomerTypeSelector component instead of duplicating */}
-          <CustomerTypeSelector 
-            formData={newCustomerData} 
-            handleInputChange={handleCustomerInputChange} 
-          />
-          
+
           <CustomerFormSection
             formData={newCustomerData}
             handleInputChange={handleCustomerInputChange}

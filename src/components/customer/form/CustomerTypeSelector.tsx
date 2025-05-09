@@ -1,5 +1,7 @@
 
 import { Customer } from "@/contexts/CustomerContext";
+// Incorrect import: @/components/Button
+import { Button } from "@/components/ui/button"; // Corrected to use the actual UI component path
 
 interface CustomerTypeSelectorProps {
   formData: Partial<Customer>;
@@ -18,38 +20,34 @@ export function CustomerTypeSelector({
   
   return (
     <div className="space-y-2">
-      <h3 className="font-medium">客户类型</h3>
-      <div className="flex items-center space-x-2">
-        <label className="flex items-center space-x-2">
-          <input
-            type="radio"
-            checked={isCompany}
-            onChange={() => handleInputChange("type", "公司户")}
-            disabled={disabled}
-            className="h-4 w-4"
-          />
-          <span>公司户</span>
-        </label>
-        <label className="flex items-center space-x-2">
-          <input
-            type="radio"
-            checked={isInstitution}
-            onChange={() => handleInputChange("type", "机构户")}
-            disabled={disabled}
-            className="h-4 w-4"
-          />
-          <span>机构户</span>
-        </label>
-        <label className="flex items-center space-x-2">
-          <input
-            type="radio"
-            checked={isPersonal}
-            onChange={() => handleInputChange("type", "个人户")}
-            disabled={disabled}
-            className="h-4 w-4"
-          />
-          <span>个人户</span>
-        </label>
+      <div className="flex gap-4"> {/* 改为与新增面板一致的 gap 间距 */}
+        <Button
+          type="button"
+          variant={isCompany ? "default" : "outline"}
+          onClick={() => handleInputChange("type", "公司户")}
+          disabled={disabled}
+          className="flex-1"
+        >
+          公司户
+        </Button>
+        <Button
+          type="button"
+          variant={isInstitution ? "default" : "outline"}
+          onClick={() => handleInputChange("type", "机构户")}
+          disabled={disabled}
+          className="flex-1"
+        >
+          机构户
+        </Button>
+        <Button
+          type="button"
+          variant={isPersonal ? "default" : "outline"}
+          onClick={() => handleInputChange("type", "个人户")}
+          disabled={disabled}
+          className="flex-1"
+        >
+          个人户
+        </Button>
       </div>
     </div>
   );
