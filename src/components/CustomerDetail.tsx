@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -113,8 +112,8 @@ export function CustomerDetail({
           customer: customer.fullNameCn,
           type: "修改",
           category: "客户信息",
-          before: `客户名称: ${customer.fullNameCn}\n联系人: ${customer.contactPerson || ''}\n电话: ${customer.phone || ''}`,
-          after: `客户名称: ${updatedCustomer.fullNameCn || customer.fullNameCn}\n联系人: ${updatedCustomer.contactPerson || customer.contactPerson || ''}\n电话: ${updatedCustomer.phone || customer.phone || ''}`,
+          before: `客户名称: ${customer.fullNameCn}\n联系人: ${customer.contact || ''}\n电话: ${customer.phone || ''}`,
+          after: `客户名称: ${updatedCustomer.fullNameCn || customer.fullNameCn}\n联系人: ${updatedCustomer.contact || customer.contact || ''}\n电话: ${updatedCustomer.phone || customer.phone || ''}`,
           note: "",
           submitter: "当前用户",
           status: "pending"

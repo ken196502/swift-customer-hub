@@ -26,7 +26,7 @@ export function AuditFilters({ onCategoryChange, selectedCategory }: AuditFilter
   const handleCategoryChange = (value: string) => {
     setCategory(value);
     if (onCategoryChange) {
-      onCategoryChange(value === "" ? null : value);
+      onCategoryChange(value === "all" ? null : value);
     }
     
     // If category is "共享权限", reset changeType to "权限变更"
@@ -49,7 +49,7 @@ export function AuditFilters({ onCategoryChange, selectedCategory }: AuditFilter
   const handleReset = () => {
     setCustomerName("");
     setChangeType("");
-    setCategory("");
+    setCategory("all");
     if (onCategoryChange) {
       onCategoryChange(null);
     }
@@ -73,7 +73,7 @@ export function AuditFilters({ onCategoryChange, selectedCategory }: AuditFilter
             <SelectValue placeholder="审核类别" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">全部</SelectItem>
+            <SelectItem value="all">全部</SelectItem>
             <SelectItem value="客户信息">客户信息</SelectItem>
             <SelectItem value="触达记录">触达记录</SelectItem>
             <SelectItem value="共享权限">共享权限</SelectItem>
@@ -88,7 +88,7 @@ export function AuditFilters({ onCategoryChange, selectedCategory }: AuditFilter
             <SelectValue placeholder="变动类型" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">全部</SelectItem>
+            <SelectItem value="all">全部</SelectItem>
             {getChangeTypes().map(type => (
               <SelectItem key={type} value={type}>{type}</SelectItem>
             ))}
