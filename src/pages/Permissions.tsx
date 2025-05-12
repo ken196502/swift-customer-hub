@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, ChevronLeft } from 'lucide-react';
+import { PermissionEditModal } from '@/components/permissions/PermissionEditModal';
 import { 
   Select, 
   SelectContent, 
@@ -28,14 +29,7 @@ interface User {
   permissions: Permission[];
 }
 
-interface Permission {
-  id: number;
-  customerNumber: string;
-  customerName: string;
-  departments: string[];
-  visibleContent: string[];
-  visibleProducts: string[];
-}
+import { Permission } from '@/types/permission';
 
 const mockUsers: User[] = [
   {
@@ -362,102 +356,26 @@ export default function Permissions() {
           </div>
 
           {showEditModal && editingPermission && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-              <div className="bg-white p-6 rounded-lg w-[500px] max-h-[80vh] overflow-y-auto">
-                <h2 className="text-xl font-semibold mb-4">
-                  {editingPermission.id ? '编辑权限' : '添加权限'}
-                </h2>
-                
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium mb-1">客户编号</label>
-                    <Input 
-                      value={editingPermission.customerNumber} 
-                      onChange={(e) => setEditingPermission({
-                        ...editingPermission,
-                        customerNumber: e.target.value
-                      })}
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium mb-1">客户名称</label>
-                    <Input 
-                      value={editingPermission.customerName} 
-                      onChange={(e) => setEditingPermission({
-                        ...editingPermission,
-                        customerName: e.target.value
-                      })}
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium mb-1">涉及部门</label>
-                    <div className="grid grid-cols-2 gap-2">
-                      {departments.map(dept => (
-                        <label key={dept} className="flex items-center space-x-2">
-                          <Input 
-                            type="checkbox" 
-                            className="w-4 h-4"
-                            checked={editingPermission.departments.includes(dept)}
-                            onChange={() => handleDepartmentChange(dept)}
-                          />
-                          <span>{dept}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium mb-1">可见内容</label>
-                    <div className="grid grid-cols-2 gap-2">
-                      {contentOptions.map(content => (
-                        <label key={content} className="flex items-center space-x-2">
-                          <Input 
-                            type="checkbox" 
-                            className="w-4 h-4"
-                            checked={editingPermission.visibleContent.includes(content)}
-                            onChange={() => handleContentChange(content)}
-                          />
-                          <span>{content}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium mb-1">可见产品</label>
-                    <div className="grid grid-cols-2 gap-2">
-                      {productOptions.map(product => (
-                        <label key={product} className="flex items-center space-x-2">
-                          <Input 
-                            type="checkbox" 
-                            className="w-4 h-4"
-                            checked={editingPermission.visibleProducts.includes(product)}
-                            onChange={() => handleProductChange(product)}
-                          />
-                          <span>{product}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="flex justify-end space-x-2 mt-6">
-                  <Button 
-                    variant="outline" 
-                    onClick={() => setShowEditModal(false)}
-                  >
-                    取消
-                  </Button>
-                  <Button 
-                    onClick={handleSavePermission}
-                  >
-                    保存
-                  </Button>
-                </div>
-              </div>
-            </div>
+            <PermissionEditModal
+              editingPermission={editingPermission}
+              departments={departments}
+              contentOptions={contentOptions}
+              productOptions={productOptions}
+              onDepartmentChange={handleDepartmentChange}
+              onContentChange={handleContentChange}
+              onProductChange={handleProductChange}
+              onCustomerNumberChange={(value) => setEditingPermission({
+                ...editingPermission,
+                customerNumber: value
+              })}
+              onCustomerNameChange={(value) => setEditingPermission({
+                ...editingPermission,
+                customerName: value
+              })}
+              onSave={handleSavePermission}
+              onCancel={() => setShowEditModal(false)}
+              isNew={!editingPermission.id}
+            />
           )}
         </>
       )}

@@ -42,7 +42,6 @@ export function TransactionTable({
 
   return (
     <div>
-      <h3 className="text-md font-medium mb-4">往来记录</h3>
       <div className="rounded-md border">
         <div className="overflow-x-auto">
           <Table>
