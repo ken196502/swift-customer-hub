@@ -1,5 +1,5 @@
 
-import { Users, FileText, MessageSquare, Building, Shield } from "lucide-react";
+import { Users, FileText, MessageSquare, Building, Shield, UserCircle } from "lucide-react";
 import { useLocation, Link } from "react-router-dom";
 import {
   Sidebar,
@@ -31,6 +31,11 @@ export function AppSidebar() {
       title: "信息共享管理", 
       url: "/permissions",
       icon: Shield,
+    },
+    {
+      title: "服务人员管理",
+      url: "/service-personnel",
+      icon: UserCircle,
     },
     {
       title: "联系类型管理",
