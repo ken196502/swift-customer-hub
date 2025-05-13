@@ -12,6 +12,7 @@ import {
   SidebarMenuItem,
   SidebarHeader,
 } from "@/components/ui/sidebar";
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 
 export function AppSidebar() {
   const location = useLocation();
@@ -63,6 +64,33 @@ export function AppSidebar() {
             <SidebarMenu>
               {menuItems.map((item) => {
                 const isActive = location.pathname === item.url;
+                // 为“服务人员管理”加上Tooltip
+                if (item.title === "服务人员管理") {
+                  return (
+                    <SidebarMenuItem key={item.title}>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <SidebarMenuButton 
+                              asChild 
+                              isActive={isActive}
+                              tooltip={item.title}
+                            >
+                              <Link to={item.url}>
+                                <item.icon className="h-5 w-5" />
+                                <span>{item.title}</span>
+                              </Link>
+                            </SidebarMenuButton>
+                          </TooltipTrigger>
+                          <TooltipContent sideOffset={8}>
+                            人员信息管理为线上已有功能
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    </SidebarMenuItem>
+                  );
+                }
+                // 其他菜单项保持不变
                 return (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton 
