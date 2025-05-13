@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { ServicePersonnelFormModal } from "@/components/service-personnel/ServicePersonnelFormModal";
 import { useToast } from "@/components/ui/use-toast";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Initial mock data for demonstration purposes
 const initialPersonnel: ServicePersonnel[] = [
@@ -50,6 +51,7 @@ export const statusOptions = ["在职", "离职"] as const;
 export const industryOptions = ["金融", "科技", "制造", "零售", "医疗", "教育", "其他"] as const;
 
 export default function ServicePersonnelPage() {
+  const isMobile = useIsMobile();
   const [personnel, setPersonnel] = useState<ServicePersonnel[]>(initialPersonnel);
   const [filteredPersonnel, setFilteredPersonnel] = useState<ServicePersonnel[]>(personnel);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -108,7 +110,7 @@ export default function ServicePersonnelPage() {
   };
 
   return (
-    <div className="container py-6 space-y-6">
+    <div className={`${isMobile ? "px-4" : "container"} py-6 space-y-6`}>
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">服务人员管理</h1>
         <Button onClick={handleAddNew}>

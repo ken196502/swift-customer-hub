@@ -1,12 +1,12 @@
 
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { ServicePersonnel } from "@/types/servicePersonnel";
 import { SearchControls } from "@/components/filters/SearchControls";
 import { FilterPopover } from "@/components/filters/FilterPopover";
 import { industryOptions, statusOptions } from "@/pages/ServicePersonnel";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface ServicePersonnelFiltersProps {
   personnel: ServicePersonnel[];
@@ -17,6 +17,7 @@ export function ServicePersonnelFilters({
   personnel, 
   onFilter 
 }: ServicePersonnelFiltersProps) {
+  const isMobile = useIsMobile();
   const [nameFilter, setNameFilter] = useState("");
   const [positionFilter, setPositionFilter] = useState("");
   const [selectedIndustries, setSelectedIndustries] = useState<Array<string>>([]);
@@ -69,29 +70,24 @@ export function ServicePersonnelFilters({
   return (
     <Card>
       <CardContent className="p-4 space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className={`grid ${isMobile ? "grid-cols-2" : "grid-cols-1 md:grid-cols-4"} gap-4`}>
           <div>
-            <Label htmlFor="name-filter">名称/英文名</Label>
             <Input
-              id="name-filter"
-              placeholder="输入名称或英文名"
+              placeholder="名称/英文名"
               value={nameFilter}
               onChange={e => setNameFilter(e.target.value)}
             />
           </div>
           
           <div>
-            <Label htmlFor="position-filter">职务</Label>
             <Input
-              id="position-filter"
-              placeholder="输入职务"
+              placeholder="职务"
               value={positionFilter}
               onChange={e => setPositionFilter(e.target.value)}
             />
           </div>
           
           <div>
-            <Label>行业</Label>
             <FilterPopover
               label="选择行业"
               options={Array.from(industryOptions)}
@@ -107,7 +103,6 @@ export function ServicePersonnelFilters({
           </div>
           
           <div>
-            <Label>状态</Label>
             <FilterPopover
               label="选择状态"
               options={Array.from(statusOptions)}
