@@ -19,8 +19,8 @@ export function ServicePersonnelFilters({
 }: ServicePersonnelFiltersProps) {
   const [nameFilter, setNameFilter] = useState("");
   const [positionFilter, setPositionFilter] = useState("");
-  const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
-  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
+  const [selectedIndustries, setSelectedIndustries] = useState<Array<string>>([]);
+  const [selectedStatuses, setSelectedStatuses] = useState<Array<string>>([]);
 
   // Update filtered personnel when filters change
   useEffect(() => {
@@ -94,7 +94,7 @@ export function ServicePersonnelFilters({
             <Label>行业</Label>
             <FilterPopover
               label="选择行业"
-              options={industryOptions}
+              options={Array.from(industryOptions)}
               selectedItems={selectedIndustries}
               onItemSelect={(industry) => {
                 setSelectedIndustries(prev => 
@@ -110,7 +110,7 @@ export function ServicePersonnelFilters({
             <Label>状态</Label>
             <FilterPopover
               label="选择状态"
-              options={statusOptions}
+              options={Array.from(statusOptions)}
               selectedItems={selectedStatuses}
               onItemSelect={(status) => {
                 setSelectedStatuses(prev => 

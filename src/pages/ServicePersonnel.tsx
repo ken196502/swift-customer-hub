@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { ServicePersonnelTable } from "@/components/service-personnel/ServicePersonnelTable";
 import { ServicePersonnelFilters } from "@/components/service-personnel/ServicePersonnelFilters";
-import { ServicePersonnel } from "@/types/servicePersonnel";
+import type { ServicePersonnel } from "@/types/servicePersonnel";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { ServicePersonnelFormModal } from "@/components/service-personnel/ServicePersonnelFormModal";
@@ -49,7 +49,7 @@ const initialPersonnel: ServicePersonnel[] = [
 export const statusOptions = ["在职", "离职"] as const;
 export const industryOptions = ["金融", "科技", "制造", "零售", "医疗", "教育", "其他"] as const;
 
-export default function ServicePersonnel() {
+export default function ServicePersonnelPage() {
   const [personnel, setPersonnel] = useState<ServicePersonnel[]>(initialPersonnel);
   const [filteredPersonnel, setFilteredPersonnel] = useState<ServicePersonnel[]>(personnel);
   const [isModalOpen, setIsModalOpen] = useState(false);
