@@ -33,7 +33,11 @@ export function CustomerGroupView({
   });
 
   // Convert to array of group entries for rendering
-  const groupEntries = Object.entries(groupedCustomers);
+  // 将 groupName 为空的分组 key 替换为 '个人户'
+  const groupEntries: [string, Customer[]][] = Object.entries(groupedCustomers).map(([groupName, groupCustomers]) => [
+    groupName === '' ? '个人户' : groupName,
+    groupCustomers
+  ]);
 
   // Helper function to get unique products across all customers in a group
   const getGroupProducts = (groupCustomers: Customer[]) => {

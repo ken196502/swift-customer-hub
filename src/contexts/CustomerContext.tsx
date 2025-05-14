@@ -24,12 +24,16 @@ const CustomerContext = createContext<CustomerContextType | undefined>(undefined
 
 export function CustomerProvider({ children }: { children: ReactNode }) {
   const [customers, setCustomers] = useState<Customer[]>(
-    initialCustomers.map(customer => ({
-      ...customer,
-      sponsorDepartments: [departmentList[Math.floor(Math.random() * departmentList.length)]],
-      entryDepartment: departmentList[Math.floor(Math.random() * departmentList.length)],
-      country: "中国内地"
-    }))
+    initialCustomers.map(customer => {
+      if (customer.type === "公司户") {
+        return {
+          ...customer,
+          country: "中国内地"
+        };
+      } else {
+        return customer;
+      }
+    })
   );
   const [selectedCustomer, setSelectedCustomer] = useState<number | null>(null);
   const [selectedCustomers, setSelectedCustomers] = useState<number[]>([]);

@@ -15,7 +15,6 @@ export function CustomerHeader({
 }: CustomerHeaderProps) {
   return (
     <div className="flex justify-between items-center">
-      <h1 className="text-2xl font-bold">客户关系管理</h1>
       <div className="flex gap-2">
         <Button 
           variant="default" 

@@ -10,7 +10,11 @@ import { Button } from "@/components/ui/button";
 import { SponsorDepartmentDialog } from "./customer/SponsorDepartmentDialog";
 import { UsersRound } from "lucide-react";
 
-export function CustomerFilters() {
+interface CustomerFiltersProps {
+  activeTab: string;
+}
+
+export function CustomerFilters({ activeTab }: CustomerFiltersProps) {
   const { 
     productOptions, 
     viewMode, 
@@ -67,18 +71,7 @@ export function CustomerFilters() {
             className="w-full"
           />
         </div>
-        <div className="w-28 sm:w-32">
-          <Select value={customerType} onValueChange={setCustomerType}>
-            <SelectTrigger>
-              <SelectValue placeholder="客户类型" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="公司户">公司户</SelectItem>
-              <SelectItem value="个人户">个人户</SelectItem>
-              <SelectItem value="机构户">机构户</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+
         <div className="w-28 sm:w-32">
           <FilterPopover 
             label="提供产品"
@@ -113,7 +106,9 @@ export function CustomerFilters() {
           <UsersRound className="h-4 w-4 mr-2" />
           设置主办部门
         </Button>
-        <ViewModeToggle viewMode={viewMode} onToggle={toggleViewMode} />
+        {activeTab !== 'personal' && (
+          <ViewModeToggle viewMode={viewMode} onToggle={toggleViewMode} />
+        )}
       </div>
 
       <SponsorDepartmentDialog
