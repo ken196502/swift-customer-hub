@@ -238,7 +238,7 @@ export default function Audit() {
   }, [auditItems]);
 
   return (
-    <div className="mx-auto py-6 space-y-6">
+    <div className="mx-auto space-y-6">
       <div className="flex justify-start items-center">
         <h1 className="text-2xl font-bold">审核管理</h1>
       </div>

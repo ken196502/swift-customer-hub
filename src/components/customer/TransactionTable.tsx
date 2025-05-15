@@ -59,7 +59,7 @@ export function TransactionTable({
             <TableBody>
               {data.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center py-6 text-muted-foreground">
+                  <TableCell colSpan={7} className="text-center text-muted-foreground">
                     暂无记录
                   </TableCell>
                 </TableRow>

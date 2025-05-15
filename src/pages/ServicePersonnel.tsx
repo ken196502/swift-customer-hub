@@ -110,7 +110,7 @@ export default function ServicePersonnelPage() {
   };
 
   return (
-    <div className={`${isMobile ? "px-4" : "container"} py-6 space-y-6`}>
+    <div className={`${isMobile ? "px-4" : "container"} space-y-6`}>
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">服务人员管理</h1>
         <Button onClick={handleAddNew}>

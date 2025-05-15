@@ -77,7 +77,7 @@ export function CustomerContent() {
   }
 
   return (
-    <div className="mx-auto py-6 space-y-6">
+    <div className="mx-auto space-y-6">
       <div className="flex justify-between items-center mb-4">
         <div className="flex space-x-2">
         <span className="md:block hidden"><h1 className="text-2xl font-bold">客户关系管理</h1></span>

@@ -25,7 +25,7 @@ export function CustomerDetailView({
   countries
 }: CustomerDetailViewProps) {
   return (
-    <div className="mx-auto py-6 space-y-6">
+    <div className="mx-auto space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">客户详情</h1>
         <Button variant="outline" onClick={onBack}>
