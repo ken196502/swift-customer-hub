@@ -26,7 +26,7 @@ const TooltipContent = React.forwardRef<
         className
       )}
       {...props}
-      forceMount={alwaysShowTooltips}
+      forceMount={alwaysShowTooltips ? true : undefined}
     />
   )
 })
