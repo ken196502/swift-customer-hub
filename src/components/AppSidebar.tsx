@@ -1,5 +1,5 @@
 
-import { Users, FileText, MessageSquare, Building, Shield, UserCircle } from "lucide-react";
+import { Users, FileText, MessageSquare, Building, Shield, UserCircle, Info } from "lucide-react";
 import { useLocation, Link } from "react-router-dom";
 import {
   Sidebar,
@@ -11,11 +11,15 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarHeader,
+  SidebarFooter,
 } from "@/components/ui/sidebar";
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
+import { Switch } from "@/components/ui/switch";
+import { useTooltipContext } from "@/contexts/TooltipContext";
 
 export function AppSidebar() {
   const location = useLocation();
+  const { alwaysShowTooltips, setAlwaysShowTooltips } = useTooltipContext();
   
   const menuItems = [
     {
@@ -64,7 +68,7 @@ export function AppSidebar() {
             <SidebarMenu>
               {menuItems.map((item) => {
                 const isActive = location.pathname === item.url;
-                // 为“服务人员管理”加上Tooltip
+                // 为"服务人员管理"加上Tooltip
                 if (item.title === "服务人员管理") {
                   return (
                     <SidebarMenuItem key={item.title}>
@@ -110,6 +114,19 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <div className="px-4 py-2 flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <Info className="h-4 w-4 text-yellow-500" />
+            <span className="text-sm">工具提示</span>
+          </div>
+          <Switch 
+            checked={alwaysShowTooltips} 
+            onCheckedChange={setAlwaysShowTooltips} 
+            aria-label="总是显示工具提示"
+          />
+        </div>
+      </SidebarFooter>
     </Sidebar>
   );
 }

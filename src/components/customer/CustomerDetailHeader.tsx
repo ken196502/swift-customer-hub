@@ -1,15 +1,28 @@
 
 import { Customer } from "@/contexts/CustomerContext";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { useTooltipContext } from "@/contexts/TooltipContext";
 
 interface CustomerDetailHeaderProps {
   customer: Customer;
 }
 
 export function CustomerDetailHeader({ customer }: CustomerDetailHeaderProps) {
+  const { alwaysShowTooltips } = useTooltipContext();
+  
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold">{customer.fullNameCn}</h2>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <h2 className="text-xl font-bold cursor-help">{customer.fullNameCn}</h2>
+            </TooltipTrigger>
+            <TooltipContent>
+              客户姓名: {customer.fullNameCn}
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
       <div className="flex items-center text-sm text-gray-500 space-x-8">
         {customer.type !== "个人户" && (
