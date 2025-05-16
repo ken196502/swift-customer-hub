@@ -30,7 +30,7 @@ export function ManagementDialogs({
   const currentDate = new Date();
   const formattedDate = `${currentDate.getFullYear()}/${String(currentDate.getMonth() + 1).padStart(2, "0")}/${String(currentDate.getDate()).padStart(2, "0")}`;
 
-  const [newCustomerType, setNewCustomerType] = useState<"公司户" | "机构户" | "个人户">("公司户");
+  const [newCustomerType, setNewCustomerType] = useState<"公司户" | "个人户">("公司户");
   const [newCustomerData, setNewCustomerData] = useState<Partial<Customer>>({
     type: "公司户",
     entryDate: formattedDate,

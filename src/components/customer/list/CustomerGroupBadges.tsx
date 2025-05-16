@@ -44,8 +44,8 @@ interface ProgressBadgeProps {
 
 export const ProgressBadge = ({ progress }: ProgressBadgeProps) => (
   <Badge
-    variant={progress === "已开户" ? "default" : "outline"}
-    className={progress === "已开户" ? "bg-green-100 text-green-800 hover:bg-green-100" : "bg-yellow-100 text-yellow-800 hover:bg-yellow-100"}
+    variant={progress === "落地" ? "default" : "outline"}
+    className={progress === "落地" ? "bg-green-100 text-green-800 hover:bg-green-100" : "bg-yellow-100 text-yellow-800 hover:bg-yellow-100"}
   >
     {progress || "意向"}
   </Badge>

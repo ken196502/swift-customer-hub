@@ -19,7 +19,7 @@ export function PersonalInfoFields({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <Label htmlFor="shortNameCn" className="text-right">
-            中文名称 <span className="text-red-500">*</span>
+            中文姓名 <span className="text-red-500">*</span>
           </Label>
           <Input
             id="shortNameCn"
@@ -30,7 +30,7 @@ export function PersonalInfoFields({
           />
         </div>
         <div>
-          <Label htmlFor="shortNameEn">英文名称</Label>
+          <Label htmlFor="shortNameEn">英文姓名</Label>
           <Input
             id="shortNameEn"
             value={formData.shortNameEn || ""}

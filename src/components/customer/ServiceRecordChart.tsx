@@ -72,9 +72,9 @@ export function ServiceRecordChart({ data }: ServiceRecordChartProps) {
             {data.map((item, index) => (
               <TableRow key={index}>
                 <TableCell>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center">
                     <div
-                      className="w-3 h-3 rounded-full"
+                      className="w-2 h-2 rounded-full mr-1"
                       style={{ backgroundColor: item.color }}
                     />
                     <span>{item.name}</span>

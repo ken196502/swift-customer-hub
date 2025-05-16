@@ -90,7 +90,7 @@ export function CommonInfoFields({
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="意向">意向</SelectItem>
-            <SelectItem value="已开户">已开户</SelectItem>
+            <SelectItem value="落地">落地</SelectItem>
           </SelectContent>
         </Select>
       </div>

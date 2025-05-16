@@ -63,7 +63,7 @@ export function BasicInfoCard({ customer }: BasicInfoCardProps) {
             <dd className="col-span-2 text-sm">
               <span className={cn(
                 "px-2 py-0.5 text-xs rounded-full font-medium",
-                customer.progress === "已开户" ? "bg-green-100 text-green-800" :
+                customer.progress === "落地" ? "bg-green-100 text-green-800" :
                 customer.progress === "意向" ? "bg-yellow-100 text-yellow-800" :
                 "bg-gray-100 text-gray-800"
               )}>
@@ -75,12 +75,12 @@ export function BasicInfoCard({ customer }: BasicInfoCardProps) {
           {isPersonalCustomer ? (
             <>
               <div className="grid grid-cols-3 py-2 px-4">
-                <dt className="col-span-1 text-sm font-medium text-muted-foreground">中文名称</dt>
+                <dt className="col-span-1 text-sm font-medium text-muted-foreground">中文姓名</dt>
                 <dd className="col-span-2 text-sm">{customer.shortNameCn || "-"}</dd>
               </div>
               
               <div className="grid grid-cols-3 py-2 px-4">
-                <dt className="col-span-1 text-sm font-medium text-muted-foreground">英文名称</dt>
+                <dt className="col-span-1 text-sm font-medium text-muted-foreground">英文姓名</dt>
                 <dd className="col-span-2 text-sm">{customer.shortNameEn || "-"}</dd>
               </div>
               

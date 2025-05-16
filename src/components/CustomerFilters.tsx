@@ -9,6 +9,13 @@ import { useCustomer } from "@/contexts/CustomerContext";
 import { Button } from "@/components/ui/button";
 import { SponsorDepartmentDialog } from "./customer/SponsorDepartmentDialog";
 import { UsersRound } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem
+} from "@/components/ui/dropdown-menu";
 
 interface CustomerFiltersProps {
   activeTab: string;
@@ -31,6 +38,8 @@ export function CustomerFilters({ activeTab }: CustomerFiltersProps) {
   const [productType, setProductType] = useState("");
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
   const [selectedDepartments, setSelectedDepartments] = useState<string[]>([]);
+  // 部门类型：主办部门/录入部门/触达部门
+  const [departmentType, setDepartmentType] = useState<string>("主办");
 
   const resetFilters = () => {
     setCustomerName("");
@@ -80,13 +89,32 @@ export function CustomerFilters({ activeTab }: CustomerFiltersProps) {
             onItemSelect={handleProductSelect}
           />
         </div>
-        <div className="w-28 sm:w-32">
-          <FilterPopover 
-            label="部门"
-            options={departments}
-            selectedItems={selectedDepartments}
-            onItemSelect={handleDepartmentSelect}
-          />
+        {/* 部门类型下拉菜单及部门筛选 */}
+        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 ml-2">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm" className="min-w-[50px]">
+                {departmentType}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start">
+              <DropdownMenuRadioGroup value={departmentType} onValueChange={setDepartmentType}>
+                <DropdownMenuRadioItem value="主办部门">主办</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="录入部门">录入</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="触达部门">触达</DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <div className="w-28 sm:w-32">
+            <FilterPopover 
+              label="部门"
+              options={departments}
+              selectedItems={selectedDepartments}
+              onItemSelect={handleDepartmentSelect}
+            />
+          </div>
+          </div>
         </div>
         <div className="flex-grow">
           <SearchControls 

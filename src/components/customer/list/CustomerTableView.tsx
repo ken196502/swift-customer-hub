@@ -78,8 +78,8 @@ export function CustomerTableView({
                 </TableCell>
                 <TableCell>
                   <Badge
-                    variant={customer.progress === "已开户" ? "default" : "outline"}
-                    className={customer.progress === "已开户" ? "bg-green-100 text-green-800 hover:bg-green-100" : "bg-yellow-100 text-yellow-800 hover:bg-yellow-100"}
+                    variant={customer.progress === "落地" ? "default" : "outline"}
+                    className={customer.progress === "落地" ? "bg-green-100 text-green-800 hover:bg-green-100" : "bg-yellow-100 text-yellow-800 hover:bg-yellow-100"}
                   >
                     {customer.progress || "意向"}
                   </Badge>
@@ -126,6 +126,12 @@ export function CustomerTableView({
                 </TableCell>
                 <TableCell className="text-xs">{customer.entryDepartment}</TableCell>
                 <TableCell className="text-xs">{customer.entryDate}</TableCell>
+                <TableCell className="text-right pr-2">
+                  {/* 右箭头SVG */}
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 5L12 10L7 15" stroke="#888" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -152,14 +158,21 @@ export function CustomerTableView({
                   <div className="text-sm text-muted-foreground">{customer.groupName}</div>
                 </div>
               </div>
-              <Badge
-                variant={customer.progress === "已开户" ? "default" : "outline"}
-                className={customer.progress === "已开户" ? "bg-green-100 text-green-800 hover:bg-green-100" : "bg-yellow-100 text-yellow-800 hover:bg-yellow-100"}
-              >
-                {customer.progress || "意向"}
-              </Badge>
+              <div className="flex items-center">
+                <Badge
+                  variant={customer.progress === "落地" ? "default" : "outline"}
+                  className={customer.progress === "落地" ? "bg-green-100 text-green-800 hover:bg-green-100" : "bg-yellow-100 text-yellow-800 hover:bg-yellow-100"}
+                >
+                  {customer.progress || "意向"}
+                </Badge>
+                <div className="ml-2 flex-shrink-0">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 5L12 10L7 15" stroke="#888" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </div>
             </div>
-            
+
             <div className="text-sm space-y-4">
               <div className="flex justify-between items-center pt-1">
                 <span className="text-muted-foreground">客户号:</span>
