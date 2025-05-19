@@ -86,7 +86,7 @@ export function AppSidebar() {
                               </Link>
                             </SidebarMenuButton>
                           </TooltipTrigger>
-                          <TooltipContent sideOffset={-15}>
+                          <TooltipContent sideOffset={-18}>
                             人员信息管理为线上已有功能
                           </TooltipContent>
                         </Tooltip>

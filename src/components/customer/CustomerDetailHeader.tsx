@@ -13,16 +13,6 @@ export function CustomerDetailHeader({ customer }: CustomerDetailHeaderProps) {
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <h2 className="text-xl font-bold cursor-help">{customer.fullNameCn}</h2>
-            </TooltipTrigger>
-            <TooltipContent>
-              客户姓名: {customer.fullNameCn}
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
       </div>
       <div className="flex items-center text-sm text-gray-500 space-x-8">
         {customer.type !== "个人户" && (

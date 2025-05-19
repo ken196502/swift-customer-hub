@@ -67,7 +67,7 @@ export function BasicInfoCard({ customer }: BasicInfoCardProps) {
                 customer.progress === "意向" ? "bg-yellow-100 text-yellow-800" :
                 "bg-gray-100 text-gray-800"
               )}>
-                {customer.progress || "-"}
+                {customer.progress || "意向"}
               </span>
             </dd>
           </div>

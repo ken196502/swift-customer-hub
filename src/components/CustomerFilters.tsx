@@ -9,6 +9,7 @@ import { useCustomer } from "@/contexts/CustomerContext";
 import { Button } from "@/components/ui/button";
 import { SponsorDepartmentDialog } from "./customer/SponsorDepartmentDialog";
 import { UsersRound } from "lucide-react";
+import { PaginationControl } from "@/components/ui/PaginationControl";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -138,11 +139,19 @@ export function CustomerFilters({ activeTab }: CustomerFiltersProps) {
         {activeTab !== 'personal' && (
           <ViewModeToggle viewMode={viewMode} onToggle={toggleViewMode} />
         )}
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" disabled>上一页</Button>
-          <Button variant="outline" size="sm">1/100</Button>
-          <Button variant="outline" size="sm">下一页</Button>
-        </div>
+        <PaginationControl
+  currentPage={1} // TODO: 用实际分页状态替换
+  total={100}     // TODO: 用实际总条数替换
+  pageSize={10}   // TODO: 用实际每页条数替换
+  onPageChange={page => {
+    // TODO: 替换为实际分页逻辑
+    console.log('Change page:', page);
+  }}
+  onPageSizeChange={size => {
+    // TODO: 替换为实际每页条数切换逻辑
+    console.log('Change page size:', size);
+  }}
+/>
         </div>
 
       </div>

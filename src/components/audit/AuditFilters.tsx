@@ -11,6 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, X } from "lucide-react";
+import { PaginationControl } from "@/components/ui/PaginationControl";
 
 interface AuditFiltersProps {
   onCategoryChange?: (category: string | null) => void;
@@ -56,8 +57,9 @@ export function AuditFilters({ onCategoryChange, selectedCategory }: AuditFilter
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-3">
+    <div className="flex flex-wrap justify-between items-center gap-3">
       {/* Customer name filter */}
+      <div className="flex items-center gap-2">
       <div className="w-36 sm:w-44">
         <Input
           placeholder="客户名称"
@@ -105,6 +107,20 @@ export function AuditFilters({ onCategoryChange, selectedCategory }: AuditFilter
           <Search className="h-4 w-4" />
         </Button>
       </div>
+      </div>
+      <PaginationControl
+  currentPage={1} // TODO: 用实际分页状态替换
+  total={100}     // TODO: 用实际总条数替换
+  pageSize={50}   // TODO: 用实际每页条数替换
+  onPageChange={page => {
+    // TODO: 替换为实际分页逻辑
+    console.log('Change page:', page);
+  }}
+  onPageSizeChange={size => {
+    // TODO: 替换为实际每页条数切换逻辑
+    console.log('Change page size:', size);
+  }}
+/>
     </div>
   );
 }
