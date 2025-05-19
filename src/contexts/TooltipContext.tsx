@@ -9,7 +9,7 @@ type TooltipContextType = {
 const TooltipContext = createContext<TooltipContextType | undefined>(undefined);
 
 export function TooltipProvider({ children }: { children: React.ReactNode }) {
-  const [alwaysShowTooltips, setAlwaysShowTooltips] = useState(false);
+  const [alwaysShowTooltips, setAlwaysShowTooltips] = useState(true);
 
   return (
     <TooltipContext.Provider value={{ alwaysShowTooltips, setAlwaysShowTooltips }}>

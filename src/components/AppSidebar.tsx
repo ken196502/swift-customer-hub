@@ -86,7 +86,7 @@ export function AppSidebar() {
                               </Link>
                             </SidebarMenuButton>
                           </TooltipTrigger>
-                          <TooltipContent sideOffset={8}>
+                          <TooltipContent sideOffset={-15}>
                             人员信息管理为线上已有功能
                           </TooltipContent>
                         </Tooltip>
@@ -118,12 +118,12 @@ export function AppSidebar() {
         <div className="px-4 py-2 flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <Info className="h-4 w-4 text-yellow-500" />
-            <span className="text-sm">工具提示</span>
+            <span className="text-sm">产品说明</span>
           </div>
           <Switch 
             checked={alwaysShowTooltips} 
             onCheckedChange={setAlwaysShowTooltips} 
-            aria-label="总是显示工具提示"
+            aria-label="总是显示产品说明"
           />
         </div>
       </SidebarFooter>

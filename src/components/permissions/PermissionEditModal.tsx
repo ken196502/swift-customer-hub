@@ -17,6 +17,8 @@ interface PermissionEditModalProps {
   isNew: boolean;
 }
 
+import React, { useState } from 'react';
+
 export function PermissionEditModal({
   editingPermission,
   departments,
@@ -31,6 +33,7 @@ export function PermissionEditModal({
   onCancel,
   isNew
 }: PermissionEditModalProps) {
+  const [allCustomers, setAllCustomers] = useState(false);
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded-lg w-[500px] max-h-[80vh] overflow-y-auto">
@@ -40,10 +43,24 @@ export function PermissionEditModal({
         
         <div className="space-y-4">
           <div>
+            <label className="flex items-center space-x-2 mb-2">
+              <Input
+                type="checkbox"
+                className="w-4 h-4"
+                checked={allCustomers}
+                onChange={() => setAllCustomers((prev) => !prev)}
+              />
+              <span>全部客户</span>
+            </label>
+          </div>
+          <div>
             <label className="block text-sm font-medium mb-1 text-left">客户编号</label>
             <Input 
               value={editingPermission.customerNumber} 
               onChange={(e) => onCustomerNumberChange(e.target.value)}
+              disabled={allCustomers}
+              placeholder={allCustomers ? '符合下面条件的全部客户' : ''}
+              className={allCustomers?"bg-gray-200":""}
             />
           </div>
           
@@ -51,9 +68,9 @@ export function PermissionEditModal({
             <label className="block text-sm font-medium mb-1 text-left">客户名称</label>
             <Input 
               value={editingPermission.customerName} 
-              readOnly
+              disabled={true}              
               placeholder="系统通过客户号自动获取客户名称"
-              className="bg-gray-100"
+              className="bg-gray-200"
             />
           </div>
           
