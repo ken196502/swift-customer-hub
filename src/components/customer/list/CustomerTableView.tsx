@@ -1,6 +1,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 import {
   Table,
   TableBody,
@@ -44,7 +45,18 @@ export function CustomerTableView({
               </TableHead>
               <TableHead>客户号</TableHead>
               <TableHead>客户名称</TableHead>
-              <TableHead>进展</TableHead>
+              <TableHead>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span>进展</span>
+                    </TooltipTrigger>
+                    <TooltipContent side="top" align="center">
+                      进展对应:<br/>金市lead/account，<br/>零售“已注册/已开户”
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </TableHead>
               <TableHead>客户类型</TableHead>
               <TableHead>主办部门</TableHead>
               <TableHead>提供产品</TableHead>

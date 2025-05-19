@@ -16,8 +16,23 @@ import { useToast } from "@/hooks/use-toast";
 import { Card } from "@/components/ui/card";
 import { useManagementAudit, ManagementChangeRecord } from "@/hooks/use-management-audit";
 import { ManagementChangeRecordsDialog } from "@/components/management/ManagementChangeRecordsDialog";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogAction,
+  AlertDialogCancel,
+} from "@/components/ui/alert-dialog";
 
 export default function Groups() {
+  // 删除弹窗控制和待删除集团
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [pendingDeleteGroup, setPendingDeleteGroup] = useState<string | null>(null);
+
   const { groupOptions, handleUpdateGroups } = useCustomer();
   const [groups, setGroups] = useState(groupOptions);
   const [newGroup, setNewGroup] = useState("");
@@ -106,15 +121,22 @@ export default function Groups() {
   };
 
   const handleDeleteGroup = (group: string) => {
-    const updatedGroups = groups.filter(g => g !== group);
-    
-    // Record the change for audit
+    setPendingDeleteGroup(group);
+    setDeleteDialogOpen(true);
+  };
+
+  const confirmDeleteGroup = () => {
+    if (!pendingDeleteGroup) return;
+    const updatedGroups = groups.filter(g => g !== pendingDeleteGroup);
     recordManagementChange("集团", groups, updatedGroups);
-    
-    // Update local state (will be overwritten when audit is approved)
     setGroups(updatedGroups);
-    
-    // The actual update happens after audit approval
+    setPendingDeleteGroup(null);
+    setDeleteDialogOpen(false);
+  };
+
+  const cancelDeleteGroup = () => {
+    setPendingDeleteGroup(null);
+    setDeleteDialogOpen(false);
   };
 
   return (
@@ -162,6 +184,21 @@ export default function Groups() {
                 </TableCell>
               </TableRow>
             ))}
+            {/* 删除确认弹窗 */}
+            <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>确认删除</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    确认要删除该集团“{pendingDeleteGroup}”吗？此操作需要审核通过后才会生效。
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel onClick={cancelDeleteGroup}>取消</AlertDialogCancel>
+                  <AlertDialogAction onClick={confirmDeleteGroup}>确认删除</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </TableBody>
         </Table>
       </Card>

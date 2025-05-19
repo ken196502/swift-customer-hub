@@ -16,8 +16,23 @@ import { useToast } from "@/hooks/use-toast";
 import { Card } from "@/components/ui/card";
 import { useManagementAudit, ManagementChangeRecord } from "@/hooks/use-management-audit";
 import { ManagementChangeRecordsDialog } from "@/components/management/ManagementChangeRecordsDialog";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogAction,
+  AlertDialogCancel,
+} from "@/components/ui/alert-dialog";
 
 export default function ContactTypes() {
+  // 删除弹窗控制和待删除类型
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [pendingDeleteType, setPendingDeleteType] = useState<string | null>(null);
+
   const { contactTypes, handleUpdateContactTypes } = useCustomer();
   const [types, setTypes] = useState(contactTypes);
   const [newType, setNewType] = useState("");
@@ -114,16 +129,22 @@ export default function ContactTypes() {
       });
       return;
     }
-    
-    const updatedTypes = types.filter(t => t !== type);
-    
-    // Record the change for audit
+    setPendingDeleteType(type);
+    setDeleteDialogOpen(true);
+  };
+
+  const confirmDeleteType = () => {
+    if (!pendingDeleteType) return;
+    const updatedTypes = types.filter(t => t !== pendingDeleteType);
     recordManagementChange("联系类型", types, updatedTypes);
-    
-    // Update local state (will be overwritten when audit is approved)
     setTypes(updatedTypes);
-    
-    // The actual update happens after audit approval
+    setPendingDeleteType(null);
+    setDeleteDialogOpen(false);
+  };
+
+  const cancelDeleteType = () => {
+    setPendingDeleteType(null);
+    setDeleteDialogOpen(false);
   };
 
   return (
@@ -176,6 +197,23 @@ export default function ContactTypes() {
                 </TableCell>
               </TableRow>
             ))}
+
+            {/* 删除确认弹窗 */}
+            <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>确认删除</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    确认要删除该联系类型“{pendingDeleteType}”吗？此操作需要审核通过后才会生效。
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel onClick={cancelDeleteType}>取消</AlertDialogCancel>
+                  <AlertDialogAction onClick={confirmDeleteType}>确认删除</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+
           </TableBody>
         </Table>
       </Card>
