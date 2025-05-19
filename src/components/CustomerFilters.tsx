@@ -134,9 +134,17 @@ export function CustomerFilters({ activeTab }: CustomerFiltersProps) {
           <UsersRound className="h-4 w-4 mr-2" />
           设置主办部门
         </Button>
+        <div className="flex justify-between items-center gap-2">
         {activeTab !== 'personal' && (
           <ViewModeToggle viewMode={viewMode} onToggle={toggleViewMode} />
         )}
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" disabled>上一页</Button>
+          <Button variant="outline" size="sm">1/100</Button>
+          <Button variant="outline" size="sm">下一页</Button>
+        </div>
+        </div>
+
       </div>
 
       <SponsorDepartmentDialog

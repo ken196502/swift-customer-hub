@@ -49,7 +49,8 @@ export function AuditBatchActions({ selectedIds, onApprove, onReject }: AuditBat
   };
 
   return (
-    <div className="mb-4 flex justify-start space-x-2">
+    <div className="mb-4 flex justify-between space-x-2">
+      <div className="flex items-center gap-2">
       <Button
         variant="default"
         size="sm"
@@ -71,6 +72,12 @@ export function AuditBatchActions({ selectedIds, onApprove, onReject }: AuditBat
         <X className="h-4 w-4 mr-2" />
         批量驳回
       </Button>
+      </div>
+      <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" disabled>上一页</Button>
+          <Button variant="outline" size="sm">1/100</Button>
+          <Button variant="outline" size="sm">下一页</Button>
+        </div>
 
       {/* Approve Confirmation Dialog */}
       <AlertDialog open={isApproveOpen} onOpenChange={setIsApproveOpen}>

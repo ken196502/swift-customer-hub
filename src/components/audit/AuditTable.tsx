@@ -1,4 +1,5 @@
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
+import { formatSubmitTime } from "./formatDate";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { AuditItem } from "@/pages/Audit";
@@ -68,7 +69,7 @@ onCheckedChange={(checked) => {
               )}
               <TableHead>类型</TableHead>
               {isSelectable && (
-                <TableHead className="w-12 audit-table">
+                <TableHead className="w-24 min-w-[90px] max-w-[120px] text-center whitespace-nowrap audit-table">
                   提交时间
                 </TableHead>
               )}
@@ -109,19 +110,33 @@ onCheckedChange={(checked) => {
                 <Badge variant="outline">{item.category}</Badge>
               </TableCell>
               {isSelectable && (
-                <TableCell>
-                  {item.submitTime}
-                </TableCell>
+                <TableCell className="text-center whitespace-nowrap align-middle">
+  {(() => {
+    const val = formatSubmitTime(item.submitTime);
+    if (!val) return null;
+    const [date, time] = val.split('\n');
+    return (
+      <>
+        <span>{date}</span><br />
+        <span>{time}</span>
+      </>
+    );
+  })()}
+</TableCell>
               )}
               <TableCell>{item.customer}</TableCell>
               <TableCell>
                 <Badge className={getBadgeColor(item.type)}>{item.type}</Badge>
               </TableCell>
               <TableCell className="text-left">
-                {item.before || "—"}
+                {item.before ? item.before.split("\n").map((line, index) => (
+                       <p key={index}>{line}</p>
+                    )) : "- -"}
               </TableCell>
               <TableCell className="text-left">
-                {item.after || "—"}
+              {item.after ? item.after.split("\n").map((line, index) => (
+                       <p key={index}>{line}</p>
+                    )) : "- -"}
               </TableCell>
               <TableCell>{item.note}</TableCell>
               <TableCell>{item.submitter}</TableCell>
@@ -183,11 +198,21 @@ onCheckedChange={(checked) => {
                   <span className="mr-2">
                     <Badge className={getBadgeColor(item.type)}>{item.type}</Badge>
                   </span>
-                  <div>变更前: {item.before || "—"}</div>
-                  <div>变更后: {item.after || "—"}</div>
+                  <div>变更前: {item.before || "- -"}</div>
+                  <div>变更后: {item.after || "— -"}</div>
                   <div>变更人: {item.submitter}</div>
                   {isSelectable && (
-                    <div>提交时间: {item.submitTime}</div>
+                   <div className="whitespace-nowrap">提交时间: {(() => {
+  const val = formatSubmitTime(item.submitTime);
+  if (!val) return null;
+  const [date, time] = val.split('\n');
+  return (
+    <>
+      <span>{date}</span><br />
+      <span>{time}</span>
+    </>
+  );
+})()}</div>
                   )}
                   {showStatus && (
                     <div>状态: {getStatusBadge(item.status)}</div>
