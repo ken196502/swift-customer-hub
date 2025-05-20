@@ -44,7 +44,7 @@ export const PaginationControl: React.FC<PaginationControlProps> = ({
   }
 
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mt-4">
+    <div className="flex flex-col sm:flex-row sm:items-center justify-end gap-2 mt-4">
       <div className="text-sm text-muted-foreground">
         共 <span className="font-semibold">{total}</span> 条
       </div>

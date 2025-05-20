@@ -21,6 +21,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { useToast } from '@/hooks/use-toast';
+import { PaginationControl } from "@/components/ui/PaginationControl";
 
 interface User {
   id: number;
@@ -258,12 +259,23 @@ export default function Permissions() {
               </Button>
             </div>
           </div>
-
+          <PaginationControl
+        currentPage={1} // TODO: 用实际分页状态替换
+        total={100}     // TODO: 用实际总条数替换
+        pageSize={50}   // TODO: 用实际每页条数替换
+        onPageChange={page => {
+          // TODO: 替换为实际分页逻辑
+          console.log('Change page:', page);
+        }}
+        onPageSizeChange={size => {
+          // TODO: 替换为实际每页条数切换逻辑
+          console.log('Change page size:', size);
+        }}
+      />
           <div className="rounded-md border">
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-[50px]">选择</TableHead>
                   <TableHead>系统用户名称</TableHead>
                   <TableHead>等级</TableHead>
                   <TableHead>所属部门</TableHead>
@@ -273,9 +285,6 @@ export default function Permissions() {
               <TableBody>
                 {filteredUsers.map((user) => (
                   <TableRow key={user.id}>
-                    <TableCell className="w-[50px]">
-                      <Input type="checkbox" className="w-4 h-4" />
-                    </TableCell>
                     <TableCell>{user.name}</TableCell>
                     <TableCell>{user.level}</TableCell>
                     <TableCell>{user.department}</TableCell>

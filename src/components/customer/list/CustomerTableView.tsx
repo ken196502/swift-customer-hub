@@ -52,7 +52,7 @@ export function CustomerTableView({
                       <span>进展</span>
                     </TooltipTrigger>
                     <TooltipContent side="top" align="center">
-                      进展对应:<br/>金市lead/account，<br/>零售“已注册/已开户”
+                      进展对应(意向/落地):<br/>金市lead/account，<br/>零售“已注册/已开户”
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
