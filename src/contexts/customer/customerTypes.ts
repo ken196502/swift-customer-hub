@@ -45,7 +45,7 @@ export interface CustomerContextType {
   showSponsorDepartmentDialog: boolean;
   productOptions: string[];
   contactTypes: string[];
-  groupOptions: string[];
+  groupOptions: string[] | { cn: string; en: string }[];
   countries: string[];
   departments: string[];
   setSelectedCustomer: (id: number | null) => void;

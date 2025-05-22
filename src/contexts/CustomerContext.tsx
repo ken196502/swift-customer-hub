@@ -43,7 +43,7 @@ export function CustomerProvider({ children }: { children: ReactNode }) {
   const [showSponsorDepartmentDialog, setShowSponsorDepartmentDialog] = useState(false);
   const [productOptions, setProductOptions] = useState<string[]>(initialProductOptions);
   const [contactTypes, setContactTypes] = useState<string[]>([...initialContactTypes, "其他"]);
-  const [groupOptions, setGroupOptions] = useState<string[]>(initialGroupOptions);
+  const [groupOptions, setGroupOptions] = useState<string[] | { cn: string; en: string }[]>(initialGroupOptions);
   const [viewMode, setViewMode] = useState<"customer" | "group">("customer");
   const { toast } = useToast();
 
