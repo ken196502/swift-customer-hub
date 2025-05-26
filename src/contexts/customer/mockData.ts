@@ -81,7 +81,7 @@ export const initialCustomers: Customer[] = [
     establishDate: "1990-01-01",
     registeredAddress: "上海市浦东新区花木路",
     legalRepresentative: "李华",
-    riskLevel: "低",
+    riskLevel: "未测评",
     entryDate: "2024-05-14",
     activeStatus: "活跃",
     products: ["股票交易"],

@@ -48,12 +48,25 @@ export function CommonInfoFields({
           disabled={disabled}
         >
           <SelectTrigger>
-            <SelectValue placeholder="请选择风险等级" />
+            <SelectValue placeholder={isPersonalCustomer ? "请选择风险等级" : "请选择风险等级"} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="低">低</SelectItem>
-            <SelectItem value="中">中</SelectItem>
-            <SelectItem value="高">高</SelectItem>
+            {isPersonalCustomer ? (
+              <>
+                <SelectItem value="未测评">未测评</SelectItem>
+                <SelectItem value="稳健型">稳健型</SelectItem>
+                <SelectItem value="审慎型">审慎型</SelectItem>
+                <SelectItem value="均衡型">均衡型</SelectItem>
+                <SelectItem value="进取型">进取型</SelectItem>
+                <SelectItem value="投机型">投机型</SelectItem>
+              </>
+            ) : (
+              <>
+                <SelectItem value="低">低</SelectItem>
+                <SelectItem value="中">中</SelectItem>
+                <SelectItem value="高">高</SelectItem>
+              </>
+            )}
           </SelectContent>
         </Select>
       </div>
