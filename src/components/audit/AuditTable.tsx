@@ -78,7 +78,7 @@ onCheckedChange={(checked) => {
               <TableHead>变更前</TableHead>
               <TableHead>变更后</TableHead>
               <TableHead>备注</TableHead>
-              <TableHead>变更人</TableHead>
+              <TableHead>申请人</TableHead>
               {showStatus && (
                 <TableHead>状态</TableHead>
               )}
@@ -200,7 +200,7 @@ onCheckedChange={(checked) => {
                   </span>
                   <div>变更前: {item.before || "- -"}</div>
                   <div>变更后: {item.after || "— -"}</div>
-                  <div>变更人: {item.submitter}</div>
+                  <div>申请人: {item.submitter}</div>
                   {isSelectable && (
                    <div className="whitespace-nowrap">提交时间: {(() => {
   const val = formatSubmitTime(item.submitTime);
