@@ -333,18 +333,17 @@ export default function Permissions() {
                   <TableHead>可见内容</TableHead>
                   <TableHead>
                     <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                      可见产品
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger asChild>
-                            <span style={{ cursor: 'pointer', color: '#999' }}>🛈</span>
+                            <span>可见产品</span>
                           </TooltipTrigger>
                           <TooltipContent side="top" align="center" style={{ maxWidth: 320, whiteSpace: 'pre-line' }}>
-                            股票交易:恒生柜台有账号, 咨询:CRM收入列表有发票, 债券交易:CRM属于FICC客户, IPO:CRM收入列表有IPO, 发债:DCM发行人
+                            股票交易:恒生柜台有账号<br/>咨询:CRM收入列表有发票<br/>债券交易:CRM属于FICC客户<br/>IPO:CRM收入列表有IPO<br/>发债:DCM发行人
                           </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
-                    </span>
+                </span>
                   </TableHead>
                   <TableHead className="text-right">操作</TableHead>
                 </TableRow>

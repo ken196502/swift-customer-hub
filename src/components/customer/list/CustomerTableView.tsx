@@ -59,7 +59,20 @@ export function CustomerTableView({
               </TableHead>
               <TableHead>客户类型</TableHead>
               <TableHead>主办部门</TableHead>
-              <TableHead>提供产品</TableHead>
+              <TableHead>
+                <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <span>提供产品</span>
+                          </TooltipTrigger>
+                          <TooltipContent side="top" align="center" style={{ maxWidth: 320, whiteSpace: 'pre-line' }}>
+                            股票交易:恒生柜台有账号<br/>咨询:CRM收入列表有发票<br/>债券交易:CRM属于FICC客户<br/>IPO:CRM收入列表有IPO<br/>发债:DCM发行人
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                </span>
+              </TableHead>
               <TableHead>触达部门</TableHead>
               <TableHead>录入部门</TableHead>
               <TableHead>录入时间</TableHead>
