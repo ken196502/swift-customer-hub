@@ -62,6 +62,7 @@ export function CommonInfoFields({
               </>
             ) : (
               <>
+               <SelectItem value="未测评">未测评</SelectItem>
                 <SelectItem value="低">低</SelectItem>
                 <SelectItem value="中">中</SelectItem>
                 <SelectItem value="高">高</SelectItem>
@@ -132,7 +133,7 @@ export function CommonInfoFields({
         <div className="space-y-2">
           <Label htmlFor="idType">证件类型</Label>
           <Select
-            value={formData.idType || "身份证"}
+            value={formData.idType || "1"}
             onValueChange={(value) => handleInputChange("idType", value)}
             disabled={disabled}
           >
@@ -140,10 +141,12 @@ export function CommonInfoFields({
               <SelectValue placeholder="请选择证件类型" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="身份证">身份证</SelectItem>
-              <SelectItem value="护照">护照</SelectItem>
-              <SelectItem value="港澳通行证">港澳通行证</SelectItem>
-              <SelectItem value="台湾通行证">台湾通行证</SelectItem>
+              <SelectItem value="1">大陆身份证</SelectItem>
+              <SelectItem value="2">护照</SelectItem>
+              <SelectItem value="5">澳门身份证</SelectItem>
+              <SelectItem value="6">台湾身份证</SelectItem>
+              <SelectItem value="7">香港非永久身份证</SelectItem>
+              <SelectItem value="9">其他</SelectItem>
             </SelectContent>
           </Select>
         </div>
