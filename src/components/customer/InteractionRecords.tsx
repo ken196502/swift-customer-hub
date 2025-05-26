@@ -30,6 +30,7 @@ export function InteractionRecords({
   customerName
 }: InteractionRecordsProps) {
   const [showNewServiceRecord, setShowNewServiceRecord] = useState(false);
+const [editRow, setEditRow] = useState<any>(null);
   const { toast } = useToast();
   
   const {
@@ -61,47 +62,49 @@ export function InteractionRecords({
         </div>
         <div className="w-full">
           <TransactionTable 
-            data={transactionData} 
-            onEditTransaction={handleEditTransaction}
-            maskedTransactions={maskedTransactions}
-            onRequestAccess={handleRequestAccess}
-          />
+  data={transactionData} 
+  onEditTransaction={(row) => {
+    setShowNewServiceRecord(true);
+    setEditRow(row);
+  }}
+  maskedTransactions={maskedTransactions}
+  onRequestAccess={handleRequestAccess}
+/>
         </div>
       </div>
 
       <NewServiceRecordDialog
-        open={showNewServiceRecord}
-        onOpenChange={setShowNewServiceRecord}
-        onSubmit={(record) => {
-          // Instead of directly adding, we create an audit request
-          window.dispatchEvent(
-            new CustomEvent("audit:create", {
-              detail: {
-                id: Math.floor(Math.random() * 10000),
-                submitTime: new Date().toLocaleString(),
-                customer: customerName || "未知客户",
-                type: "新增",
-                category: "触达记录",
-                before: "",
-                after: `类型: ${record.type}\n时间: ${record.date}\n人员: ${record.person}\n部门: ${record.department}\n金额: ${record.amount || 0}\n目的: ${record.purpose || ''}`,
-                note: record.notes || "",
-                submitter: "当前用户",
-                status: "pending"
-              },
-            })
-          );
-          
-          toast({
-            title: "提交审核",
-            description: "已提交新增触达记录审核请求，审核通过后将添加记录",
-          });
-          
-          // Still call the handler to store it locally if needed
-          onAddServiceRecord(record);
-        }}
-        contactTypes={contactTypes}
-        departments={departments}
-      />
+  open={showNewServiceRecord}
+  onOpenChange={setShowNewServiceRecord}
+  onSubmit={(record) => {
+    setShowNewServiceRecord(false);
+    setEditRow(null);
+    window.dispatchEvent(
+      new CustomEvent("audit:create", {
+        detail: {
+          id: Math.floor(Math.random() * 10000),
+          submitTime: new Date().toLocaleString(),
+          customer: customerName || "未知客户",
+          type: "新增",
+          category: "触达记录",
+          before: "",
+          after: `类型: ${record.type}\n时间: ${record.date}\n人员: ${record.person}\n部门: ${record.department}\n金额: ${record.amount || 0}\n目的: ${record.purpose || ''}`,
+          note: record.notes || "",
+          submitter: "当前用户",
+          status: "pending"
+        },
+      })
+    );
+    toast({
+      title: "提交审核",
+      description: "已提交新增触达记录审核请求，审核通过后将添加记录",
+    });
+    onAddServiceRecord(record);
+  }}
+  contactTypes={contactTypes}
+  departments={departments}
+  {...(editRow ? { defaultValue: editRow } : {})}
+/>
 
       <AccessRequestDialog
         open={showAccessDialog}

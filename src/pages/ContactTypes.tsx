@@ -10,7 +10,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { History, PlusCircle, Trash } from "lucide-react";
+import { History, PlusCircle, Trash, Info } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Card } from "@/components/ui/card";
@@ -175,7 +176,21 @@ export default function ContactTypes() {
           <TableHeader>
             <TableRow>
               <TableHead>联系类型</TableHead>
-              <TableHead>操作</TableHead>
+              <TableHead>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className="flex items-center gap-1 cursor-help">
+                        操作
+                        <Info className="h-3.5 w-3.5 text-muted-foreground ml-1" />
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>已有数据的不能删除</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
