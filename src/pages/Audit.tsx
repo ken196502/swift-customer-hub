@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { AuditContent } from "@/components/audit/AuditContent";
+import { TooltipProvider } from '@/contexts/TooltipContext';
+import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 
 // Define the audit item type
 export interface AuditItem {
@@ -240,7 +242,16 @@ export default function Audit() {
   return (
     <div className="mx-auto space-y-6">
       <div className="flex justify-start items-center">
-        <h1 className="text-2xl font-bold">审核管理</h1>
+         <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+              <h1 className="text-2xl font-bold">审核管理</h1>
+              </TooltipTrigger>
+              <TooltipContent side="top" align="center" style={{ maxWidth: 320, whiteSpace: 'pre-line' }}>
+                录入部门的管理员能看所有，用户只看自己提的
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
       </div>
       <Tabs defaultValue="pending" className="w-full">
         <TabsList className="grid w-[400px] grid-cols-2">
