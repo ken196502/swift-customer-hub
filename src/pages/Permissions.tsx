@@ -314,13 +314,22 @@ export default function Permissions() {
               <ChevronLeft className="h-4 w-4 mr-2" />
               返回列表
             </Button>
-            <Button 
-              variant="default" 
-              size="sm"
-              onClick={handleAddPermission}
-            >
-              添加权限
-            </Button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button 
+                    variant="default" 
+                    size="sm"
+                    onClick={handleAddPermission}
+                  >
+                    添加权限
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="top" align="center" style={{ maxWidth: 320, whiteSpace: 'pre-line' }}>
+                  添加已存在客户时，请去编辑该客户的权限，不能新增
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
           
           <div className="rounded-md border">

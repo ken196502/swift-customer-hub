@@ -109,7 +109,7 @@ export function PermissionEditModal({
           </div>
           
           <div>
-            <label className="block text-sm font-medium mb-1 text-left">可见产品</label>
+            <label className="block text-sm font-medium mb-1 text-left">可见产品记录</label>
             <div className="grid grid-cols-2 gap-2">
               {productOptions.map(product => (
                 <label key={product} className="flex items-center space-x-2">
