@@ -10,7 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { History, PlusCircle, Trash, Info } from "lucide-react";
+import { History, PlusCircle, Trash, Info, Edit } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -37,6 +37,7 @@ export default function ContactTypes() {
   const { contactTypes, handleUpdateContactTypes } = useCustomer();
   const [types, setTypes] = useState(contactTypes);
   const [newType, setNewType] = useState("");
+  const [editingType, setEditingType] = useState<{original: string; newValue: string} | null>(null);
   const { toast } = useToast();
   const { recordManagementChange } = useManagementAudit();
   
@@ -100,7 +101,7 @@ export default function ContactTypes() {
 
   const handleAddType = () => {
     if (!newType.trim()) return;
-    if (types.includes(newType.trim())) {
+    if (types.some(t => t.toLowerCase() === newType.trim().toLowerCase())) {
       toast({
         title: "添加失败",
         description: "该联系类型已存在",
@@ -119,6 +120,49 @@ export default function ContactTypes() {
     setNewType("");
     
     // The actual update happens after audit approval
+  };
+  
+  const handleStartEdit = (type: string) => {
+    setEditingType({ original: type, newValue: type });
+  };
+  
+  const handleSaveEdit = () => {
+    if (!editingType) return;
+    
+    const { original, newValue } = editingType;
+    
+    if (!newValue.trim()) {
+      toast({
+        title: "保存失败",
+        description: "联系类型不能为空",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    if (original.toLowerCase() !== newValue.toLowerCase() && 
+        types.some(t => t.toLowerCase() === newValue.trim().toLowerCase())) {
+      toast({
+        title: "保存失败",
+        description: "该联系类型已存在",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    const updatedTypes = types.map(t => t === original ? newValue.trim() : t);
+    
+    // Record the change for audit
+    recordManagementChange("联系类型", types, updatedTypes);
+    
+    // Update local state
+    setTypes(updatedTypes);
+    setEditingType(null);
+    
+    toast({
+      title: "更新成功",
+      description: "联系类型已更新，等待审核通过后生效"
+    });
   };
 
   const handleDeleteType = (type: string) => {
@@ -196,18 +240,45 @@ export default function ContactTypes() {
           <TableBody>
             {types.map((type) => (
               <TableRow key={type}>
-                <TableCell>{type}</TableCell>
                 <TableCell>
-                  {type !== "其他" ? (
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
-                      onClick={() => handleDeleteType(type)}
-                    >
-                      <Trash className="h-4 w-4 text-red-500" />
-                    </Button>
+                  {editingType?.original === type ? (
+                    <Input
+                      value={editingType.newValue}
+                      onChange={(e) => setEditingType({...editingType, newValue: e.target.value})}
+                      onKeyDown={(e) => e.key === 'Enter' && handleSaveEdit()}
+                      autoFocus
+                      className="w-48"
+                    />
                   ) : (
+                    type
+                  )}
+                </TableCell>
+                <TableCell className="space-x-2">
+                  {type === "其他" ? (
                     <span className="text-sm text-muted-foreground">系统保留</span>
+                  ) : (
+                    <>
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={() => editingType?.original === type ? handleSaveEdit() : handleStartEdit(type)}
+                      >
+                        {editingType?.original === type ? (
+                          <span>保存</span>
+                        ) : (
+                          <Edit className="h-4 w-4 text-blue-500" />
+                        )}
+                      </Button>
+                      {editingType?.original !== type && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          onClick={() => handleDeleteType(type)}
+                        >
+                          <Trash className="h-4 w-4 text-red-500" />
+                        </Button>
+                      )}
+                    </>
                   )}
                 </TableCell>
               </TableRow>
@@ -233,8 +304,10 @@ export default function ContactTypes() {
         </Table>
       </Card>
       
-      <div className="text-muted-foreground text-sm">
-        <p>注意: "其他" 是系统保留的联系类型，不能被删除。</p>
+      <div className="text-muted-foreground text-sm space-y-1">
+        <p>• 点击编辑图标修改联系类型名称</p>
+        <p>• 按回车键或点击保存按钮保存修改</p>
+        <p>• "其他" 是系统保留的联系类型，不能被修改或删除</p>
       </div>
       
       <ManagementChangeRecordsDialog
