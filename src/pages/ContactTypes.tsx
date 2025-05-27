@@ -161,7 +161,7 @@ export default function ContactTypes() {
     
     toast({
       title: "更新成功",
-      description: "联系类型已更新，等待审核通过后生效"
+      description: "更新成功"
     });
   };
 

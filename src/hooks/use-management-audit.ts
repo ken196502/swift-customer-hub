@@ -47,8 +47,8 @@ export function useManagementAudit() {
     );
 
     toast({
-      title: "配置变更已提交",
-      description: `${type}配置变更记录已提交审核，通过后将生效`,
+      title: "已添加",
+      description: `${type}已成功添加`,
     });
 
     return changeRecord;
