@@ -42,6 +42,8 @@ export function AuditFilters({ onCategoryChange, selectedCategory }: AuditFilter
   const getChangeTypes = () => {
     if (category === "共享权限") {
       return ["权限变更"];
+    } else if (category === "客户信息") {
+      return ["新增", "修改", "合并"];
     }
     return ["新增", "修改", "删除", "权限变更"];
   };

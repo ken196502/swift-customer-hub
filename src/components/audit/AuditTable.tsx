@@ -3,6 +3,7 @@ import { formatSubmitTime } from "./formatDate";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { AuditItem } from "@/pages/Audit";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@radix-ui/react-tooltip";
 
 interface AuditTableProps {
   items: AuditItem[];
@@ -75,7 +76,18 @@ onCheckedChange={(checked) => {
               )}
               <TableHead>客户</TableHead>
               <TableHead>变动类型</TableHead>
-              <TableHead>变更前</TableHead>
+              <TableHead>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span>变更前</span>
+                    </TooltipTrigger>
+                    <TooltipContent side="top" align="center">
+                      合并时变动前是两个客户号，变动后一个客户号
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </TableHead>
               <TableHead>变更后</TableHead>
               <TableHead>备注</TableHead>
               <TableHead>申请人</TableHead>
