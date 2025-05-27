@@ -327,6 +327,7 @@ export default function Permissions() {
                 </TooltipTrigger>
                 <TooltipContent side="top" align="center" style={{ maxWidth: 320, whiteSpace: 'pre-line' }}>
                   添加已存在客户时，请去编辑该客户的权限，不能新增
+                  <br/>优先判断全部客户，再判断单个客户
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
