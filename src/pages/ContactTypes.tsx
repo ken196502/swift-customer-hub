@@ -290,7 +290,7 @@ export default function ContactTypes() {
                 <AlertDialogHeader>
                   <AlertDialogTitle>确认删除</AlertDialogTitle>
                   <AlertDialogDescription>
-                    确认要删除该联系类型“{pendingDeleteType}”吗？此操作需要审核通过后才会生效。
+                    确认要删除该联系类型“{pendingDeleteType}”吗？
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
