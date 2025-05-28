@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 
@@ -36,6 +36,29 @@ export function NewServiceRecordDialog({
   departments
 }: NewServiceRecordDialogProps) {
   const { toast } = useToast();
+  
+  // 模拟业务人员数据
+  const salesPersons = useMemo(() => [
+    { id: '1', name: '张三', enName: 'Zhang San' },
+    { id: '2', name: '李四', enName: 'Li Si' },
+    { id: '3', name: '王五', enName: 'Wang Wu' },
+    { id: '4', name: '赵六', enName: 'Zhao Liu' },
+    { id: '5', name: '钱七', enName: 'Qian Qi' },
+  ], []);
+  
+  const [searchTerm, setSearchTerm] = useState('');
+  
+  // 根据搜索词过滤业务人员
+  const filteredPersons = useMemo(() => {
+    if (!searchTerm) return salesPersons;
+    const term = searchTerm.toLowerCase();
+    return salesPersons.filter(
+      person => 
+        person.name.toLowerCase().includes(term) || 
+        person.enName.toLowerCase().includes(term)
+    );
+  }, [searchTerm, salesPersons]);
+
   const [record, setRecord] = useState<Partial<ServiceRecord>>({
     date: new Date().toISOString().split('T')[0],
     type: "",
@@ -176,11 +199,36 @@ export function NewServiceRecordDialog({
 
           <div className="space-y-2">
             <Label>业务人员</Label>
-            <Input 
-              placeholder="请输入业务人员" 
-              value={record.person} 
-              onChange={(e) => handleChange('person', e.target.value)}
-            />
+            <Select
+              value={record.person}
+              onValueChange={(value) => handleChange('person', value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="选择或搜索业务人员" />
+              </SelectTrigger>
+              <SelectContent>
+                <div className="px-3 py-2">
+                  <Input 
+                    placeholder="搜索姓名或拼音..." 
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onClick={(e) => e.stopPropagation()}
+                    className="mb-2"
+                  />
+                </div>
+                {filteredPersons.length > 0 ? (
+                  filteredPersons.map((person) => (
+                    <SelectItem key={person.id} value={person.name}>
+                      {person.name} {person.enName}
+                    </SelectItem>
+                  ))
+                ) : (
+                  <div className="px-3 py-2 text-sm text-muted-foreground">
+                    未找到匹配的业务人员
+                  </div>
+                )}
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="space-y-2">
