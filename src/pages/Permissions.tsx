@@ -53,7 +53,7 @@ const mockUsers: User[] = [
   {
     id: 2,
     name: '李四',
-    level: '管理员',
+    level: '部门管理员',
     department: '机构经纪',
     permissions: [
       {
