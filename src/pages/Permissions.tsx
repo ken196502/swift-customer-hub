@@ -37,7 +37,7 @@ const mockUsers: User[] = [
   {
     id: 1,
     name: '张三',
-    level: '员工',
+    level: '普通用户',
     department: '零售经纪',
     permissions: [
       {
@@ -53,7 +53,7 @@ const mockUsers: User[] = [
   {
     id: 2,
     name: '李四',
-    level: '部门管理层',
+    level: '管理员',
     department: '机构经纪',
     permissions: [
       {
@@ -69,7 +69,7 @@ const mockUsers: User[] = [
   {
     id: 3,
     name: '王五',
-    level: '公司管理层',
+    level: '系统管理员',
     department: 'ECM',
     permissions: [
       {
