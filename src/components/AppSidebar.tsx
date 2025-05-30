@@ -23,7 +23,7 @@ export function AppSidebar() {
   
   const menuItems = [
     {
-      title: "客户关系管理",
+      title: "客户管理",
       url: "/",
       icon: Users,
     },
@@ -58,7 +58,7 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarHeader>
         <div className="px-4 py-2 flex items-center justify-between">
-          <h3 className="text-lg font-semibold">客户关系管理</h3>
+          <h3 className="text-lg font-semibold">客户管理</h3>
         </div>
       </SidebarHeader>
       <SidebarContent>
