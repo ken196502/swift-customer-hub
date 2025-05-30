@@ -23,7 +23,7 @@ export function AppSidebar() {
   
   const menuItems = [
     {
-      title: "客户管理",
+      title: "客户关系管理",
       url: "/",
       icon: Users,
     },
