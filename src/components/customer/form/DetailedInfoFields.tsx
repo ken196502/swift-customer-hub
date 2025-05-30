@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 interface DetailedInfoFieldsProps {
   formData: Partial<Customer>;
   handleInputChange: (field: string, value: any) => void;
-  groupOptions: string[];
+  groupOptions: string[] | { cn: string; en: string }[];
 }
 
 export function DetailedInfoFields({ 
@@ -31,11 +31,15 @@ export function DetailedInfoFields({
             <SelectValue placeholder="选择集团" />
           </SelectTrigger>
           <SelectContent>
-            {groupOptions.map((group) => (
-              <SelectItem key={group} value={group}>
-                {group}
-              </SelectItem>
-            ))}
+            {groupOptions.map((group) => {
+              const groupValue = typeof group === 'string' ? group : group.cn;
+              const groupLabel = typeof group === 'string' ? group : `${group.cn} (${group.en})`;
+              return (
+                <SelectItem key={groupValue} value={groupValue}>
+                  {groupLabel}
+                </SelectItem>
+              );
+            })}
           </SelectContent>
         </Select>
       </div>

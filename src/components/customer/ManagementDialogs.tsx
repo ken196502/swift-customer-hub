@@ -12,7 +12,7 @@ interface ManagementDialogsProps {
   handleAddCustomer: (newCustomer: Partial<Customer>) => void;
   productOptions: string[];
   contactTypes: string[];
-  groupOptions: string[];
+  groupOptions: string[] | { cn: string; en: string }[];
   departments: string[];
   countries: string[];
 }

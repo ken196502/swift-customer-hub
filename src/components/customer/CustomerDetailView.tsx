@@ -9,7 +9,7 @@ interface CustomerDetailViewProps {
   onEditCustomer: (updatedCustomer: Partial<Customer>) => void;
   productOptions: string[];
   contactTypes: string[];
-  groupOptions: string[];
+  groupOptions: string[] | { cn: string; en: string }[];
   departments: string[];
   countries: string[];
 }
@@ -20,10 +20,12 @@ export function CustomerDetailView({
   onEditCustomer,
   productOptions,
   contactTypes,
-  groupOptions,
+  groupOptions: originalGroupOptions,
   departments,
   countries
 }: CustomerDetailViewProps) {
+  // 将 groupOptions 转换为 string[] 类型
+  const groupOptions = originalGroupOptions.map(opt => typeof opt === 'string' ? opt : opt.cn);
   return (
     <div className="mx-auto space-y-6">
       <div className="flex justify-between items-center">

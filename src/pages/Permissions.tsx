@@ -349,7 +349,7 @@ export default function Permissions() {
                             <span>可见产品</span>
                           </TooltipTrigger>
                           <TooltipContent side="top" align="center" style={{ maxWidth: 320, whiteSpace: 'pre-line' }}>
-                            股票交易:恒生柜台有账号<br/>咨询:CRM收入列表有发票<br/>债券交易:CRM属于FICC客户<br/>IPO:CRM收入列表有IPO<br/>发债:DCM发行人
+                            股票交易:恒生柜台有账号<br/>咨询:CRM收入列表有发票<br/>债券交易:CRM属于FICC客户<br/>IPO:CRM收入列表有IPO<br/>发债:DCM发行人testdv.tfisec.cn/groupcrm/dcm-project/issuer
                           </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>

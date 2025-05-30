@@ -6,7 +6,7 @@ import { DetailedInfoFields } from "./form/DetailedInfoFields";
 interface CustomerFormSectionProps {
   formData: Partial<Customer>;
   handleInputChange: (field: string, value: any) => void;
-  groupOptions: string[];
+  groupOptions: string[] | { cn: string; en: string }[];
   countries: string[];
 }
 
