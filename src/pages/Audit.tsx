@@ -118,9 +118,9 @@ const mockAuditItems: AuditItem[] = [
     customer: "阿里",
     type: "权限变更",
     category: "共享权限",
-    before: "部门: 机构经纪\n内容: 触达记录\n产品: 股票交易",
-    after: "部门: 机构经纪, DCM\n内容: 触达记录, 客户画像\n产品: 股票交易, 发债",
-    note: "新增DCM部门查看权限",
+    before: "部门: 金融市场部\n内容: 触达记录\n产品: 股票交易",
+    after: "部门: 金融市场部, 投资银行DCM\n内容: 触达记录, 客户画像\n产品: 股票交易, 发债",
+    note: "新增投资银行DCM部门查看权限",
     submitter: "孙八",
     status: "pending"
   },
@@ -131,7 +131,7 @@ const mockAuditItems: AuditItem[] = [
     type: "权限变更",
     category: "共享权限",
     before: "",
-    after: "部门: 零售经纪\n内容: 触达记录\n产品: 咨询",
+    after: "部门: 零售经纪部\n内容: 触达记录\n产品: 咨询",
     note: "新增查看权限",
     submitter: "王五",
     status: "approved"

@@ -17,7 +17,7 @@ export function useCustomerDetail(
       amount: -34000.0,
       type: "出差费用",
       purpose: "出差实访客户",
-      department: "零售经纪",
+      department: "零售经纪部",
       person: "张三",
     },
     {
@@ -26,14 +26,14 @@ export function useCustomerDetail(
       amount: 0.0,
       type: "电话沟通",
       purpose: "运营和销售沟通",
-      department: "机构经纪",
+      department: "金融市场部",
       person: "李四",
     },
     {
       id: 3,
       date: "2025-03-21",
       amount: 0.0,
-      type: "跨资产",
+      type: "财富管理部",
       purpose: "运营和销售服务反馈",
       department: "销售部",
       person: "李四",
@@ -44,7 +44,7 @@ export function useCustomerDetail(
       amount: -1234.56,
       type: "招待客户",
       purpose: "招待客户",
-      department: "DCM",
+      department: "投资银行DCM",
       person: "张三，王五",
     },
     {
@@ -53,7 +53,7 @@ export function useCustomerDetail(
       amount: 0.0,
       type: "线上会议",
       purpose: "线上1on1",
-      department: "ECM",
+      department: "投资银行ECM",
       person: "赵六",
     },
   ]);

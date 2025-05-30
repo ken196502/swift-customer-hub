@@ -10,7 +10,7 @@ import {
 } from "./customer/mockData";
 
 // List of departments
-const departmentList = ["零售经纪", "机构经纪", "跨资产", "DCM", "ECM"];
+const departmentList = ["零售经纪部", "金融市场部", "财富管理部", "投资银行DCM", "投资银行ECM"];
 
 // List of countries
 const countryList = [

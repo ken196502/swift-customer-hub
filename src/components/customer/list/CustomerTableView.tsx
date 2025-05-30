@@ -66,8 +66,8 @@ export function CustomerTableView({
                           <TooltipTrigger asChild>
                             <span>提供产品</span>
                           </TooltipTrigger>
-                          <TooltipContent side="top" align="center" style={{ maxWidth: 320, whiteSpace: 'pre-line' }}>
-                            股票交易:恒生柜台有账号<br/>咨询:CRM收入列表有发票<br/>债券交易:CRM属于FICC客户<br/>IPO:CRM收入列表有IPO<br/>发债:DCM发行人
+                          <TooltipContent side="top" align="center" style={{ maxWidth: 640, whiteSpace: 'pre-line' }}>
+                          股票交易:恒生柜台有账号<br/>咨询:CRM收入列表有发票(testdv.tfisec.cn/groupcrm/revenue/revenue_list)<br/>债券交易:CRM属于FICC客户testdv.tfisec.cn/groupcrm/product/product_list<br/>IPO:CRM收入列表有IPO(testdv.tfisec.cn/groupcrm/revenue/revenue_list)<br/>发债:投资银行DCM发行人(testdv.tfisec.cn/groupcrm/dcm-project/issuer)
                           </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>

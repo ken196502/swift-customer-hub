@@ -38,13 +38,13 @@ const mockUsers: User[] = [
     id: 1,
     name: '张三',
     level: '普通用户',
-    department: '零售经纪',
+    department: '零售经纪部',
     permissions: [
       {
         id: 1,
         customerNumber: 'C001',
         customerName: '小米集团',
-        departments: ['零售经纪'],
+        departments: ['零售经纪部'],
         visibleContent: ['触达记录', '客户画像'],
         visibleProducts: ['股票交易']
       }
@@ -54,13 +54,13 @@ const mockUsers: User[] = [
     id: 2,
     name: '李四',
     level: '部门管理员',
-    department: '机构经纪',
+    department: '金融市场部',
     permissions: [
       {
         id: 2,
         customerNumber: 'C002',
         customerName: '腾讯',
-        departments: ['机构经纪', 'DCM'],
+        departments: ['金融市场部', '投资银行DCM'],
         visibleContent: ['触达记录', '收入'],
         visibleProducts: ['股票交易', '债券交易']
       }
@@ -70,13 +70,13 @@ const mockUsers: User[] = [
     id: 3,
     name: '王五',
     level: '系统管理员',
-    department: 'ECM',
+    department: '投资银行ECM',
     permissions: [
       {
         id: 3,
         customerNumber: 'ALL',
         customerName: '全公司客户',
-        departments: ['零售经纪', '机构经纪', '跨资产', 'DCM', 'ECM'],
+        departments: ['零售经纪部', '金融市场部', '财富管理部', '投资银行DCM', '投资银行ECM'],
         visibleContent: ['触达记录', '客户画像', '收入'],
         visibleProducts: ['股票交易', '咨询', '债券交易', 'IPO', '发债']
       }
@@ -94,7 +94,7 @@ export default function Permissions() {
   const [editingPermission, setEditingPermission] = useState<Permission | null>(null);
   const { toast } = useToast();
 
-  const departments = ["零售经纪", "机构经纪", "跨资产", "DCM", "ECM"];
+  const departments = ["零售经纪部", "金融市场部", "财富管理部", "投资银行DCM", "投资银行ECM"];
   const contentOptions = ["触达记录", "客户画像", "收入"];
   const productOptions = ["股票交易", "咨询", "债券交易", "IPO", "发债"];
 
@@ -348,8 +348,8 @@ export default function Permissions() {
                           <TooltipTrigger asChild>
                             <span>可见产品</span>
                           </TooltipTrigger>
-                          <TooltipContent side="top" align="center" style={{ maxWidth: 320, whiteSpace: 'pre-line' }}>
-                            股票交易:恒生柜台有账号<br/>咨询:CRM收入列表有发票<br/>债券交易:CRM属于FICC客户<br/>IPO:CRM收入列表有IPO<br/>发债:DCM发行人testdv.tfisec.cn/groupcrm/dcm-project/issuer
+                          <TooltipContent side="top" align="center" style={{ maxWidth: 640, whiteSpace: 'pre-line' }}>
+                          股票交易:恒生柜台有账号<br/>咨询:CRM收入列表有发票(testdv.tfisec.cn/groupcrm/revenue/revenue_list)<br/>债券交易:CRM属于FICC客户testdv.tfisec.cn/groupcrm/product/product_list<br/>IPO:CRM收入列表有IPO(testdv.tfisec.cn/groupcrm/revenue/revenue_list)<br/>发债:投资银行DCM发行人(testdv.tfisec.cn/groupcrm/dcm-project/issuer)
                           </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>

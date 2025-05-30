@@ -27,9 +27,9 @@ export const initialCustomers: Customer[] = [
     entryDate: "2019-10-01",
     activeStatus: "活跃",
     products: ["股票交易", "咨询"],
-    reaches: ["跨资产", "DCM", "ECM"],
-    sponsorDepartments: ["机构经纪"],
-    entryDepartment: "机构经纪",
+    reaches: ["财富管理部", "投资银行DCM", "投资银行ECM"],
+    sponsorDepartments: ["金融市场部"],
+    entryDepartment: "金融市场部",
   },
   {
     id: 2,
@@ -56,9 +56,9 @@ export const initialCustomers: Customer[] = [
     entryDate: "2018-05-15",
     activeStatus: "活跃",
     products: ["债券交易", "IPO", "发债"],
-    reaches: ["零售经纪", "机构经纪"],
-    sponsorDepartments: ["零售经纪"],
-    entryDepartment: "零售经纪",
+    reaches: ["零售经纪部", "金融市场部"],
+    sponsorDepartments: ["零售经纪部"],
+    entryDepartment: "零售经纪部",
   },
   {
     id: 3,
@@ -85,15 +85,15 @@ export const initialCustomers: Customer[] = [
     entryDate: "2024-05-14",
     activeStatus: "活跃",
     products: ["股票交易"],
-    reaches: ["零售经纪"],
+    reaches: ["零售经纪部"],
     phone: "13800138000",
     email: "lihua@example.com",
     contact: "李华",
-    entryDepartment: "零售经纪",
+    entryDepartment: "零售经纪部",
   },
 ];
 
 export const initialProductOptions: string[] = ["股票交易", "咨询", "债券交易", "IPO", "发债"];
-export const initialTagOptions: string[] = ["零售经纪", "机构经纪", "跨资产", "DCM", "ECM"];
+export const initialTagOptions: string[] = ["零售经纪部", "金融市场部", "财富管理部", "投资银行DCM", "投资银行ECM"];
 export const initialContactTypes: string[] = ["电话", "会议", "邮件", "拜访", "社交活动"];
 export const initialGroupOptions: string[] = ["小米集团", "腾讯", "阿里", "字节"];
