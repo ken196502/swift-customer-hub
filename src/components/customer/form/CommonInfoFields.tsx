@@ -175,6 +175,17 @@ export function CommonInfoFields({
           disabled={disabled}
         />
       </div>
+
+      {/* <div className="space-y-2">
+        <Label htmlFor="hsAccount">恒生柜台账号</Label>
+        <Input
+          id="hsAccount"
+          value={formData.hsAccount || ""}
+          onChange={(e) => handleInputChange("hsAccount", e.target.value)}
+          disabled={disabled}
+          placeholder="请输入恒生柜台账号"
+        />
+      </div> */}
     </div>
   );
 }

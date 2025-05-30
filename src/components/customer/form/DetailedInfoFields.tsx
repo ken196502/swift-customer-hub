@@ -109,6 +109,24 @@ export function DetailedInfoFields({
           onChange={(e) => handleInputChange('legalRepresentative', e.target.value)}
         />
       </div>
+
+      <div className="space-y-2">
+        <Label>CRM金市ID</Label>
+        <Input 
+          placeholder="请输入CRM金市ID" 
+          value={formData.crmMarketId || ''} 
+          onChange={(e) => handleInputChange('crmMarketId', e.target.value)}
+        />
+      </div>
+
+      <div className="space-y-2">
+        <Label>DCM发行人ID</Label>
+        <Input 
+          placeholder="请输入DCM发行人ID" 
+          value={formData.dcmIssuerId || ''} 
+          onChange={(e) => handleInputChange('dcmIssuerId', e.target.value)}
+        />
+      </div>
     </div>
   );
 }

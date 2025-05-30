@@ -32,6 +32,9 @@ export interface Customer {
   phone?: string;
   email?: string;
   contact?: string;  // Contact person's name
+  hsAccount?: string; // 恒生柜台账号
+  crmMarketId?: string; // CRM金市ID
+  dcmIssuerId?: string; // DCM发行人ID
 }
 
 export interface CustomerContextType {
