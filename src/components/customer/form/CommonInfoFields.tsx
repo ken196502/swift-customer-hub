@@ -5,6 +5,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { CountrySelect } from "@/components/ui/country-select";
 import { Customer } from "@/contexts/CustomerContext";
 import { countries } from "@/utils/countries";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Info } from "lucide-react";
 
 interface CommonInfoFieldsProps {
   formData: Partial<Customer>;
@@ -152,8 +154,20 @@ export function CommonInfoFields({
         </div>
       ) : null}
 
-      <div>
-        <Label htmlFor="idNumber">证件号码</Label>
+      <div className="space-y-2">
+        <div className="flex items-center space-x-2">
+          <Label htmlFor="idNumber">证件号码</Label>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Info className="h-4 w-4 text-muted-foreground" />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>提交时将校验证件号码是否已存在</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
         <Input
           id="idNumber"
           value={formData.idNumber || ""}

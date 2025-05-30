@@ -1,6 +1,8 @@
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Info } from "lucide-react";
 import { Customer } from "@/contexts/CustomerContext";
 
 interface CompanyInfoFieldsProps {
@@ -73,7 +75,19 @@ export function CompanyInfoFields({
           />
         </div>
         <div>
-          <Label htmlFor="email">邮箱</Label>
+          <div className="flex items-center space-x-1">
+            <Label htmlFor="email">邮箱</Label>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Info className="h-3.5 w-3.5 text-muted-foreground" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>提交时会校验邮箱是否重复</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
           <Input
             id="email"
             type="email"
@@ -86,7 +100,19 @@ export function CompanyInfoFields({
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="phone">联系电话</Label>
+          <div className="flex items-center space-x-1">
+            <Label htmlFor="phone">联系电话</Label>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Info className="h-3.5 w-3.5 text-muted-foreground" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>提交时会校验电话是否重复</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
           <Input
             id="phone"
             value={formData.phone || ""}
