@@ -20,9 +20,21 @@ export function CompanyInfoFields({
     <div className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="shortNameCn" className="text-right">
-            中文简称 <span className="text-red-500">*</span>
-          </Label>
+          <div className="flex items-center space-x-1">
+            <Label htmlFor="shortNameCn" className="text-right">
+              中文简称 <span className="text-red-500">*</span>
+            </Label>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Info className="h-3.5 w-3.5 text-muted-foreground" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>提交时会校验中文简称是否重复</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
           <Input
             id="shortNameCn"
             value={formData.shortNameCn || ""}
@@ -32,7 +44,19 @@ export function CompanyInfoFields({
           />
         </div>
         <div>
-          <Label htmlFor="shortNameEn">英文简称</Label>
+          <div className="flex items-center space-x-1">
+            <Label htmlFor="shortNameEn">英文简称</Label>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Info className="h-3.5 w-3.5 text-muted-foreground" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>提交时会校验英文简称是否重复</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
           <Input
             id="shortNameEn"
             value={formData.shortNameEn || ""}

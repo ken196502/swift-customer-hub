@@ -168,6 +168,10 @@ export function BasicInfoCard({ customer }: BasicInfoCardProps) {
             <dt className="col-span-1 text-sm font-medium text-muted-foreground">证件号码</dt>
             <dd className="col-span-2 text-sm">{customer.idNumber || "-"}</dd>
           </div>
+          {isPersonalCustomer && <div className="grid grid-cols-3 py-2 px-4">
+            <dt className="col-span-1 text-sm font-medium text-muted-foreground">恒生柜台账号</dt>
+            <dd className="col-span-2 text-sm">{customer.hsAccount || "-"}</dd>
+          </div>}
         </dl>
       </CardContent>
     </Card>

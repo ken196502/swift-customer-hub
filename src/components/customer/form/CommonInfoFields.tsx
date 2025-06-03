@@ -176,8 +176,20 @@ export function CommonInfoFields({
         />
       </div>
 
-      {/* <div className="space-y-2">
+      {isPersonalCustomer && <div className="space-y-2">
+        <div className="flex items-center space-x-2">
         <Label htmlFor="hsAccount">恒生柜台账号</Label>
+        <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Info className="h-4 w-4 text-muted-foreground" />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>提交时校验恒生号码是否已存在</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
         <Input
           id="hsAccount"
           value={formData.hsAccount || ""}
@@ -185,7 +197,7 @@ export function CommonInfoFields({
           disabled={disabled}
           placeholder="请输入恒生柜台账号"
         />
-      </div> */}
+      </div>}
     </div>
   );
 }
