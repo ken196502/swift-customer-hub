@@ -3,7 +3,7 @@ import { formatSubmitTime } from "./formatDate";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { AuditItem } from "@/pages/Audit";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@radix-ui/react-tooltip";
+import { CustomTooltip } from "@/components/ui/CustomTooltip";
 
 interface AuditTableProps {
   items: AuditItem[];
@@ -77,16 +77,9 @@ onCheckedChange={(checked) => {
               <TableHead>客户</TableHead>
               <TableHead>变动类型</TableHead>
               <TableHead>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <span>变更前</span>
-                    </TooltipTrigger>
-                    <TooltipContent side="top" align="center">
-                      合并时变动前是两个客户号，变动后一个客户号
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+                <CustomTooltip content="合并时变动前是两个客户号，变动后一个客户号">
+                  <span>变更前</span>
+                </CustomTooltip>
               </TableHead>
               <TableHead>变更后</TableHead>
               <TableHead>备注</TableHead>
@@ -140,15 +133,43 @@ onCheckedChange={(checked) => {
               <TableCell>
                 <Badge className={getBadgeColor(item.type)}>{item.type}</Badge>
               </TableCell>
-              <TableCell className="text-left">
-                {item.before ? item.before.split("\n").map((line, index) => (
-                       <p key={index}>{line}</p>
-                    )) : "- -"}
+              <TableCell className="text-left max-w-[200px]">
+                {item.before ? (
+                  <CustomTooltip 
+                    content={
+                      <div className="p-1">
+                        {item.before.split("\n").map((line, index) => (
+                          <p key={index} className="whitespace-pre-wrap">{line}</p>
+                        ))}
+                      </div>
+                    }
+                  >
+                    <div className="overflow-hidden text-ellipsis whitespace-nowrap max-w-full">
+                      {item.before.split("\n").map((line, index) => (
+                        <p key={index} className="truncate">{line}</p>
+                      ))}
+                    </div>
+                  </CustomTooltip>
+                ) : "- -"}
               </TableCell>
-              <TableCell className="text-left">
-              {item.after ? item.after.split("\n").map((line, index) => (
-                       <p key={index}>{line}</p>
-                    )) : "- -"}
+              <TableCell className="text-left max-w-[200px]">
+                {item.after ? (
+                  <CustomTooltip 
+                    content={
+                      <div className="p-1">
+                        {item.after.split("\n").map((line, index) => (
+                          <p key={index} className="whitespace-pre-wrap">{line}</p>
+                        ))}
+                      </div>
+                    }
+                  >
+                    <div className="overflow-hidden text-ellipsis whitespace-nowrap max-w-full">
+                      {item.after.split("\n").map((line, index) => (
+                        <p key={index} className="truncate">{line}</p>
+                      ))}
+                    </div>
+                  </CustomTooltip>
+                ) : "- -"}
               </TableCell>
               <TableCell>{item.note}</TableCell>
               <TableCell>{item.submitter}</TableCell>

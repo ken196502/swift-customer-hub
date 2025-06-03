@@ -25,6 +25,7 @@ import "./TransactionTable.css";
 interface TransactionTableProps {
   data: TransactionData[];
   onEditTransaction?: (row: any) => void;
+  onDeleteTransaction?: (id: number) => void;
   maskedTransactions?: number[];
   onRequestAccess?: (id: number) => void;
 }
@@ -35,6 +36,7 @@ import { useState } from "react";
 export function TransactionTable({ 
   data, 
   onEditTransaction,
+  onDeleteTransaction,
   maskedTransactions = [],
   onRequestAccess
 }: TransactionTableProps) {
@@ -116,26 +118,49 @@ export function TransactionTable({
                       {isTransactionMasked(row.id) ? maskContent(row.person) : row.person}
                     </TableCell>
                     <TableCell className="text-center">
-  {isTransactionMasked(row.id) ? (
-  <Button
-    variant="ghost"
-    className="h-8 w-8 p-0"
-    onClick={() => onRequestAccess && onRequestAccess(row.id)}
-    title="申请查看"
-  >
-    <Lock className="h-4 w-4 text-gray-400" />
-  </Button>
-) : (
-  <Button
-    variant="ghost"
-    className="h-8 w-8 p-0"
-    onClick={() => handleChartEdit(row)}
-    title="编辑触达记录"
-  >
-    <Edit className="h-4 w-4" />
-  </Button>
-)}
-</TableCell>
+                      <div className="flex justify-center space-x-1">
+                        {isTransactionMasked(row.id) ? (
+                          <Button
+                            variant="ghost"
+                            className="h-8 w-8 p-0"
+                            onClick={() => onRequestAccess && onRequestAccess(row.id)}
+                            title="申请查看"
+                          >
+                            <Lock className="h-4 w-4 text-gray-400" />
+                          </Button>
+                        ) : (
+                          <>
+                            <Button
+                              variant="ghost"
+                              className="h-8 w-8 p-0"
+                              onClick={() => handleChartEdit(row)}
+                              title="编辑触达记录"
+                            >
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              className="h-8 w-8 p-0 text-red-500 hover:text-red-600"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                if (confirm('确定要删除这条触达记录吗？') && onDeleteTransaction) {
+                                  onDeleteTransaction(row.id);
+                                }
+                              }}
+                              title="删除记录"
+                            >
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M3 6h18"/>
+                                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+                                <line x1="10" x2="10" y1="11" y2="17"/>
+                                <line x1="14" x2="14" y1="11" y2="17"/>
+                              </svg>
+                            </Button>
+                          </>
+                        )}
+                      </div>
+                    </TableCell>
                   </TableRow>
                 ))
               )}

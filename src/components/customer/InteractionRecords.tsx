@@ -42,6 +42,36 @@ const [editRow, setEditRow] = useState<any>(null);
     handleConfirmAccessRequest,
   } = useInteractionRecords(transactionData, customerId, customerName);
 
+  const handleDeleteTransaction = (id: number) => {
+    // 这里添加删除逻辑，比如调用API删除记录
+    // 删除后触发父组件更新数据
+    const recordToDelete = transactionData.find(record => record.id === id);
+    if (!recordToDelete) return;
+
+    // 发送审核事件
+    window.dispatchEvent(
+      new CustomEvent("audit:create", {
+        detail: {
+          id: Math.floor(Math.random() * 10000),
+          submitTime: new Date().toLocaleString(),
+          customer: customerName || "未知客户",
+          type: "删除",
+          category: "触达记录",
+          before: `类型: ${recordToDelete.type}\n时间: ${recordToDelete.date}\n人员: ${recordToDelete.person}\n部门: ${recordToDelete.department}\n金额: ${recordToDelete.amount || 0}\n目的: ${recordToDelete.purpose || ''}`,
+          after: "",
+          note: "",
+          submitter: "当前用户",
+          status: "pending"
+        },
+      })
+    );
+
+    toast({
+      title: "提交审核",
+      description: "已提交删除触达记录审核请求，审核通过后将删除该记录",
+    });
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -62,14 +92,15 @@ const [editRow, setEditRow] = useState<any>(null);
         </div>
         <div className="w-full">
           <TransactionTable 
-  data={transactionData} 
-  onEditTransaction={(row) => {
-    setShowNewServiceRecord(true);
-    setEditRow(row);
-  }}
-  maskedTransactions={maskedTransactions}
-  onRequestAccess={handleRequestAccess}
-/>
+            data={transactionData} 
+            onEditTransaction={(row) => {
+              setShowNewServiceRecord(true);
+              setEditRow(row);
+            }}
+            onDeleteTransaction={handleDeleteTransaction}
+            maskedTransactions={maskedTransactions}
+            onRequestAccess={handleRequestAccess}
+          />
         </div>
       </div>
 

@@ -248,7 +248,7 @@ export default function Audit() {
               <h1 className="text-2xl font-bold">审核管理</h1>
               </TooltipTrigger>
               <TooltipContent side="top" align="center" style={{ maxWidth: 320, whiteSpace: 'pre-line' }}>
-                部门管理员能看所有该部门相关申请<br/>用户只看自己提的<br/>系统管理员和超管不限制<br/>共享权限只能系统管理员和超管看
+                部门管理员能看所有该部门相关申请<br/>用户只看自己提的<br/>系统管理员和超管不限制<br/>共享权限只能系统管理员和超管看<br/>正在审核的客户不能提新的审核
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
