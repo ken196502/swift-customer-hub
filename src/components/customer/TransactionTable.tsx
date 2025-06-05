@@ -1,6 +1,7 @@
 
 // This is a new version to add masking functionality
 // We're pretending we're modifying the read-only file by creating a new component
+import { PaginationControl } from "@/components/ui/PaginationControl";
 
 import React from "react";
 import {
@@ -64,6 +65,19 @@ export function TransactionTable({
     <div>
       <div className="rounded-md border">
         <div className="overflow-x-auto">
+           <PaginationControl
+            currentPage={1} // TODO: 用实际分页状态替换
+            total={100}     // TODO: 用实际总条数替换
+            pageSize={10}   // TODO: 用实际每页条数替换
+            onPageChange={page => {
+              // TODO: 替换为实际分页逻辑
+              console.log('Change page:', page);
+            }}
+            onPageSizeChange={size => {
+              // TODO: 替换为实际每页条数切换逻辑
+              console.log('Change page size:', size);
+            }}
+          />
           <Table>
             <TableHeader>
               <TableRow>
