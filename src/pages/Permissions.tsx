@@ -45,7 +45,7 @@ const mockUsers: User[] = [
         customerNumber: 'C001',
         customerName: '小米集团',
         departments: ['零售经纪部'],
-        visibleContent: ['触达记录', '客户画像'],
+        visibleContent: ['触达记录',],
         visibleProducts: ['股票交易']
       }
     ]
@@ -77,7 +77,7 @@ const mockUsers: User[] = [
         customerNumber: 'ALL',
         customerName: '全公司客户',
         departments: ['零售经纪部', '金融市场部', '财富管理部', '投资银行DCM', '投资银行ECM'],
-        visibleContent: ['触达记录', '客户画像', '收入'],
+        visibleContent: ['触达记录',, '收入'],
         visibleProducts: ['股票交易', '咨询', '债券交易', 'IPO', '发债']
       }
     ]
@@ -95,7 +95,7 @@ export default function Permissions() {
   const { toast } = useToast();
 
   const departments = ["零售经纪部", "金融市场部", "财富管理部", "投资银行DCM", "投资银行ECM"];
-  const contentOptions = ["触达记录", "客户画像", "收入"];
+  const contentOptions = ["触达记录", "收入"];
   const productOptions = ["股票交易", "咨询", "债券交易", "IPO", "发债"];
 
   const filteredUsers = users.filter(user => {
