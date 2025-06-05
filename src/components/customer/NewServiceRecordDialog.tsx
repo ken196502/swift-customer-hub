@@ -144,7 +144,7 @@ export function NewServiceRecordDialog({
         </DialogHeader>
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label>日期</Label>
+            <Label><span className="text-red-500">*</span>日期</Label>
             <Input 
               type="date" 
               value={record.date} 
@@ -153,7 +153,7 @@ export function NewServiceRecordDialog({
           </div>
 
           <div className="space-y-2">
-            <Label>联系类型</Label>
+            <Label><span className="text-red-500">*</span>联系类型</Label>
             <Select
               value={record.type}
               onValueChange={(value) => handleChange('type', value)}
@@ -171,7 +171,7 @@ export function NewServiceRecordDialog({
 
           {showCustomTypeInput && (
             <div className="space-y-2">
-              <Label>自定义类型</Label>
+              <Label><span className="text-red-500">*</span>自定义类型</Label>
               <Input 
                 placeholder="请输入自定义类型" 
                 value={record.customType} 
@@ -181,7 +181,7 @@ export function NewServiceRecordDialog({
           )}
 
           <div className="space-y-2">
-            <Label>业务部门</Label>
+            <Label><span className="text-red-500">*</span>业务部门</Label>
             <Select
               value={record.department}
               onValueChange={(value) => handleChange('department', value)}
@@ -198,7 +198,7 @@ export function NewServiceRecordDialog({
           </div>
 
           <div className="space-y-2">
-            <Label>业务人员</Label>
+            <Label><span className="text-red-500">*</span>业务人员</Label>
             <Select
               value={record.person}
               onValueChange={(value) => handleChange('person', value)}
@@ -251,7 +251,7 @@ export function NewServiceRecordDialog({
           </div>
 
           <div className="space-y-2">
-            <Label>触达内容<span className="text-red-500">*</span></Label>
+            <Label><span className="text-red-500">*</span>触达内容</Label>
             <Textarea 
               placeholder="请输入触达内容" 
               value={record.notes} 
