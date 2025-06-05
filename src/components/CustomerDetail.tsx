@@ -17,6 +17,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -116,6 +117,9 @@ export function CustomerDetail({
                   <DialogContent>
                     <DialogHeader>
                       <DialogTitle>合并重复客户</DialogTitle>
+                      <DialogDescription>
+                        将删除较新客户，并将所有信息合并到较旧客户中，但旧客户已有数据不会被覆盖
+                      </DialogDescription>
                     </DialogHeader>
                     <div className="grid gap-4 py-4">
                       <div className="space-y-2">
