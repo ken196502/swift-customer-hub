@@ -329,8 +329,9 @@ export default function Permissions() {
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent side="top" align="center" style={{ maxWidth: 320, whiteSpace: 'pre-line' }}>
-                  添加已存在客户时，请去编辑该客户的权限，不能新增
-                  <br/>优先判断全部客户，再判断单个客户
+                  添加已存在客户时，提示去编辑该客户的权限，不能新增
+                  <br/>存在全部客户时，可以新单个客户
+                  <br/>权限为并集，只要存在权限即可查看
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
