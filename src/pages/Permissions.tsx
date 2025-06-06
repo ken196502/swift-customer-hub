@@ -131,17 +131,20 @@ export default function Permissions() {
   const handleDeletePermission = (permissionId: number) => {
     if (!selectedUser) return;
     
-    const updatedUser = {
-      ...selectedUser,
-      permissions: selectedUser.permissions.filter(p => p.id !== permissionId)
-    };
+    // 查找要删除的权限信息
+    const permissionToDelete = selectedUser.permissions.find(p => p.id === permissionId);
+    if (!permissionToDelete) return;
     
-    setUsers(users.map(user => user.id === selectedUser.id ? updatedUser : user));
-    setSelectedUser(updatedUser);
+    // 显示确认提交审核的提示
+    const confirmSubmit = window.confirm('确定要提交删除该权限的审核申请吗？');
+    if (!confirmSubmit) return;
+    
+    // 这里可以添加提交审核的API调用
+    // 例如: await api.submitPermissionDeletionReview(permissionId);
     
     toast({
-      title: "权限已删除",
-      description: "该权限信息已成功删除"
+      title: "删除申请已提交",
+      description: `已提交删除 ${permissionToDelete.customerName || '该客户'} 权限的审核申请，请等待审核结果`
     });
   };
 
