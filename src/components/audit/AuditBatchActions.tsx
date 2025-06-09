@@ -26,6 +26,7 @@ export function AuditBatchActions({ selectedIds, onApprove, onReject }: AuditBat
   const [isApproveOpen, setIsApproveOpen] = useState(false);
   const [isRejectOpen, setIsRejectOpen] = useState(false);
   const [reason, setReason] = useState("");
+  const [rejectError, setRejectError] = useState("");
   const hasSelected = selectedIds.length > 0;
 
   const handleApproveConfirm = () => {
@@ -39,8 +40,14 @@ export function AuditBatchActions({ selectedIds, onApprove, onReject }: AuditBat
   };
 
   const handleRejectConfirm = () => {
+    if (!reason.trim()) {
+      setRejectError("请填写驳回原因");
+      return;
+    }
+    
     onReject(selectedIds, reason);
     setReason("");
+    setRejectError("");
     setIsRejectOpen(false);
     toast({
       title: "操作成功",
@@ -112,13 +119,22 @@ export function AuditBatchActions({ selectedIds, onApprove, onReject }: AuditBat
           
           <div className="my-4">
             <label className="text-sm font-medium mb-2 block">
-              备注（非必填）
+              驳回原因<span className="text-red-500">*</span>
             </label>
             <Textarea 
-              placeholder="输入驳回原因（可选）" 
+              placeholder="请输入驳回原因" 
               value={reason} 
-              onChange={(e) => setReason(e.target.value)}
+              onChange={(e) => {
+                setReason(e.target.value);
+                if (e.target.value.trim() && rejectError) {
+                  setRejectError("");
+                }
+              }}
+              className={rejectError ? "border-red-500" : ""}
             />
+            {rejectError && (
+              <p className="mt-1 text-sm text-red-500">{rejectError}</p>
+            )}
           </div>
           
           <AlertDialogFooter>
