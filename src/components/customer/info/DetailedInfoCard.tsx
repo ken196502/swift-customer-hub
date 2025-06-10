@@ -77,6 +77,16 @@ export function DetailedInfoCard({ customer }: DetailedInfoCardProps) {
             <dt className="col-span-1 text-sm font-medium text-muted-foreground">主办部门</dt>
             <dd className="col-span-2 text-sm">{(customer.sponsorDepartments || []).join(', ') || "-"}</dd>
           </div>
+          
+          <div className="grid grid-cols-3 py-2 px-4">
+            <dt className="col-span-1 text-sm font-medium text-muted-foreground">CRM金市ID</dt>
+            <dd className="col-span-2 text-sm">{customer.crmMarketId || "-"}</dd>
+          </div>
+          
+          <div className="grid grid-cols-3 py-2 px-4">
+            <dt className="col-span-1 text-sm font-medium text-muted-foreground">DCM发行人ID</dt>
+            <dd className="col-span-2 text-sm">{customer.dcmIssuerId || "-"}</dd>
+          </div>
         </dl>
       </CardContent>
     </Card>
