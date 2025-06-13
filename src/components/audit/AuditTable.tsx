@@ -82,7 +82,6 @@ onCheckedChange={(checked) => {
                 </CustomTooltip>
               </TableHead>
               <TableHead>变更后</TableHead>
-              <TableHead>备注</TableHead>
               <TableHead>申请人</TableHead>
               {showStatus && (
                 <TableHead>状态</TableHead>
@@ -171,7 +170,6 @@ onCheckedChange={(checked) => {
                   </CustomTooltip>
                 ) : "- -"}
               </TableCell>
-              <TableCell>{item.note}</TableCell>
               <TableCell>{item.submitter}</TableCell>
               {showStatus && (
                 <TableCell>
