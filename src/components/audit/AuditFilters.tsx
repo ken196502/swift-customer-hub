@@ -30,18 +30,19 @@ export function AuditFilters({ onCategoryChange, selectedCategory }: AuditFilter
       onCategoryChange(value === "all" ? null : value);
     }
     
-    // If category is "共享权限", reset changeType to "权限变更"
-    if (value === "共享权限") {
-      setChangeType("权限变更");
-    } else {
-      setChangeType("");
-    }
+    // // If category is "共享权限", reset changeType to "权限变更"
+    // if (value === "共享权限") {
+    //   setChangeType("权限变更");
+    // } else {
+    //   setChangeType("");
+    // }
+    setChangeType("");
   };
   
   // Get available change types based on the selected category
   const getChangeTypes = () => {
     if (category === "共享权限") {
-      return ["权限变更"];
+      return ["新增", "修改", "删除"];
     } else if (category === "客户信息") {
       return ["新增", "修改", "合并"];
     }
@@ -87,7 +88,7 @@ export function AuditFilters({ onCategoryChange, selectedCategory }: AuditFilter
 
       {/* Change type filter */}
       <div className="w-28 sm:w-32">
-        <Select value={changeType} onValueChange={setChangeType} disabled={category === "共享权限"}>
+        <Select value={changeType} onValueChange={setChangeType}>
           <SelectTrigger>
             <SelectValue placeholder="变动类型" />
           </SelectTrigger>
