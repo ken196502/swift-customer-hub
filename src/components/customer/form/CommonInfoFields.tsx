@@ -63,7 +63,17 @@ export function CommonInfoFields({
       
       {/* Added active status dropdown */}
       <div className="space-y-2">
-        <Label>活跃状态</Label>
+        <div className="flex items-center space-x-2">
+          <Label>活跃状态</Label>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Info className="h-4 w-4 text-muted-foreground" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>个人户为反洗钱等级</p>
+            </TooltipContent>
+          </Tooltip>
+        </div>
         <Select
           value={formData.activeStatus}
           onValueChange={(value) => handleInputChange('activeStatus', value)}

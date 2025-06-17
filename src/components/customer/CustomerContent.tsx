@@ -9,7 +9,6 @@ import { Customer } from "@/contexts/customer/customerTypes";
 import { useCustomerAudit } from "@/hooks/use-customer-audit";
 import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 export function CustomerContent() {
   const {
@@ -109,26 +108,19 @@ export function CustomerContent() {
             />
             公司户
           </label>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <label
-                className={`inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm cursor-pointer border border-transparent ${activeTab === 'personal' ? 'bg-background text-foreground shadow-sm border-border' : 'text-muted-foreground hover:text-foreground'}`}
-              >
-                <input
-                  type="radio"
-                  name="customerType"
-                  value="personal"
-                  checked={activeTab === 'personal'}
-                  onChange={() => setActiveTab('personal')}
-                  className="sr-only"
-                />
-                个人户
-              </label>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>个人户为反洗钱等级</p>
-            </TooltipContent>
-          </Tooltip>
+          <label
+            className={`inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm cursor-pointer border border-transparent ${activeTab === 'personal' ? 'bg-background text-foreground shadow-sm border-border' : 'text-muted-foreground hover:text-foreground'}`}
+          >
+            <input
+              type="radio"
+              name="customerType"
+              value="personal"
+              checked={activeTab === 'personal'}
+              onChange={() => setActiveTab('personal')}
+              className="sr-only"
+            />
+            个人户
+          </label>
           </div>
         </div>
         <CustomerHeader
