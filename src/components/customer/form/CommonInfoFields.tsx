@@ -112,7 +112,7 @@ export function CommonInfoFields({
         <div className="space-y-2">
           <Label htmlFor="idType">证件类型</Label>
           <Select
-            value={formData.idType || "营业执照"}
+            value={formData.idType || "10"}
             onValueChange={(value) => handleInputChange("idType", value)}
             disabled={disabled}
           >
@@ -120,9 +120,9 @@ export function CommonInfoFields({
               <SelectValue placeholder="请选择证件类型" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="营业执照">营业执照</SelectItem>
-              <SelectItem value="组织机构代码证">组织机构代码证</SelectItem>
-              <SelectItem value="税务登记证">税务登记证</SelectItem>
+              <SelectItem value="10">10:LEI</SelectItem>
+              <SelectItem value="11">11:公司注册证书</SelectItem>
+              <SelectItem value="12">12:营业执照</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -140,12 +140,13 @@ export function CommonInfoFields({
               <SelectValue placeholder="请选择证件类型" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="1">大陆身份证</SelectItem>
-              <SelectItem value="2">护照</SelectItem>
-              <SelectItem value="5">澳门身份证</SelectItem>
-              <SelectItem value="6">台湾身份证</SelectItem>
-              <SelectItem value="7">香港非永久身份证</SelectItem>
-              <SelectItem value="9">其他</SelectItem>
+              <SelectItem value="0">0:香港永久身份证</SelectItem>
+              <SelectItem value="1">1:大陆身份证</SelectItem>
+              <SelectItem value="2">2:护照</SelectItem>
+              <SelectItem value="5">5:澳门身份证</SelectItem>
+              <SelectItem value="6">6:台湾身份证</SelectItem>
+              <SelectItem value="7">7:香港非永久身份证</SelectItem>
+              <SelectItem value="9">9:其他</SelectItem>
             </SelectContent>
           </Select>
         </div>
