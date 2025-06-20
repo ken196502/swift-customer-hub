@@ -83,8 +83,8 @@ export function CommonInfoFields({
             <SelectValue placeholder="请选择活跃状态" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="活跃">活跃</SelectItem>
             <SelectItem value="一般">一般</SelectItem>
+            <SelectItem value="活跃">活跃</SelectItem>
             <SelectItem value="不活跃">不活跃</SelectItem>
           </SelectContent>
         </Select>
@@ -112,7 +112,7 @@ export function CommonInfoFields({
         <div className="space-y-2">
           <Label htmlFor="idType">证件类型</Label>
           <Select
-            value={formData.idType || "10"}
+            value={formData.idType ?? ""}
             onValueChange={(value) => handleInputChange("idType", value)}
             disabled={disabled}
           >
@@ -132,7 +132,7 @@ export function CommonInfoFields({
         <div className="space-y-2">
           <Label htmlFor="idType">证件类型</Label>
           <Select
-            value={formData.idType || "1"}
+            value={formData.idType ?? ""}
             onValueChange={(value) => handleInputChange("idType", value)}
             disabled={disabled}
           >
