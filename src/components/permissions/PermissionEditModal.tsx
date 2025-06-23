@@ -48,19 +48,20 @@ export function PermissionEditModal({
                 type="checkbox"
                 className="w-4 h-4"
                 checked={allCustomers}
-                onChange={() => setAllCustomers((prev) => !prev)}
+                onChange={isNew ? () => setAllCustomers((prev) => !prev) : undefined}
+                disabled={!isNew}
               />
-              <span>全部客户</span>
+              <span className={!isNew ? 'text-gray-500' : ''}>全部客户</span>
             </label>
           </div>
           <div>
             <label className="block text-sm font-medium mb-1 text-left">客户编号</label>
             <Input 
               value={editingPermission.customerNumber} 
-              onChange={(e) => onCustomerNumberChange(e.target.value)}
-              disabled={allCustomers}
+              onChange={isNew ? (e) => onCustomerNumberChange(e.target.value) : undefined}
+              disabled={!isNew || allCustomers}
               placeholder={allCustomers ? '符合下面条件的全部客户' : ''}
-              className={allCustomers?"bg-gray-200":""}
+              className={!isNew || allCustomers ? 'bg-gray-200' : ''}
             />
           </div>
           
@@ -108,7 +109,7 @@ export function PermissionEditModal({
             </div>
           </div>
           
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium mb-1 text-left">可见产品记录</label>
             <div className="grid grid-cols-2 gap-2">
               {productOptions.map(product => (
@@ -123,7 +124,7 @@ export function PermissionEditModal({
                 </label>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
         
         <div className="flex justify-end space-x-2 mt-6">
