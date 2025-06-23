@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { AuditContent } from "@/components/audit/AuditContent";
-import { TooltipProvider } from '@/contexts/TooltipContext';
-import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 import { useTooltipContext } from "@/contexts/TooltipContext";
+import { CustomTooltip } from "@/components/ui/CustomTooltip";
 
 // Define the audit item type
 export interface AuditItem {
@@ -240,19 +239,26 @@ export default function Audit() {
     };
   }, [auditItems]);
 
+  const tooltipContent = (
+    <div style={{ whiteSpace: 'pre-line' }}>
+      部门管理员能看所有该部门相关申请<br/>
+      用户只看自己提的<br/>
+      系统管理员和超管不限制<br/>
+      共享权限只能系统管理员和超管看<br/>
+      正在审核的客户不能提新的审核
+    </div>
+  );
+
   return (
     <div className="mx-auto space-y-6">
       <div className="flex justify-start items-center">
-        <TooltipProvider>
-          <Tooltip open={alwaysShowTooltips}>
-            <TooltipTrigger asChild>
-              <h1 className="text-2xl font-bold">审核管理</h1>
-            </TooltipTrigger>
-            <TooltipContent side="top" align="center" style={{ maxWidth: 320, whiteSpace: 'pre-line' }}>
-              部门管理员能看所有该部门相关申请<br/>用户只看自己提的<br/>系统管理员和超管不限制<br/>共享权限只能系统管理员和超管看<br/>正在审核的客户不能提新的审核
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        {alwaysShowTooltips ? (
+          <CustomTooltip content={tooltipContent} maxWidth={320}>
+            <h1 className="text-2xl font-bold">审核管理</h1>
+          </CustomTooltip>
+        ) : (
+          <h1 className="text-2xl font-bold">审核管理</h1>
+        )}
       </div>
       
       <Tabs defaultValue="pending" className="w-full">
