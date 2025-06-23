@@ -244,7 +244,7 @@ export default function Audit() {
     <div className="mx-auto space-y-6">
       <div className="flex justify-start items-center">
         <TooltipProvider>
-          <Tooltip open={alwaysShowTooltips ? true : undefined}>
+          <Tooltip open={alwaysShowTooltips}>
             <TooltipTrigger asChild>
               <h1 className="text-2xl font-bold">审核管理</h1>
             </TooltipTrigger>
@@ -254,6 +254,7 @@ export default function Audit() {
           </Tooltip>
         </TooltipProvider>
       </div>
+      
       <Tabs defaultValue="pending" className="w-full">
         <TabsList className="grid w-[400px] grid-cols-2">
           <TabsTrigger value="pending">待审核 ({pendingItems.length})</TabsTrigger>
