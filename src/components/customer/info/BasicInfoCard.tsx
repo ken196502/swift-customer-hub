@@ -140,6 +140,10 @@ export function BasicInfoCard({ customer }: BasicInfoCardProps) {
                 <dd className="col-span-2 text-sm">{customer.establishDate || "-"}</dd>
               </div>
 
+              <div className="grid grid-cols-3 py-2 px-4">
+                <dt className="col-span-1 text-sm font-medium text-muted-foreground">联系电话</dt>
+                <dd className="col-span-2 text-sm">{customer.phone || "-"}</dd>
+              </div>
 
               <div className="grid grid-cols-3 py-2 px-4">
                 <dt className="col-span-1 text-sm font-medium text-muted-foreground">邮箱</dt>
