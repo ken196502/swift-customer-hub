@@ -136,6 +136,12 @@ export function BasicInfoCard({ customer }: BasicInfoCardProps) {
               </div>
               
               <div className="grid grid-cols-3 py-2 px-4">
+                <dt className="col-span-1 text-sm font-medium text-muted-foreground">成立日期</dt>
+                <dd className="col-span-2 text-sm">{customer.establishDate || "-"}</dd>
+              </div>
+
+
+              <div className="grid grid-cols-3 py-2 px-4">
                 <dt className="col-span-1 text-sm font-medium text-muted-foreground">邮箱</dt>
                 <dd className="col-span-2 text-sm">{customer.email || "-"}</dd>
               </div>
