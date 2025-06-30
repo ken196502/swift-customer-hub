@@ -2,13 +2,13 @@
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 interface SponsorDepartmentDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   departments: string[];
-  onSubmit: (departments: string[]) => void;
+  onSubmit: (department: string) => void;
   selectedCustomerCount: number;
 }
 
@@ -19,23 +19,15 @@ export function SponsorDepartmentDialog({
   onSubmit,
   selectedCustomerCount
 }: SponsorDepartmentDialogProps) {
-  const [selectedDepartments, setSelectedDepartments] = useState<string[]>([]);
-
-  const handleToggleDepartment = (dept: string) => {
-    setSelectedDepartments(prev => 
-      prev.includes(dept)
-        ? prev.filter(d => d !== dept)
-        : [...prev, dept]
-    );
-  };
+  const [selectedDepartment, setSelectedDepartment] = useState<string>("");
 
   const handleSubmit = () => {
-    onSubmit(selectedDepartments);
+    onSubmit(selectedDepartment);
     onOpenChange(false);
   };
 
   const handleCancel = () => {
-    setSelectedDepartments([]);
+    setSelectedDepartment("");
     onOpenChange(false);
   };
 
@@ -51,14 +43,10 @@ export function SponsorDepartmentDialog({
             已选择 {selectedCustomerCount} 个客户，请选择要设置的主办部门：
           </p>
           
-          <div className="space-y-4">
+          <RadioGroup value={selectedDepartment} onValueChange={setSelectedDepartment}>
             {departments.map(dept => (
               <div key={dept} className="flex items-center space-x-2">
-                <Checkbox
-                  id={`dept-${dept}`}
-                  checked={selectedDepartments.includes(dept)}
-                  onCheckedChange={() => handleToggleDepartment(dept)}
-                />
+                <RadioGroupItem value={dept} id={`dept-${dept}`} />
                 <label
                   htmlFor={`dept-${dept}`}
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -67,7 +55,7 @@ export function SponsorDepartmentDialog({
                 </label>
               </div>
             ))}
-          </div>
+          </RadioGroup>
         </div>
         
         <div className="flex justify-end space-x-2">

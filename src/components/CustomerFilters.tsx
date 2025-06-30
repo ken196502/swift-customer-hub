@@ -66,8 +66,8 @@ export function CustomerFilters({ activeTab }: CustomerFiltersProps) {
     );
   };
 
-  const handleSponsorDepartmentSubmit = (departments: string[]) => {
-    handleUpdateSponsorDepartments(selectedCustomers, departments);
+  const handleSponsorDepartmentSubmit = (department: string) => {
+    handleUpdateSponsorDepartments(selectedCustomers, [department]);
   };
 
   return (
